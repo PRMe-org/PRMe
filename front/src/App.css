@@ -1,38 +1,128 @@
-.App {
-  text-align: center;
+@font-face {
+    font-family: 'KOTRAHOPE';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2110@1.0/KOTRAHOPE.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+html {
+    width: 100vw;
+    height: 100vh;
+    background : linear-gradient(rgba(12,186,103,1) 0%, rgba(251,232,115,1) 100%);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+body {
+    margin: 0px;
+    font-size: 10px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.navbar1 {
+    display: flex;
 }
 
-.App-link {
-  color: #61dafb;
+.titles{
+    font-family: 'KOTRAHOPE';
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    padding: 3.5rem 0 1rem 0;
+
+    margin-left: 7rem;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.title {
+    font-size: 5rem;
+}
+.sub {
+    font-size: 2rem;
+}
+
+.help {
+    cursor: pointer;
+
+    width: 4rem;
+    height: 4rem;
+
+    position: relative;
+    top: 15%;
+    margin-right: 3rem;
+
+    font-family: 'KOTRAHOPE';
+    font-size: 2rem;
+
+    border: none;
+    border-radius: 0.8rem;
+
+    outline: 0.1rem dashed rgb(123, 123, 123);
+    outline-offset: -0.4rem;
+
+    font-family: 'KOTRAHOPE';
+    font-size: 1.5rem;
+    color: white;
+    background: radial-gradient(50% 50% at 50% 50%, #57564E 0%, #35342C 100%);
+}
+
+.welcome{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    margin-top: 2rem;
+
+}
+.smile {
+    height: 30em;
+}
+
+.loginbuttons {
+    display: flex;
+    flex-direction: column;
+}
+
+#register {
+    cursor: pointer;
+
+    width: 27rem;
+    height: 4rem;
+
+    margin-bottom: 0.5rem;
+
+    border: none;
+    border-radius: 0.8rem;
+
+    outline: 0.1rem dashed rgb(123, 123, 123);
+    outline-offset: -0.4rem;
+
+    font-family: 'KOTRAHOPE';
+    font-size: 1.5rem;
+    letter-spacing: 0.2rem;
+    color: white;
+    background: radial-gradient(50% 50% at 50% 50%, #57564E 0%, #35342C 100%);
+}
+#login {
+    cursor: pointer;
+
+    width: 27rem;
+    height: 4rem;
+
+    border: none;
+    border-radius: 0.8rem;
+
+    outline: 0.1rem dashed rgb(123, 123, 123);
+    outline-offset: -0.4rem;
+
+    font-family: 'KOTRAHOPE';
+    font-size: 1.5rem;
+    letter-spacing: 0.2rem;
+    color: white;
+    background: radial-gradient(50% 50% at 50% 50%, #57564E 0%, #35342C 100%);
 }
