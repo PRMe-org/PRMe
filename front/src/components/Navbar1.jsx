@@ -9,7 +9,7 @@ const Navbar1 = () => {
         <div className='title'>PR Me!</div>
         <div className='sub'>성격 찾기 프로젝트</div>
       </div>
-      <Link to='./help'><button className='help'>?</button></Link>
+      <Link to='./help'><button id='help'>?</button></Link>
     </div>
   )
 }
