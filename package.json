@@ -1,7 +1,9 @@
 {
   "dependencies": {
+    "body-parser": "^1.20.2",
     "concurrently": "^8.0.1",
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "mysql": "^2.18.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.22",
@@ -11,5 +13,12 @@
     "start": "npm-run-all --parallel start:**",
     "start:server": "cd server && nodemon server",
     "start:front": "cd front && npm start"
-  }
+  },
+  "name": "prme",
+  "description": "성격 찾기 프로젝트",
+  "version": "1.0.0",
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }

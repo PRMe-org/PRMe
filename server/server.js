@@ -1,11 +1,27 @@
 //server.js
 const express = require('express');
+const mysql = require("mysql");
 const app = express();
-const test = require('./Router/test');
+// const test = require('./Router/test');
+const PORT = process.env.port || 3002;
 
-app.use('/api', test);
+// DB 연동
+const db = mysql.createPool({
+    host: "localhost",
+    user: "root",
+    password: "wjflrkfk",
+    database: "testdb",
+  });
 
-const port = 3002; //node 서버가 사용할 포트 번호, 리액트의 포트번호(3000)와 충돌하지 않게 다른 번호로 할당
-app.listen(port, () => {
-    console.log(`Listening on port ${port}`);
-})
+// app.use('/api', test);
+// 브라우저에 URL 입력 시 DB에 1이 저장되는 코드
+app.get("/", (req, res) => {
+    const sqlQuery = "INSERT INTO requested (rowno) VALUES (1)";
+    db.query(sqlQuery, (err, result) => {
+      res.send("success!");
+    });
+  });
+
+app.listen(PORT, ()=>{
+    console.log(`running on port ${PORT}`); // 포트번호 3002
+});
