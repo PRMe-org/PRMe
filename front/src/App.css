@@ -92,6 +92,7 @@ body {
     flex-direction: column;
 }
 
+
 #register {
     cursor: pointer;
 
@@ -112,6 +113,13 @@ body {
     color: white;
     background: radial-gradient(50% 50% at 50% 50%, #57564E 0%, #35342C 100%);
 }
+#register:hover {
+    background: radial-gradient(circle, rgba(228,227,219,1) 0%, rgba(178,176,161,1) 100%);
+    color: #101010;
+    outline: 0.1rem dashed #101010;
+
+}
+
 #login {
     cursor: pointer;
 
@@ -129,6 +137,12 @@ body {
     letter-spacing: 0.2rem;
     color: white;
     background: radial-gradient(50% 50% at 50% 50%, #57564E 0%, #35342C 100%);
+}
+#login:hover {
+    background: radial-gradient(circle, rgba(228,227,219,1) 0%, rgba(178,176,161,1) 100%);
+    color: #101010;
+    outline: 0.1rem dashed #101010;
+
 }
 
 /* ----------- Help.jsx ----------- */
