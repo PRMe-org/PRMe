@@ -4,6 +4,13 @@
     font-weight: normal;
     font-style: normal;
 }
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
 
 html {
     width: 100vw;
@@ -15,6 +22,8 @@ body {
     margin: 0px;
     font-size: 10px;
 }
+
+/* ----------- Navbar1.jsx ----------- */
 
 .navbar1 {
     display: flex;
@@ -65,6 +74,8 @@ body {
     color: white;
     background: radial-gradient(50% 50% at 50% 50%, #57564E 0%, #35342C 100%);
 }
+
+/* ----------- Welcome.jsx ----------- */
 
 .welcome{
     display: flex;
@@ -194,4 +205,143 @@ body {
 
 #from {
     float: right;
+}
+
+/* ----------- Register.jsx ----------- */
+
+.form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    margin-top: 5rem;
+    /* 수정해야됨 */
+}
+
+.tab-header {
+    height: 4rem;
+    line-height: 4rem;
+    width: 27rem;
+    font-family: 'KOTRAHOPE';
+    font-size: 1.5rem;
+    letter-spacing: 0.2rem;
+}
+
+#register-tab {
+    border-top-left-radius: 0.8rem;
+    border-top-right-radius: 0.8rem;
+}
+#login-tab {
+    border-top-left-radius: 0.8rem;
+    border-top-right-radius: 0.8rem;
+}
+
+.tab-header > div {
+    width: 50%; /* tap-header width의 50% */
+    float: left;
+    text-align: center;
+    background-color: #B2B0A1;
+    color: #101010;
+
+    cursor: pointer;
+}
+
+.tab-header > div.active {
+    background-color: #35342C;
+    color: white;
+}
+
+.tab-content {
+    width: 27rem;
+}
+
+.form-element {
+    padding: 1rem;
+    border-bottom-left-radius: 0.8rem;
+    border-bottom-right-radius: 0.8rem;
+    
+    font-family: 'KOTRAHOPE';
+    font-size: 1rem;
+    letter-spacing: 0.1rem;
+    color: white;
+    background: radial-gradient(50% 50% at 50% 50%, #57564E 0%, #35342C 100%);
+}
+
+#subtitle {
+    margin: 0px;
+    margin-bottom: 0.3rem;
+}
+
+#input {
+    width: 23.75rem;
+    height: 2.5rem;
+    margin-bottom: 0.6rem;
+    padding: 0 0.7rem;
+
+    border: none;
+    border-radius: 0.5rem;
+
+    font-family: 'Pretendard-Regular';
+    font-size: 0.8rem;
+    color: #101010;
+}
+#input::placeholder {
+    color: #9f9f9f;
+}
+
+#register-register {
+    margin-top: 0.5rem;
+    width: 100%;
+    height: 3rem;
+
+    border: none;
+    border-radius: 0.8rem;
+
+    outline: 0.1rem dashed rgb(123, 123, 123);
+    outline-offset: -0.4rem;
+
+    font-family: 'KOTRAHOPE';
+    font-size: 1.5rem;
+    letter-spacing: 0.2rem;
+    color: white;
+    background: radial-gradient(50% 50% at 50% 50%, #57564E 0%, #35342C 100%);
+}
+#register-register:hover {
+    background: radial-gradient(circle, rgba(228,227,219,1) 0%, rgba(178,176,161,1) 100%);
+    color: #101010;
+    outline: 0.1rem dashed #101010;
+}
+
+/* 카카오톡으로 회원가입/로그인 */
+#register-login {
+    margin-top: 0.5rem;
+    width: 100%;
+    height: 3rem;
+
+    border: 2.5px #3B1E1E solid;
+    border-radius: 0.8rem;
+
+    font-family: 'KOTRAHOPE';
+    font-size: 1.5rem;
+    letter-spacing: 0.2rem;
+    color: #3B1E1E;
+    background: radial-gradient(circle, rgba(255,224,59,1) 0%, rgba(250,185,19,1) 100%);}
+#register-login img {
+    width: 1.3rem;
+    margin-right: 0.5rem;
+}
+#register-login:hover {
+    background: radial-gradient(circle, rgba(255,201,45,1) 0%, rgba(255,133,12,1) 100%);
+}
+
+.form .tab-content > .tab-body.active {
+    display: block;
+}
+.form .tab-content > .tab-body {
+    display: none;
 }
