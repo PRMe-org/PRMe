@@ -4,6 +4,12 @@
     font-weight: normal;
     font-style: normal;
 }
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
 
 html {
     width: 100vw;
@@ -198,4 +204,33 @@ body {
 
 #from {
     float: right;
+}
+
+
+/* ----------- pwfind.jsx ----------- */
+/* input창  */
+input[id='pwfind']::placeholder{
+    color: #9f9f9f; /*글속성*/
+    text-align: center;
+    letter-spacing: 2px;
+
+    font-family: 'Pretendard-Regular'; /*글꼴*/
+    font-size: 1rem;
+}
+#pwfind {
+    margin-bottom: 1rem; /*위치*/
+    
+    width: 25.2rem; /*크기*/
+    height: 3.4rem;
+
+    border:4px solid #101010; /*테두리*/
+    border-radius: 0.8rem;
+    outline: none;
+
+    text-align: center; /*입력 커서*/
+    padding-left: 10px ;
+    padding-right: 10px ;
+
+    font-family: 'Pretendard-Regular'; /*글꼴*/
+    font-size: 1.2rem;
 }
