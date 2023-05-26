@@ -6,6 +6,8 @@ import {
 } from "react-router-dom";
 
 import Navbar from "./components/Navbar"
+import Navbar2 from "./components/Navbar2"
+import Modal from "./components/Modal";
 
 import Welcome from "./pages/Welcome"
 import Help from "./pages/Help"
@@ -25,6 +27,16 @@ const Layout1 = () => {
   return (
     <>
       <Navbar />
+      <Outlet />
+    </>
+  );
+};
+
+// Navbar2
+const Layout2 = () => {
+  return (
+    <>
+      <Navbar2 />
       <Outlet />
     </>
   );
@@ -52,6 +64,13 @@ const router = createBrowserRouter([
         path: "/pwfind",
         element: <Pwfind/>
       },
+    ]
+  },
+  {
+    // 2. 로그인, 회원가입 후 Navbar2 적용
+    path: "/home",
+    element: <Layout2/>,
+    children:[
       {
         path: "/home",
         element: <Home/>
@@ -79,6 +98,11 @@ const router = createBrowserRouter([
     path: "/help",
     element: <Help/>
   },
+  
+  {
+    path: "/modal",
+    element: <Modal/>,
+  }
 ]);
 
 function App() {
