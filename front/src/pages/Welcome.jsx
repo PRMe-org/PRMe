@@ -7,11 +7,13 @@ const Welcome = () => {
 
   return (
     <div className='welcome'>
-      <img src={imgUrl} className='smile'/>
-      
-      <div className='loginbuttons'>
-        <Link to='/register'><button id='register'>회원가입</button></Link>
-        <Link to='/login'><button id='login'>로그인</button></Link>
+      <div className='welcomebox'>
+        <img src={imgUrl} className='smile'/>
+        
+        <div className='loginbuttons'>
+          <Link to='/register'><button id='register'>회원가입</button></Link>
+          <Link to='/login'><button id='login'>로그인</button></Link>
+        </div>
       </div>
     </div>
   )
