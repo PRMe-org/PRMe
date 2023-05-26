@@ -11,6 +11,10 @@
     font-style: normal;
 }
 
+/* colors */
+/* 기본 검정색 텍스트 #101010 */
+/* placeholder 텍스트 #9f9f9f */
+
 html {
     width: 100vw;
     height: 100vh;
@@ -218,8 +222,7 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
 
-    margin-top: 5rem;
-    /* 수정해야됨 */
+    margin-top: 4rem;
 }
 
 .tab-header {
@@ -234,25 +237,23 @@ body {
 #register-tab {
     border-top-left-radius: 0.8rem;
     border-top-right-radius: 0.8rem;
+    background-color: #35342C;
+    color: white;
 }
 #login-tab {
     border-top-left-radius: 0.8rem;
     border-top-right-radius: 0.8rem;
+    text-decoration: none;
+    color: #101010;
+    background-color: #B2B0A1;
+    
 }
 
-.tab-header > div {
+.tab-header #login-tab, #register-tab {
     width: 50%; /* tap-header width의 50% */
     float: left;
     text-align: center;
-    background-color: #B2B0A1;
-    color: #101010;
-
     cursor: pointer;
-}
-
-.tab-header > div.active {
-    background-color: #35342C;
-    color: white;
 }
 
 .tab-content {
@@ -282,6 +283,7 @@ body {
     margin-bottom: 0.6rem;
     padding: 0 0.7rem;
 
+    outline: none;
     border: none;
     border-radius: 0.5rem;
 
@@ -322,7 +324,7 @@ body {
     width: 100%;
     height: 3rem;
 
-    border: 2.5px #3B1E1E solid;
+    border: 0.2rem #3B1E1E solid;
     border-radius: 0.8rem;
 
     font-family: 'KOTRAHOPE';
@@ -338,38 +340,92 @@ body {
     background: radial-gradient(circle, rgba(255,201,45,1) 0%, rgba(255,133,12,1) 100%);
 }
 
-.form .tab-content > .tab-body.active {
-    display: block;
+/* ----------- Login.jsx ----------- */
+
+#login-register-tab {
+    border-top-left-radius: 0.8rem;
+    border-top-right-radius: 0.8rem;
+    color: #101010;
+    background-color: #B2B0A1;
+
 }
-.form .tab-content > .tab-body {
-    display: none;
+#login-login-tab {
+    border-top-left-radius: 0.8rem;
+    border-top-right-radius: 0.8rem;
+    text-decoration: none;
+    background-color: #35342C;
+    color: white;
+}
+
+.tab-header #login-login-tab, #login-register-tab {
+    width: 50%; /* tap-header width의 50% */
+    float: left;
+    text-align: center;
+    cursor: pointer;
+}
+
+#pwforgot {
+    color: #101010;
+    cursor: pointer;
+    text-align: center;
+    font-family: 'Pretendard-Regular';
+    font-size: 0.8rem; /*input fontsize랑 같음*/
+    margin-top: 1rem;
+}
+#pwforgot:hover {
+    font-weight: 800;
 }
 
 /* ----------- pwfind.jsx ----------- */
 
+.pwfind-welcome{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    margin-top: 2rem;
+
+}
+
+.pwfind-smile {
+    height: 30em;
+}
+
+.pwfind-loginbuttons {
+    display: flex;
+    flex-direction: column;
+}
+
 /* input창  */
-input[id='pwfind']::placeholder{
+#pwfind {
+    margin-bottom: 0.5rem; /*위치*/
+    
+    width: 27rem; /*크기*/
+    height: 4rem;
+    
+    border: none;
+    outline: none;
+    border-radius: 0.8rem;
+    box-shadow: 0 0 0 0.3rem #35342C inset; /*테두리*/
+
+    text-align: center; /*입력 커서*/
+    padding: 0;
+
+    font-family: 'Pretendard-Regular'; /*글꼴*/
+    font-size: 1rem;
+    color: #101010;
+}
+#pwfind::placeholder{
     color: #9f9f9f; /*글속성*/
     text-align: center;
-    letter-spacing: 2px;
 
     font-family: 'Pretendard-Regular'; /*글꼴*/
     font-size: 1rem;
 }
-#pwfind {
-    margin-bottom: 1rem; /*위치*/
-    
-    width: 25.2rem; /*크기*/
-    height: 3.4rem;
 
-    border:4px solid #101010; /*테두리*/
-    border-radius: 0.8rem;
-    outline: none;
 
-    text-align: center; /*입력 커서*/
-    padding-left: 10px ;
-    padding-right: 10px ;
-
-    font-family: 'Pretendard-Regular'; /*글꼴*/
-    font-size: 1.2rem;
-}
