@@ -5,8 +5,7 @@ import {
   Outlet,
 } from "react-router-dom";
 
-import Navbar1 from "./components/Navbar1"
-import Navbar2 from "./components/Navbar2"
+import Navbar from "./components/Navbar"
 
 import Welcome from "./pages/Welcome"
 import Help from "./pages/Help"
@@ -21,21 +20,11 @@ import Result from "./pages/Result"
 
 import "./App.css"
 
-// 1. 로그인, 회원가입 전 Navbar1 적용
+// Navbar
 const Layout1 = () => {
   return (
     <>
-      <Navbar1 />
-      <Outlet />
-    </>
-  );
-};
-
-// 2. 로그인, 회원가입 후 Navbar2 적용
-const Layout2 = () => {
-  return (
-    <>
-      <Navbar2 />
+      <Navbar />
       <Outlet />
     </>
   );
@@ -63,19 +52,6 @@ const router = createBrowserRouter([
         path: "/pwfind",
         element: <Pwfind/>
       },
-    ]
-  },
-
-  {
-    path: "/help",
-    element: <Help/>
-  },
-  
-  // 2. 로그인, 회원가입 후 Navbar2 적용
-  {
-    path: "/home",
-    element: <Layout2/>,
-    children: [
       {
         path: "/home",
         element: <Home/>
@@ -97,6 +73,11 @@ const router = createBrowserRouter([
         element: <Result/>,
       },
     ]
+  },
+
+  {
+    path: "/help",
+    element: <Help/>
   },
 ]);
 
