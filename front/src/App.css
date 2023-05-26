@@ -15,14 +15,22 @@
 /* 기본 검정색 텍스트 #101010 */
 /* placeholder 텍스트 #9f9f9f */
 
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
 html {
-    width: 100vw;
-    height: 100vh;
     background : linear-gradient(rgba(12,186,103,1) 0%, rgba(251,232,115,1) 100%);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
 }
 
 body {
-    margin: 0px;
+    margin: 0;
     font-size: 10px;
 }
 
@@ -80,7 +88,7 @@ body {
 
 /* ----------- Welcome.jsx ----------- */
 
-.welcome{
+.welcome {
     height: 100%;
     width: 100%;
 }
@@ -379,7 +387,7 @@ body {
     font-weight: 800;
 }
 
-/* ----------- pwfind.jsx ----------- */
+/* ----------- Pwfind.jsx ----------- */
 
 .pwfind-welcome{
     height: 100%;
@@ -422,6 +430,233 @@ body {
     font-size: 1rem;
 }
 
+/* ----------- Modal.jsx ----------- */
+
+.modal {
+    display: none;
+    position: fixed;
+
+    height: 100%;
+    width: 100%;
+
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 99;
+    background-color: rgba(0, 0, 0, 0.6);
+  }
+  .modal button {
+    outline: none;
+    cursor: pointer;
+    border: 0;
+  }
+  .modal > section {
+    width: 90%;
+    max-width: 450px;
+    margin: 0 auto;
+    border-radius: 0.3rem;
+    background-color: #fff;
+    /* 팝업이 열릴때 스르륵 열리는 효과 */
+    animation: modal-show 0.3s;
+    overflow: hidden;
+  }
+  .modal > section > header {
+    position: relative;
+    padding: 16px 64px 16px 16px;
+    background-color: #f1f1f1;
+    font-weight: 700;
+  }
+  .modal > section > header button { /* 모달 제목 */
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 30px;
+    font-size: 21px;
+    font-weight: 700;
+    text-align: center;
+    color: #999;
+    background-color: transparent;
+  }
+  .modal > section > main { /* 모달 내용 */
+    padding: 16px;
+    border-bottom: 1px solid #dee2e6;
+    border-top: 1px solid #dee2e6;
+
+    text-align: center;
+    white-space: pre-line;
+  }
+  .modal > section > footer {
+    padding: 12px 16px;
+    text-align: right;
+  }
+  .modal > section > footer button {
+    padding: 6px 12px;
+    color: #fff;
+    background-color: #6c757d; /*모달 버튼 색*/
+    border-radius: 5px;
+    font-size: 13px;
+  }
+  .modal.openModal {
+    display: flex;
+    align-items: center;
+
+    animation: modal-bg-show 0.3s; /* 스르륵 열리는 효과 */
+  }
+  @keyframes modal-show {
+    from {
+      opacity: 0;
+      margin-top: -50px;
+    }
+    to {
+      opacity: 1;
+      margin-top: 0;
+    }
+  }
+  @keyframes modal-bg-show {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+/* ----------- Home.jsx ----------- */
+
+.home {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 2rem;
+    
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+
+    background-color: white;
+    width: 60rem;
+    margin-top: 26rem;
+    /* margin-bottom: 3rem; 수정중!!!! */
+}
+
+/* profile 이미지 + 키워드 문장 */
+.one {
+    width: 100%;
+    padding: 4.5rem 0 2.5rem 0;
+
+    display: flex;
+    border-bottom: 0.01rem solid #9f9f9f;
+    align-items: center;
+    justify-content: center;
+    gap: 3rem;
+}
+
+.default { /* default.svg 이미지 사이즈 조정 */
+    width: 12rem;
+}
+
+.tag-text {
+    display: flex;
+    font-family: 'KOTRAHOPE';
+    font-size: 4rem;
+    letter-spacing: 0.2rem;
+    color: #101010;
+    line-height: 5rem;
+}
+
+.tag-text-others {
+    font-family: 'KOTRAHOPE';
+    font-size: 4rem;
+    letter-spacing: 0.2rem;
+    color: #101010;
+}
+
+.keyword1 {
+    color: #0CBA67;
+}
+.keyword2 {
+    color: #FFC773;
+}
+
+/* 내가 생각하는 내 성격 + 친구가 생각하는 내 성격 */
+.two {
+    width: 100%;
+    display: flex;
+    border-bottom: 0.01rem solid #9f9f9f;
+}
+.two .me-think, .friend-think{
+    width: 50%;
+    float: left;
+    text-align: center;
+}
+.two p {
+    margin: 0;
+    padding-top: 1.5rem;
+    margin-bottom: 1.5rem;
+
+    font-family: 'KOTRAHOPE';
+    font-size: 2rem;
+    letter-spacing: 0.2rem;
+    color: #101010;
+}
+
+.me-think {
+    border-right: 0.01rem solid #9f9f9f;
+}
+
+table {
+    margin-left: auto;  /* 표 가운데정렬 */
+    margin-right: auto; /* 표 가운데정렬 */
+
+    width: 23rem;
+    height: 5rem;
+    border-collapse: collapse;
+    margin-bottom: 1.5rem;
+
+    border-radius: 0.8rem;
+}
+
+table {
+    height: 6rem;
+    vertical-align: middle;
+
+    color: #101010;
+    font-family: 'Pretendard-Regular';
+    font-size: 1rem;
+    letter-spacing: 0.1rem;
+}
+
+.me-think table {
+    background-color: #b4b4b460;
+}
+
+.friend-think table {
+    background-color: #b4b4b460;
+}
+
+/* 최종 내 성격은?! */
+.three {
+    width: 100%;
+    padding: 2.5rem 0 4.5rem 0; /* .one이랑 위/아래 반대 */
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.chart-title {
+    margin: 0;
+    margin-bottom: 1.5rem;
+    font-family: 'KOTRAHOPE';
+    font-size: 2rem;
+    letter-spacing: 0.2rem;
+    color: #101010;
+}
+.piechart {
+    width: 30rem;
+}
 
 /* ----------- Modal.jsx ----------- */
 

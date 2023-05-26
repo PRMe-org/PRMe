@@ -35,6 +35,7 @@ const Pwfind = () => {
       <Modal open={modalOpen} close={closeModal} header="모달 제목">
         <span> { modal_text } </span>
         <span style={{ fontSize: '3rem' }}> { modal_emoji } </span>
+
       </Modal>
     </div>
 

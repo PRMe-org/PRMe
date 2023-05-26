@@ -9,7 +9,6 @@ const Modal = (props) => {
       {open ? (
         <section>
           <main>{props.children}</main>
-          
           <footer>
             <button className="close" onClick={close}>
               확인
