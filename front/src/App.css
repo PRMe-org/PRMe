@@ -92,19 +92,17 @@ body {
     height: 100%;
     width: 100%;
 }
-
 .welcomebox{
     display: flex;
     flex-direction: column;
     align-items: center;
-
+    
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-
+    
     margin-top: 2rem;
-
 }
 .smile {
     height: 30em;
@@ -659,4 +657,92 @@ table {
 .piechart {
     width: 30rem;
 }
+
+/* ----------- Modal.jsx ----------- */
+
+.modal { /* 모달 전체 */
+    background-color: rgba(31, 31, 31, 0.6);
+
+    height: 100%;
+    width: 100%;
+
+    display: none;
+    position: fixed;
+    top: 0;
+
+    z-index: 99;
+}
+
+/* 모달 창 */
+.modal > section {
+    width:20rem; /* 크기 */
+    height: 11rem;
+    
+    margin: 0 auto;
+    border-radius: 1rem;
+    background-color: #000;
+
+    animation: modal-show 0.3s; /* 스르륵 열리는 효과 */
+    overflow: hidden;
+}
+
+/* 모달 창 - 상단(text) 영역 */
+.modal > section > main { 
+    padding: 23px 16px 0 16px;
+
+    color: #D9D9D9; /* text 속성*/
+    font-size: 13px;
+    text-align: center;
+    white-space: pre-line;
+    font-weight: bold;
+}
+
+/* 모달 창 - 하단(button) 영역 */
+.modal > section > footer {
+    padding: 14px 16px;
+    text-align: right;
+}
+.modal button {
+    width: 4.8rem;
+    height: 1.6rem;
+
+    outline: none; /* 테두리 */
+    border: 0;
+    border-radius: 0.5rem;
+
+    cursor: pointer;
+
+    padding: 4px 13px 6px 13px; /* 글자 위치 */
+    margin-right: 6.6rem;
+
+    background-color: #D9D9D9;
+    color: #000;
+    font-size: 13px;
+}
+
+.modal.openModal {
+    display: flex;
+    align-items: center;
+
+    /* 스르륵 열리는 애니메이션 */
+    animation: modal-bg-show 0.3s; 
+}
+@keyframes modal-show {
+from {
+    opacity: 0;
+    margin-top: -50px;
+}
+to {
+    opacity: 1;
+    margin-top: 0;
+}
+}
+@keyframes modal-bg-show {
+from {
+    opacity: 0;
+}
+to {
+    opacity: 1;
+}
+  }
 
