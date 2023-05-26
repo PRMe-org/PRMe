@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 
 import Navbar from "./components/Navbar"
+import Modal from "./components/Modal";
 
 import Welcome from "./pages/Welcome"
 import Help from "./pages/Help"
@@ -79,6 +80,12 @@ const router = createBrowserRouter([
     path: "/help",
     element: <Help/>
   },
+  
+  // 모달창
+  {
+    path: "/modal",
+    element: <Modal/>,
+  }
 ]);
 
 function App() {
