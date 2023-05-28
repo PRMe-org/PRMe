@@ -6,7 +6,7 @@ const Pwfind = () => {
 
   const imgUrl = '/images/smile'+'.png'
   const modal_text = '비밀번호 변경 url을 전송했습니다.\n 메일함을 확인해주세요\n'; 
-  const modal_emoji = '📩';
+  const modal_emoji = '📨';
 
   // useState를 사용하여 open상태를 변경한다. (open일때 true로 만들어 열리는 방식)
   const [modalOpen, setModalOpen] = useState(false);
