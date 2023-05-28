@@ -7,11 +7,11 @@ const Modal = (props) => {
   return (
     <div className={open ? 'openModal modal' : 'modal'}>
       {open ? (
-        <section>
+        <section> 
           <main>{props.children}</main>
           
           <footer>
-            <button className="close" onClick={close}>
+            <button id='modal-close' onClick={close}>
               확인
             </button>
           </footer>
