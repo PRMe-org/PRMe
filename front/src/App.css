@@ -443,94 +443,96 @@ body {
 
 /* ----------- Modal.jsx ----------- */
 
-.modal {
-    display: none;
-    position: fixed;
-
+.modal { /* 모달 전체 */
+    background-color: rgba(31, 31, 31, 0.6);
     height: 100%;
     width: 100%;
-
+    display: none;
+    position: fixed;
     top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
     z-index: 99;
-    background-color: rgba(0, 0, 0, 0.6);
-  }
-  .modal button {
-    outline: none;
-    cursor: pointer;
-    border: 0;
-  }
-  .modal > section {
-    width: 90%;
-    max-width: 450px;
-    margin: 0 auto;
-    border-radius: 0.3rem;
-    background-color: #fff;
-    /* 팝업이 열릴때 스르륵 열리는 효과 */
-    animation: modal-show 0.3s;
-    overflow: hidden;
-  }
-  .modal > section > header {
-    position: relative;
-    padding: 16px 64px 16px 16px;
-    background-color: #f1f1f1;
-    font-weight: 700;
-  }
-  .modal > section > header button { /* 모달 제목 */
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    width: 30px;
-    font-size: 21px;
-    font-weight: 700;
-    text-align: center;
-    color: #999;
-    background-color: transparent;
-  }
-  .modal > section > main { /* 모달 내용 */
-    padding: 16px;
-    border-bottom: 1px solid #dee2e6;
-    border-top: 1px solid #dee2e6;
+}
 
+/* 모달 창 */
+.modal > section {
+    width: 23rem; /* section 가로 크기 */
+    padding: 1.5rem 0; /* 모달 창 위,아래 여백 */
+
+    margin: 0 auto; /* 수평 가운데정렬 */
+    border-radius: 1rem;
+    background-color: #101010;
+
+    animation: modal-show 0.3s; /* 스르륵 열리는 효과 */
+    overflow: hidden;
+}
+
+/* 모달 창 - 상단(text) 영역 */
+.modal > section > main {
     text-align: center;
     white-space: pre-line;
-  }
-  .modal > section > footer {
-    padding: 12px 16px;
-    text-align: right;
-  }
-  .modal > section > footer button {
-    padding: 6px 12px;
-    color: #fff;
-    background-color: #6c757d; /*모달 버튼 색*/
-    border-radius: 5px;
-    font-size: 13px;
-  }
-  .modal.openModal {
+}
+
+#modal-text {
+    line-height: 1.5rem; /* 이모지 제외, 텍스트끼리 위,아래 간격 조정 */
+    color: white; /* 모달 text color*/
+    font-family: 'Pretendard-Regular';
+    font-size: 1rem;
+    letter-spacing: 0.03rem;
+}
+#modal-emoji {
+    font-size: 4rem;
+}
+
+#modal-text, #modal-emoji {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.modal button {
+    font-size: 1rem;
+    font-family: 'Pretendard-Regular';
+    color: black;
+    background-color: #cecece;
+    letter-spacing: 0.1rem;
+    width: 5.5rem;
+    height: 2rem;
+
+    cursor: pointer;
+    border: none;
+    border-radius: 0.5rem;
+}
+.modal button:hover {
+    background-color: white;
+}
+
+footer {
+    display: flex;
+    justify-content: center; /* footer 영역 안에서 버튼 수평가운데정렬 */
+}
+
+.modal.openModal {
     display: flex;
     align-items: center;
-
-    animation: modal-bg-show 0.3s; /* 스르륵 열리는 효과 */
-  }
-  @keyframes modal-show {
-    from {
-      opacity: 0;
-      margin-top: -50px;
-    }
-    to {
-      opacity: 1;
-      margin-top: 0;
-    }
-  }
-  @keyframes modal-bg-show {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
+    /* 스르륵 열리는 애니메이션 */
+    animation: modal-bg-show 0.3s; 
+}
+@keyframes modal-show {
+from {
+    opacity: 0;
+    margin-top: -50px;
+}
+to {
+    opacity: 1;
+    margin-top: 0;
+}
+}
+@keyframes modal-bg-show {
+from {
+    opacity: 0;
+}
+to {
+    opacity: 1;
+}
   }
 
 /* ----------- Home.jsx ----------- */
@@ -548,7 +550,7 @@ body {
 
     background-color: white;
     width: 60rem;
-    margin-top: 26rem;
+    margin-top: 28rem;
     /* margin-bottom: 3rem; 수정중!!!! */
 }
 
@@ -639,12 +641,8 @@ table {
     letter-spacing: 0.1rem;
 }
 
-.me-think table {
-    background-color: #b4b4b460;
-}
-
-.friend-think table {
-    background-color: #b4b4b460;
+.me-think table, .friend-think table {
+    background-color: #eeeeee;
 }
 
 /* 최종 내 성격은?! */
