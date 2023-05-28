@@ -164,6 +164,8 @@ body {
     width: 100vw;
     height: 100vh;
     background: linear-gradient(rgba(255,255,255,1) 0%, rgb(197, 197, 197) 100%);
+    animation: help-show 0.3s; /* 스르륵 열리는 효과 */
+    overflow: hidden;
 }
 
 #close {
@@ -212,6 +214,15 @@ body {
 #from {
     float: right;
 }
+
+@keyframes help-show {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
 
 /* ----------- Register.jsx ----------- */
 
@@ -442,6 +453,8 @@ body {
 .modal > section {
     width:20rem; /* 크기 */
     height: 11rem;
+
+    padding: 2rem 0; /* 모달 창 위,아래 여백*/
     
     margin: 0 auto; /* 수평 가운데정렬 */
     border-radius: 1rem;
@@ -453,19 +466,17 @@ body {
 
 /* 모달 창 - 상단(text) 영역 */
 .modal > section > main { 
-    padding: 23px 16px 0 16px;
-
-    color: #D9D9D9; /* text 속성*/
-    font-size: 13px;
+    color: white; /* 모달 text color*/
+    font-size: 1rem;
     text-align: center;
     white-space: pre-line;
 }
 
 /* 모달 창 - 하단(button) 영역 */
-.modal > section > footer {
+/* .modal > section > footer {
     padding: 14px 16px;
     text-align: right;
-}
+} */
 .modal button {
     width: 4.8rem;
     height: 1.6rem;
