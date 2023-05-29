@@ -550,8 +550,7 @@ to {
 
     background-color: white;
     width: 60rem;
-    margin-top: 28rem;
-    /* margin-bottom: 3rem; 수정중!!!! */
+    margin-top: 30rem;
 }
 
 /* profile 이미지 + 키워드 문장 */
@@ -620,25 +619,24 @@ to {
 }
 
 table {
-    margin-left: auto;  /* 표 가운데정렬 */
-    margin-right: auto; /* 표 가운데정렬 */
+    margin-left: auto;  /* 표 수평 가운데정렬 */
+    margin-right: auto; /* 표 수평 가운데정렬 */
 
     width: 23rem;
-    height: 5rem;
-    border-collapse: collapse;
-    margin-bottom: 1.5rem;
-
-    border-radius: 0.8rem;
-}
-
-table {
     height: 6rem;
     vertical-align: middle;
+
+    border-collapse: collapse;
+    margin-bottom: 1.5rem;
+    border-radius: 0.8rem;
 
     color: #101010;
     font-family: 'Pretendard-Regular';
     font-size: 1rem;
     letter-spacing: 0.1rem;
+}
+table tbody, thead {
+    height: 50%;
 }
 
 .me-think table, .friend-think table {
@@ -663,9 +661,15 @@ table {
     letter-spacing: 0.2rem;
     color: #101010;
 }
-.piechart {
-    width: 30rem;
+
+/* ----------- Piechart.jsx ----------- */
+
+.piechart { /* 마우스 오버 시 뜨는 text */
+    font-family: 'Pretendard-Regular';
+    color: #101010;
+    font-size: 1rem;
 }
+
 
 /* ----------- Modal.jsx ----------- */
 
