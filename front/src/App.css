@@ -541,16 +541,15 @@ to {
     display: flex;
     flex-direction: column;
     align-items: center;
-    border-radius: 2rem;
     
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-
-    background-color: white;
     width: 60rem;
-    margin-top: 30rem;
+    margin: 2rem auto 0;
+}
+
+.home-content {
+    width: 100%;
+    background-color: white;
+    border-radius: 2rem;
 }
 
 /* profile 이미지 + 키워드 문장 */
@@ -660,6 +659,97 @@ table tbody, thead {
     font-size: 2rem;
     letter-spacing: 0.2rem;
     color: #101010;
+}
+
+/* ---------------------------- */
+
+.home-buttons {
+    margin: 2rem 0;
+    width: 100%;
+
+    display: flex;
+    justify-content: space-between;
+    gap: 1.5rem;
+}
+
+.home-buttons button {
+    padding: 0;
+    flex-grow: 1;
+    flex-basis: 0; /* 버튼 3개 width 동일하게 만들어줌 */
+
+    cursor: pointer;
+    height: 3.5rem;
+    border: none;
+    border-radius: 0.8rem;
+    outline: 0.1rem dashed rgb(123, 123, 123);
+    outline-offset: -0.4rem;
+    font-family: 'KOTRAHOPE';
+    font-size: 1.5rem;
+    letter-spacing: 0.2rem;
+    color: white;
+    background: radial-gradient(50% 50% at 50% 50%, #57564E 0%, #35342C 100%);
+}
+
+.home-buttons button:hover {
+    background: radial-gradient(circle, rgba(228,227,219,1) 0%, rgba(178,176,161,1) 100%);
+    color: #101010;
+    outline: 0.1rem dashed #101010;
+}
+
+/* ---------------------------- */
+
+.participants {
+    width: 100%;
+    background-color: white;
+    border-radius: 2rem;
+    margin-bottom: 6rem;
+}
+
+.participants p {
+    margin: 0;
+    margin: 2rem 2rem 1rem 2rem;
+    font-family: 'KOTRAHOPE';
+    font-size: 1.5rem;
+    letter-spacing: 0.2rem;
+    color: #101010;
+}
+
+.nicknames {
+    display: flex;
+    margin: 0 2rem 1rem 2rem;
+    gap: 1rem;
+    overflow-x: auto; /* 가로 스크롤 추가 */
+}
+
+/* 스크롤바 커스텀 */
+.nicknames::-webkit-scrollbar {
+    height: 0.8rem;
+}
+.nicknames::-webkit-scrollbar-thumb { /* 스크롤바 막대 설정 */
+    background-color: #ececec;
+    border-radius: 3rem;
+}
+.nicknames::-webkit-scrollbar-thumb:hover {
+    background-color: #ddd;
+}
+
+.nicknames button {
+    padding: 0.8rem 2rem;
+    border: none;
+    border-radius: 5rem;
+    cursor: pointer;
+
+    margin-bottom: 1rem; /* 버튼-스크롤 사이에 여백 추가 */
+
+    font-family: 'KOTRAHOPE';
+    font-size: 1.3rem;
+    letter-spacing: 0.2rem;
+    color: white;
+    background-color: #0CBA67;
+    white-space: nowrap; /* 버튼 텍스트가 한 줄로 유지되도록 설정 */
+}
+.nicknames button:hover {
+    background-color: #84E7B7;
 }
 
 /* ----------- Piechart.jsx ----------- */
