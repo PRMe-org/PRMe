@@ -1,7 +1,21 @@
-import React from 'react'
+import React, { useState }  from 'react'
+import Modal2 from '../components/Modal2';
+
 
 const Mypage = () => {
   const imgUrl = '/images/default.svg';
+  const modal_text = '정말 탈퇴하시겠습니까?'; 
+  const modal_emoji = '😭';
+
+  // useState를 사용하여 open상태를 변경한다. (open일때 true로 만들어 열리는 방식)
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const openModal = () => {
+    setModalOpen(true);
+  };
+  const closeModal = () => {
+    setModalOpen(false);
+  };
 
   return (
     <div className='mypage'>
@@ -34,7 +48,7 @@ const Mypage = () => {
         </div>
 
         <div className='delete-save'>
-          <button className='mypage-delete'>탈퇴하기</button>
+          <button onClick={ openModal } className='mypage-delete'>탈퇴하기</button>
           <button className='mypage-save'>저장하기</button>
         </div>
       </div>
@@ -43,6 +57,11 @@ const Mypage = () => {
         <button>테스트 결과 보기</button>
         <button>테스트 다시 하기</button>
       </div>
+
+      <Modal2 open={modalOpen} close={closeModal} header="모달 제목">
+        <span id='modal-text'> { modal_text } </span>
+        <span id='modal-emoji'> { modal_emoji } </span>
+      </Modal2>
     </div>
   )
 }
