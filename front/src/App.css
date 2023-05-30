@@ -34,7 +34,7 @@ body {
     font-size: 10px;
 }
 
-/* ----------- Navbar1.jsx ----------- */
+/* ----------- Navbar.jsx ----------- */
 
 .navbar1 {
     display: flex;
@@ -84,6 +84,71 @@ body {
     font-size: 1.5rem;
     color: white;
     background: radial-gradient(50% 50% at 50% 50%, #57564E 0%, #35342C 100%);
+}
+
+/* ----------- Dropdonw.jsx ----------- */
+.dropdown {
+    position: absolute;
+    
+    top: 3.15rem;
+    right: 1.5rem;
+}
+
+.dropdown-ul {
+    display: flex;
+    flex-direction: column;
+
+    list-style-type: none;
+    gap: 1rem;
+}
+
+.d1 {
+    animation: dropdown-show 0.05s steps(1);
+}
+.d2 {
+    animation: dropdown-show 0.1s steps(1);
+}
+.d3 {
+    animation: dropdown-show 0.15s steps(1);
+}
+.d4 {
+    animation: dropdown-show 0.2s steps(1);
+}
+@keyframes dropdown-show {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.dropdown-ul li {
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+
+    width: 4rem;
+    height: 4rem;
+    text-align: center;
+    justify-content: center;
+
+    font-family: 'KOTRAHOPE';
+
+    border: none;
+    border-radius: 0.8rem;
+
+    outline: 0.1rem dashed rgb(123, 123, 123);
+    outline-offset: -0.4rem;
+
+    font-size: 1.5rem;
+    color: white;
+    background: radial-gradient(50% 50% at 50% 50%, #57564E 0%, #35342C 100%);
+}
+.dropdown-ul li:hover {
+    background: radial-gradient(circle, rgba(228,227,219,1) 0%, rgba(178,176,161,1) 100%);
+    color: #101010;
+    outline: 0.1rem dashed #101010;
 }
 
 /* ----------- Welcome.jsx ----------- */
