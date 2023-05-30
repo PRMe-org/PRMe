@@ -8,6 +8,7 @@ import {
 import Navbar from "./components/Navbar"
 import Navbar2 from "./components/Navbar2"
 import Modal from "./components/Modal";
+import Modal2 from "./components/Modal2";
 
 import Welcome from "./pages/Welcome"
 import Help from "./pages/Help"
@@ -103,6 +104,10 @@ const router = createBrowserRouter([
   {
     path: "/modal",
     element: <Modal/>,
+  },
+  {
+    path: "/modal2",
+    element: <Modal2/>,
   }
 ]);
 
