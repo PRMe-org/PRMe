@@ -1,10 +1,6 @@
 import React, { useRef, useState } from 'react';
 import Piechart from '../components/Piechart';
 
-
-
-// ----------------------------------------------------------
-
 const Home = () => {
   const imgUrl = '/images/default.svg';
 
