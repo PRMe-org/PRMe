@@ -926,3 +926,157 @@ to {
 }
   }
 
+  /* ----------- Mypage.jsx ----------- */
+
+.mypage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+    width: 60rem;
+    margin: 2rem auto 0;
+}
+
+.mypage-content {
+    width: 100%;
+    background-color: white;
+    border-radius: 2rem;
+}
+
+.mypage-content-top {
+    width: 100%;
+    padding: 3rem 0 1rem 0;
+
+    display: flex;
+}
+.profile-hover {
+    position: absolute;
+    width: 12rem;
+    height: 12rem;
+    border-radius: 50%;
+
+    margin-top: 0.75rem;
+    margin-left: 6rem;
+
+    background-color: rgba(0, 0, 0, 0.250);
+    color: white;
+    font-size: 8rem;
+    font-family: 'Pretendard-Regular';
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    opacity: 0;
+    cursor: pointer;
+}
+.profile-hover:hover {
+    opacity: 1;
+}
+
+#mypage-prorile {
+    width: 40%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#mypage-prorile img {
+    cursor: pointer;
+}
+
+.mypage-settings {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.mypage-settings-title {
+    font-family: 'KOTRAHOPE';
+    font-size: 2rem;
+    letter-spacing: 0.2rem;
+    color: #101010;
+}
+
+.mypage-setting1, .mypage-setting2, .mypage-setting3 {
+    display: flex;
+    gap: 2.5rem;
+    font-family: 'Pretendard-Regular';
+    font-size: 1.2rem;
+    letter-spacing: 0.03rem;
+    color: #101010;
+}
+
+.mypage-setting1 {
+    align-items: center;
+}
+.mypage-setting1 input {
+    width: 60%;
+    font-size: 1rem;
+    letter-spacing: 0.1rem;
+    padding: 0.5rem;
+    color: #9f9f9f;
+    outline: none;
+}
+
+.delete-save {
+    display: flex;
+    float: right;
+    gap: 1rem;
+}
+
+.delete-save button {
+    padding: 0.8rem 2rem;
+    border: none;
+    border-radius: 5rem;
+    cursor: pointer;
+
+    margin-bottom: 2rem;
+
+    font-family: 'KOTRAHOPE';
+    font-size: 1.3rem;
+    letter-spacing: 0.2rem;
+    color: white;
+    background-color: #0CBA67;
+    white-space: nowrap; /* 버튼 텍스트가 한 줄로 유지되도록 설정 */
+}
+.delete-save button:hover {
+    background-color: #84E7B7;
+}
+.mypage-save {
+    margin-right: 3rem;
+}
+ 
+.mypage-buttons {
+    margin: 2rem 0 0;
+    width: 100%;
+
+    display: flex;
+    justify-content: space-between;
+    gap: 1.5rem;
+}
+
+.mypage-buttons button {
+    padding: 0;
+    flex-grow: 1;
+    flex-basis: 0; /* 버튼 3개 width 동일하게 만들어줌 */
+
+    cursor: pointer;
+    height: 3.5rem;
+    border: none;
+    border-radius: 0.8rem;
+    outline: 0.1rem dashed rgb(123, 123, 123);
+    outline-offset: -0.4rem;
+    font-family: 'KOTRAHOPE';
+    font-size: 1.5rem;
+    letter-spacing: 0.2rem;
+    color: white;
+    background: radial-gradient(50% 50% at 50% 50%, #57564E 0%, #35342C 100%);
+}
+
+.mypage-buttons button:hover {
+    background: radial-gradient(circle, rgba(228,227,219,1) 0%, rgba(178,176,161,1) 100%);
+    color: #101010;
+    outline: 0.1rem dashed #101010;
+}
+
