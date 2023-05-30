@@ -21,6 +21,7 @@ const Login = () => {
       console.log(response.data)
     })
     .catch(error => {
+      alert("실패했어요")
       console.log('실패했어요:', error.response);
     });
   }
@@ -56,7 +57,9 @@ const Login = () => {
 
           </div>
 
-          <button onClick={ login } id='register-register'>로그인</button>
+          <button onClick={ login } id='register-register'>
+            로그인
+          </button>
           <button id='register-login'>
             <img src={imgUrl} className='kakao'/>  
             카카오톡으로 로그인
