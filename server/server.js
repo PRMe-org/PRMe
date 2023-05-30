@@ -53,3 +53,35 @@ db.query(sqlQuery, [email, name, password], (err, result) => {
 });
 }
 );
+
+
+// 로그인 처리
+app.post("/login", (req, res) => { // 데이터 받아서 전송
+  const email = req.body.email;
+  const password = req.body.password;
+  const sendData = { isLogin: "", name: "" };
+
+  const loginQuery = "SELECT * FROM user WHERE email = ?";
+  db.query(loginQuery, [email], function(err, result, fields){
+    if (err){
+      console.error("로그인 쿼리 오류:", err);
+      return res.status(500).send("로그인 처리 중 오류가 발생하였습니다.")
+    }
+
+    if (result.length === 0){ // 일치하는 이메일이 없는 경우
+      sendData.isLogin = "False"; // 로그인 실패
+      return res.json(sendData);
+    }
+
+    const user = result[0] // 쿼리 결과의 첫 번째 사용자 정보
+    
+    if (password === user.password) { // 비밀번호가 일치하는 경우
+      sendData.isLogin = "True";
+      sendData.name = user.name;
+    } else { // 비밀번호가 일치하지 않는 경우
+      sendData.isLogin = "False";
+    }
+
+    return res.json(sendData);
+  });
+});
