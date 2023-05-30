@@ -601,6 +601,7 @@ to {
 }
   }
 
+/* ----------- Modal2.jsx ----------- */
 
 .modal2-buttons {
     display: flex;
@@ -1086,3 +1087,72 @@ to {
     outline: 0.1rem dashed #101010;
 }
 
+/* ----------- Friends.jsx ----------- */
+
+.friends {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+    width: 60rem;
+    margin: 2rem auto 0;
+}
+
+.friends-content {
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.809);
+    color: #101010;
+    border-radius: 2rem;
+    cursor: pointer;
+}
+.friends-content:hover {
+    background-color: white;
+}
+
+.friends-content-top {
+    padding: 1.5rem 3rem 1rem 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.friends-content-top button {
+    cursor: pointer;
+    width: 2rem;
+    height: 2rem;
+    border: none;
+    outline: none;
+    background-color: #ddd;
+    border-radius: 50%;
+    font-family: 'Pretendard-Regular';
+}
+.friends-content-top button:hover {
+    font-weight: bold;
+}
+
+.friends-content-title {
+    display: flex;
+    font-family: 'KOTRAHOPE';
+    font-size: 3rem;
+    letter-spacing: 0.2rem;
+}
+
+#friends-name {
+    color: #0CBA67;
+}
+
+.friends-content-bottom {
+    padding: 0 3rem 1.5rem 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: 'Pretendard-Regular';
+    font-size: 1rem;
+    letter-spacing: 0.1rem;
+
+}
+
+.friends-tags {
+    display: flex;
+    gap: 0.5rem;
+}
