@@ -1,12 +1,12 @@
 
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 export const Register = () => {
   const server = 'http://localhost:3002'
-  const client = 'http://localhost:3000'
-  
+  const Navigate = useNavigate();
+
   // input 값을 변수에 저장
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -22,11 +22,12 @@ export const Register = () => {
       password: password,
     })
     .then(response => { // then <= 위 코드와 동시작동 안하도록 사용
-      console.log('회원가입 요청 성공!');
-      window.location.href = `${ client }/login` // 좋은 방법은 아니니 추후 수정
+      alert('회원가입 요청 성공!');
+      Navigate('/login');
     })
     .catch(error => {
-      console.log('실패했어요:', error.response);
+      alert('회원가입 요청 실패')
+      console.log('요청이 실패했어요:', error.response);
     });
   }
 
@@ -66,7 +67,9 @@ export const Register = () => {
             />
           </div>
 
-          <button onClick={ register } id='register-register'>회원가입</button>
+          <button onClick={ register } id='register-register'>
+            회원가입
+          </button>
           <button id='register-login'>
             <img src={ imgUrl } className='kakao'/>  
             카카오톡으로 회원가입

@@ -1,16 +1,16 @@
 import React, { useState }  from 'react'
 import { Link } from 'react-router-dom'
 import Modal from '../components/Modal';
+import axios from 'axios';
 
 const Pwfind = () => {
-
-  const imgUrl = '/images/smile'+'.png'
-  const modal_text = '비밀번호 변경 url을 전송했습니다.\n 메일함을 확인해주세요\n'; 
-  const modal_emoji = '📬';
-
-  // useState를 사용하여 open상태를 변경한다. (open일때 true로 만들어 열리는 방식)
+  const server = 'http://localhost:3002'
+  
+  // 변수 저장
+  const [email, setEmail] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
 
+  // 모달창 - (디폴트 false) open일 때 true
   const openModal = () => {
     setModalOpen(true);
   };
@@ -18,21 +18,49 @@ const Pwfind = () => {
     setModalOpen(false);
   };
 
+  // 이메일 요청
+  const sendmail = () => {
+    axios
+    .get(`${ server }/sendmail`, {
+      email: email,
+    })
+    .then((response) => {
+      alert("열려라")
+    })
+    .catch(error => {
+      alert('이메일 요청 실패')
+      console.log('요청이 실패했어요:', error.response);
+    });
+  }
+
+  const imgUrl = '/images/smile'+'.png'
+  const modal_text = '비밀번호 변경 url을 전송했습니다.\n 메일함을 확인해주세요\n'; 
+  const modal_emoji = '📬';
+
   return (
     <div className='pwfind-welcome'>
       <div className='welcomebox'>
-        <img src={imgUrl} className='pwfind-smile'/>
+        <img src={ imgUrl } className='pwfind-smile'/>
         
         <div className='pwfind-loginbuttons'>
-          <input type='text' id='pwfind' name='email' placeholder='피알미에 가입된 이메일을 입력해주세요'></input>
-          <button onClick={ openModal } id='login'>비밀번호 변경 url 전송</button>
+          <input type='text' id='pwfind' placeholder='피알미에 가입된 이메일을 입력해주세요' 
+            onChange={(event) => {
+              setEmail(event.target.value);
+              console.log(event.target.value);
+            }}
+          />
+
+          <button onClick={ sendmail } id='login'>
+            비밀번호 변경 url 전송
+          </button>
         </div>
 
         <Link to='/' style={{ textDecorationLine: 'none' }}>
           <p id='pwforgot'>첫 화면으로 돌아가기</p></Link>
       </div>
 
-      <Modal open={modalOpen} close={closeModal} header="모달 제목">
+
+      <Modal open={ modalOpen } close={ closeModal } header="모달 제목">
         <span id='modal-text'> { modal_text } </span>
         <span id='modal-emoji'> { modal_emoji } </span>
       </Modal>
