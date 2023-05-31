@@ -60,6 +60,12 @@ const Friends = () => {
     setCurrentPage(page);
   };
 
+  const handleDeleteFriend = (friendId) => {
+    // friendsData에서 friendId에 해당하는 친구를 제외한 새로운 배열을 생성.
+    const updatedFriendsData = friendsData.filter((friend) => friend.id !== friendId);
+    setFriendsData(updatedFriendsData);
+  };
+
   // 현재 페이지에 해당하는 데이터만 반환하는 함수
   const getCurrentPageData = () => {
     const startIndex = (currentPage - 1) * itemsPerPage;
@@ -71,13 +77,13 @@ const Friends = () => {
     <div className='friends'>
       {/* 친구 데이터를 사용하여 내용을 표시 */}
       {getCurrentPageData().map((friend) => (
-        <div className='friends-content' key={friend.id}>
+        <div className={`friends-content ${friend.deleted ? 'hidden' : ''}`} key={friend.id}>
           <div className='friends-content-top'>
             <div className='friends-content-title'>
               <div id='friends-name'>{friend.name}</div>
               <div id='friends-others'>님이 보는 내 모습이예요!</div>
             </div>
-            <button className='friends-delete'>X</button>
+            <button className='friends-delete' onClick={() => handleDeleteFriend(friend.id)}>X</button>
           </div>
 
           <div className='friends-content-bottom'>
