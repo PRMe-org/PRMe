@@ -1,7 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import Pagination from '../components/Pagination';
+import Modal3 from '../components/Modal3';
+
 
 const Friends = () => {
+
+  const modal_text = '테스트 결과를 삭제하시겠습니까?'; 
+  const modal_emoji = '😭';
+
+  const [modalOpen, setModalOpen] = useState(false); // 모달의 열림/닫힘 상태를 관리하는 상태 변수
+  const [deletedFriendId, setDeletedFriendId] = useState(null); // 삭제할 친구의 ID를 저장하는 상태 변수
+
   const [friendsData, setFriendsData] = useState([
     // api데이터가 없어서 임의로 넣은 test용 데이터.
     // 실제 데이터 api넣어서 다시 test!
@@ -36,7 +45,7 @@ const Friends = () => {
       date: "2023.06.03",
     },
   ]);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1); // 현재 페이지를 관리하는 상태 변수
   const itemsPerPage = 5;
 
   useEffect(() => {
@@ -61,9 +70,15 @@ const Friends = () => {
   };
 
   const handleDeleteFriend = (friendId) => {
-    // friendsData에서 friendId에 해당하는 친구를 제외한 새로운 배열을 생성.
-    const updatedFriendsData = friendsData.filter((friend) => friend.id !== friendId);
+    setDeletedFriendId(friendId); // 삭제할 친구의 ID를 저장
+    openModal(); // 모달 열기
+  };
+
+  const confirmDelete = () => {
+    // 확인 버튼을 누를 때 저장된 친구의 ID를 사용하여 삭제
+    const updatedFriendsData = friendsData.filter((friend) => friend.id !== deletedFriendId);
     setFriendsData(updatedFriendsData);
+    closeModal(); // 모달 닫기
   };
 
   // 현재 페이지에 해당하는 데이터만 반환하는 함수
@@ -71,6 +86,16 @@ const Friends = () => {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
     return friendsData.slice(startIndex, endIndex);
+  };
+
+  const openModal = () => {
+    // 모달 열기
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    // 모달 닫기
+    setModalOpen(false);
   };
 
   return (
@@ -83,7 +108,7 @@ const Friends = () => {
               <div id='friends-name'>{friend.name}</div>
               <div id='friends-others'>님이 보는 내 모습이예요!</div>
             </div>
-            <button className='friends-delete' onClick={() => handleDeleteFriend(friend.id)}>X</button>
+            <button className='friends-delete' onClick={ () => handleDeleteFriend(friend.id)}>X</button>
           </div>
 
           <div className='friends-content-bottom'>
@@ -107,6 +132,17 @@ const Friends = () => {
           onChange={handlePageChange}
         />
       </div>
+
+      <Modal3 open={modalOpen} close={closeModal} header="모달 제목">
+        <span id='modal-text'>{modal_text}</span>
+        <span id='modal-emoji'>{modal_emoji}</span>
+        <footer>
+          <div className='modal2-buttons'>
+            <button id='modal-close' onClick={closeModal}>취소</button>
+            <button id='modal-close' onClick={confirmDelete}>확인</button>
+          </div>
+        </footer>
+      </Modal3>
     </div>
   );
 };
