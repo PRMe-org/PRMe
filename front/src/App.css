@@ -1104,6 +1104,7 @@ to {
     color: #101010;
     border-radius: 2rem;
     cursor: pointer;
+    margin-bottom: 1rem;
 }
 .friends-content:hover {
     background-color: white;
@@ -1128,6 +1129,7 @@ to {
 }
 .friends-content-top button:hover {
     font-weight: bold;
+    background-color: #c9c9c9;
 }
 
 .friends-content-title {
@@ -1155,4 +1157,45 @@ to {
 .friends-tags {
     display: flex;
     gap: 0.5rem;
+}
+
+/* ----------- Pagination.jsx ----------- */
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    list-style-type: none;
+    gap: 0.3rem;
+    margin-top: 2rem;
+    margin-bottom: 4rem;
+}
+
+.pagination li {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1rem;
+}
+
+.pagination li a {
+    text-decoration: none;
+    color: #101010;
+    font-family: 'Pretendard-Regular';
+    font-size: 0.8rem;
+}
+
+.pagination li.active a {
+    color: white;
+}
+
+.pagination li.active {
+    background-color: #35342C;
+    border-radius: 50%;
+}
+
+.pagination li:hover {
+    font-weight: bold;
 }
