@@ -21,14 +21,15 @@ const Pwfind = () => {
   // 이메일 요청
   const sendmail = () => {
     axios
-    .get(`${ server }/sendmail`, {
+    .post(`${ server }/sendmail`, {
       email: email,
     })
     .then((response) => {
-      alert("열려라")
+      openModal();
+      console.log(response.data);
     })
     .catch(error => {
-      alert('이메일 요청 실패')
+      alert('이메일 요청 실패');
       console.log('요청이 실패했어요:', error.response);
     });
   }
@@ -46,7 +47,6 @@ const Pwfind = () => {
           <input type='text' id='pwfind' placeholder='피알미에 가입된 이메일을 입력해주세요' 
             onChange={(event) => {
               setEmail(event.target.value);
-              console.log(event.target.value);
             }}
           />
 

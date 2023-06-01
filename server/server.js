@@ -88,35 +88,34 @@ app.post("/login", (req, res) => { // 데이터 받아서 전송
 
 
 /* --------------------- 이메일 전송 함수 --------------------- */
-app.get("/sendmail", (req) => {
+app.post("/sendmail", (req, res) => {
   // 코드 출처 - https://nodemailer.com/about/
-  const email={
-    "host": "sandbox.smtp.mailtrap.io",
-    "port": 587,
-    "secure": false,
-    auth: {
-      user:"75b8f80a79852a", // 보내는 메일 주소
-      pass: "31bc1809e5f64a", // 보내는 메일 비밀번호
+  const transporter= nodemailer.createTransport({
+    "service": 'naver',
+    "host": 'smtp.naver.com',
+    "port": 465,
+    auth:{
+      user:"uu401@naver.com", // 보내는 메일 주소
+      pass: "다비니네이버비밀버노...", // 보내는 메일 비밀번호
     }
-  }
-  
-  const send = async (data) => {
-    nodemailer.createTransport(email).sendMail(data, function(error, info){
-      if(error){
-        console.log(error);
-      }else {
-        console.log(info);
-        return info.response;
-      }
-    });
+  });
+
+  const mailOptions = {
+    from: 'uu401@naver.com',  // 송신할 네이버 메일
+    to: req.body.email,  // 수신자 아이디
+    subject: '0601 테스트 중',
+    html: '안녕하십니까. 반갑습니다.',
   };
   
-  const content = {
-    form: "uu401@naver.com", // 보내는 사람
-    to: "2d503d3e96-6ed13d@inbox.mailtrap.io", // 받는 사람 
-    subject: "한번만보내라",
-    text: "한번만!",
-  };
-  
-  send(content);
+  // 두번째 인자로 콜백 함수를 넣어주면 await x
+  transporter.sendMail(mailOptions, function (err, info) {
+    if (err) {
+      console.log(err);
+      res.sendStatus(500); // 이메일 전송 실패 시 500 오류 응답
+    } else {
+      console.log('Successfully Send Email.', info.response);
+      transporter.close();
+      res.sendStatus(200); // 이메일 전송 성공 시 200 응답
+    }
+  });
 });
