@@ -18,10 +18,10 @@ const Login = () => {
     })
     .then(response => {
       alert("로그인 요청 성공!");
-      console.log(response.data)
+      console.log(response.data);
     })
     .catch(error => {
-      alert("실패했어요")
+      alert("실패했어요");
       console.log('실패했어요:', error.response);
     });
   }
