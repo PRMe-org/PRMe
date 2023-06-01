@@ -18,8 +18,8 @@ const Pwfind = () => {
     setModalOpen(false);
   };
 
-  // 이메일 요청
-  const sendmail = () => {
+   // 이메일 요청
+   const sendmail = () => {
     axios
     .post(`${ server }/sendmail`, {
       email: email,
