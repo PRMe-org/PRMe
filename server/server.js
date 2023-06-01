@@ -96,7 +96,7 @@ app.post("/sendmail", (req, res) => {
     "port": 465,
     auth:{
       user:"uu401@naver.com", // 보내는 메일 주소
-      pass: "네이버비밀번호..", // 보내는 메일 비밀번호
+      pass: "@네이버비밀번호@", // 보내는 메일 비밀번호
     }
   });
 

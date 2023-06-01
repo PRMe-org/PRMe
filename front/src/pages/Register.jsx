@@ -29,7 +29,15 @@ export const Register = () => {
       alert('회원가입 요청 실패')
       console.log('요청이 실패했어요:', error.response);
     });
-  }
+  };
+
+  // 한글키 금지
+  const onlyEng = (event) => {
+    const inputText = event.target.value;
+    const filterText = inputText.replace(/[ㄱ-ㅎㅏ-ㅣ가-힣]/g, ''); // 한글 입력 제거
+    event.target.value = filterText;
+  };
+
 
   const imgUrl = '/images/kakao.svg';
 
@@ -54,8 +62,10 @@ export const Register = () => {
 
             <p id='subtitle'>이메일</p>
             <input id='input' type="text" placeholder='example@gmail.com'
+              onInput={ onlyEng }
               onChange={(event) => {
                 setEmail(event.target.value);
+                console.log(event.target.value);
                 }}
               />
 

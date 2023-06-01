@@ -29,7 +29,7 @@ const Pwfind = () => {
       console.log(response.data);
     })
     .catch(error => {
-      alert('이메일 요청 실패');
+      alert('유효한 이메일 인지 확인해주세요');
       console.log('요청이 실패했어요:', error.response);
     });
   }
