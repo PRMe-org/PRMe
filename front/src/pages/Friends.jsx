@@ -6,7 +6,7 @@ import Modal3 from '../components/Modal3';
 const Friends = () => {
 
   const modal_text = '테스트 결과를 삭제하시겠습니까?'; 
-  const modal_emoji = '😭';
+  const modal_emoji = '🥲';
 
   const [modalOpen, setModalOpen] = useState(false); // 모달의 열림/닫힘 상태를 관리하는 상태 변수
   const [deletedFriendId, setDeletedFriendId] = useState(null); // 삭제할 친구의 ID를 저장하는 상태 변수
