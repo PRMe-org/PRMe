@@ -67,7 +67,7 @@ const Friends = () => {
   const handlePageChange = (page) => {
     // 페이징 바뀌는지 확인
     // console.log('페이지 변경:', page);
-    
+
     // 페이지 변경 시 현재 페이지 업데이트
     setCurrentPage(page);
   };
