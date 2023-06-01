@@ -933,8 +933,151 @@ to {
     opacity: 1;
 }
   }
+  
+/* ----------- Test.jsx ----------- */
+.test {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+    width: 60rem;
+    margin: 2rem auto 0;
+}
 
-  /* ----------- Mypage.jsx ----------- */
+.test-content {
+    width: 100%;
+}
+
+.test-content-top {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.progress-bar {
+    width: 92%;
+    height: 1rem;
+    background-color: white;
+    border-radius: 2rem;
+}
+.progress-bar-text {
+    font-size: 1rem;
+    letter-spacing: 0.2rem;
+    font-family: 'Pretendard-Regular';
+}
+
+.test-box {
+    width: 100%;
+    margin-top: 1rem;
+    background-color: white;
+    border-radius: 2rem;
+}
+.test-title {
+    padding: 3rem 5rem 1.5rem 5rem;
+
+    font-size: 2rem;
+    font-family: 'KOTRAHOPE';
+    color: #101010;
+}
+.test-select {
+    height: 10rem;
+    padding-bottom: 3rem;
+
+    display: flex;
+    gap: 7rem;
+    justify-content: center;
+    align-items: center;
+
+    font-family: 'KOTRAHOPE';
+    font-size: 15rem;
+}
+
+input[type=radio] {
+    display: none;
+}
+
+input[type=radio] + label {
+    cursor: pointer;
+}
+
+/* o버튼 */
+#yes + label[for="yes"] {
+    color: #00b3ff73;
+}
+#yes + label[for="yes"]:hover {
+    color: #00B2FF;
+}
+#yes:checked + label[for="yes"] {
+    color: #00B2FF;
+}
+
+/* △버튼 */
+#soso + label[for="soso"] {
+    color: #FFBA0973;
+}
+#soso + label[for="soso"]:hover {
+    color: #FFBA09;
+}
+#soso:checked + label[for="soso"] {
+    color: #FFBA09;
+}
+
+/* x버튼 */
+#no + label[for="no"] {
+    color: #FF512B73;
+}
+#no + label[for="no"]:hover {
+    color: #FF512B;
+}
+#no:checked + label[for="no"] {
+    color: #FF512B;
+}
+
+/* --------------- */
+
+.test-buttons {
+    margin: 2rem 0 0;
+    width: 100%;
+
+    display: flex;
+    justify-content: space-between;
+    gap: 1.5rem;
+}
+
+.test-button-prev, .test-button-next, .test-button-result {
+    padding: 0;
+    flex-grow: 1;
+    flex-basis: 0; /* 버튼 3개 width 동일하게 만들어줌 */
+
+    cursor: pointer;
+    height: 3.5rem;
+    border: none;
+    border-radius: 0.8rem;
+    outline: 0.1rem dashed rgb(123, 123, 123);
+    outline-offset: -0.4rem;
+    font-family: 'KOTRAHOPE';
+    font-size: 1.5rem;
+    letter-spacing: 0.2rem;
+    color: white;
+    background: radial-gradient(50% 50% at 50% 50%, #57564E 0%, #35342C 100%);
+}
+
+.test-button-prev:hover, .test-button-next:hover, .test-button-result:hover {
+    background: radial-gradient(circle, rgba(228,227,219,1) 0%, rgba(178,176,161,1) 100%);
+    color: #101010;
+    outline: 0.1rem dashed #101010;
+}
+
+.test-button-none {
+    padding: 0;
+    flex-grow: 1;
+    flex-basis: 0; /* 버튼 3개 width 동일하게 만들어줌 */
+    background-color: rgba(255, 0, 0, 0);
+    outline: none;
+    border: none;
+}
+
+/* ----------- Mypage.jsx ----------- */
 
 .mypage {
     display: flex;
