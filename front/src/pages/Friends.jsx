@@ -65,6 +65,9 @@ const Friends = () => {
   };
 
   const handlePageChange = (page) => {
+    // 페이징 바뀌는지 확인
+    // console.log('페이지 변경:', page);
+    
     // 페이지 변경 시 현재 페이지 업데이트
     setCurrentPage(page);
   };
@@ -85,6 +88,9 @@ const Friends = () => {
   const getCurrentPageData = () => {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
+    // 현재 페이지 데이터가 정확하게 반환되는지 확인
+    // const currentPageData = friendsData.slice(startIndex, endIndex);
+    // console.log('현재 페이지 데이터:', currentPageData);
     return friendsData.slice(startIndex, endIndex);
   };
 
