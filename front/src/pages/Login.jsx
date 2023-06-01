@@ -23,10 +23,15 @@ const Login = () => {
     .catch(error => {
       alert("실패했어요");
       console.log('실패했어요:', error.response);
-    });
-  }
+    })
+  };
 
-
+  // 한글키 금지
+  const onlyEng = (event) => {
+    const inputText = event.target.value;
+    const filterText = inputText.replace(/[ㄱ-ㅎㅏ-ㅣ가-힣]/g, ''); // 한글 입력 제거
+    event.target.value = filterText;
+  };
   
   const imgUrl = '/images/kakao.svg';
 
@@ -43,6 +48,7 @@ const Login = () => {
           <div className='form-element'>
             <p id='subtitle'>이메일</p>
             <input id='input' type="text" placeholder='example@gmail.com'
+              onInput={ onlyEng }
               onChange={(event) => {
                 setEmail(event.target.value);
               }}
