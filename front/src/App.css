@@ -1077,6 +1077,17 @@ input[type=radio] + label {
     border: none;
 }
 
+.test-button-next.test-button-next-disabled {
+    cursor: default;
+}
+.test-button-next.test-button-next-disabled:hover {
+    cursor: default;
+    color: white;
+    outline: 0.1rem dashed rgb(123, 123, 123);
+    background: radial-gradient(50% 50% at 50% 50%, #57564E 0%, #35342C 100%);
+}
+
+
 /* ----------- Mypage.jsx ----------- */
 
 .mypage {
