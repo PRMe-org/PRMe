@@ -1242,6 +1242,25 @@ input[type=radio] + label {
     margin: 2rem auto 0;
 }
 
+.no-friend {
+    width: 100%;
+    background-color: white;
+    color: #101010;
+    letter-spacing: 0.1rem;
+
+    border-radius: 2rem;
+    border: none;
+    outline: 0.1rem dashed rgb(123, 123, 123);
+    outline-offset: -0.4rem;
+}
+.no-friend-text {
+    font-family: 'KOTRAHOPE';
+    font-size: 1.5rem;
+    line-height: 2.5rem;
+    padding: 2rem;
+    text-align: center;
+}
+
 .friends-content {
     width: 100%;
     background-color: rgba(255, 255, 255, 0.809);
