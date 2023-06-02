@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const Test = () => {
   const [currentQuestion, setCurrentQuestion] = useState(1);
   const totalQuestions = 20;
   const [selectedOptions, setSelectedOptions] = useState([]);
+  const [progressWidth, setProgressWidth] = useState(0);
   
   const questions = [
     "1. 피알미 성격 테스트 질문입니다.",
@@ -51,6 +52,11 @@ const Test = () => {
     // 여기에 원하는 동작을 추가.
   };
 
+  useEffect(() => {
+    const width = ((currentQuestion - 1) / (totalQuestions - 1)) * 95 + 5;
+    setProgressWidth(width);
+  }, [currentQuestion, totalQuestions]);
+
   const currentQuestionText = questions[currentQuestion - 1];
   const selectedOption = selectedOptions[currentQuestion - 1];
 
@@ -58,7 +64,9 @@ const Test = () => {
     <div className='test'>
       <div className='test-content'>
         <div className='test-content-top'>
-          <div className='progress-bar'></div>
+          <div className="progress-bar">
+            <div className="progress-bar-full" style={{ width: `${progressWidth}%` }}></div>
+          </div>
           <div className='progress-bar-text'>{currentQuestion.toString().padStart(2, '0')}/{totalQuestions}</div>
         </div>
 

@@ -957,9 +957,17 @@ to {
 .progress-bar {
     width: 92%;
     height: 1rem;
-    background-color: white;
+    background-color: #101010;
     border-radius: 2rem;
 }
+.progress-bar-full {
+    height: 100%;
+    width: 0;
+    transition: width 0.5s ease-in-out;
+    border-radius: 2rem;
+    background: linear-gradient(90deg, rgba(255,233,115,1) 0%, rgba(255,149,115,1) 100%);
+}
+
 .progress-bar-text {
     font-size: 1rem;
     letter-spacing: 0.2rem;
