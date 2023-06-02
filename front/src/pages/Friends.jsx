@@ -14,6 +14,7 @@ const Friends = () => {
   const [friendsData, setFriendsData] = useState([
     // api데이터가 없어서 임의로 넣은 test용 데이터.
     // 실제 데이터 api넣어서 다시 test!
+
     // {
     //   id: 1,
     //   name: "김지원",
@@ -44,6 +45,7 @@ const Friends = () => {
     //   tags: ["#열정적", "#도전적", "#사교적"],
     //   date: "2023.06.03",
     // },
+    
   ]);
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지를 관리하는 상태 변수
   const itemsPerPage = 5;
