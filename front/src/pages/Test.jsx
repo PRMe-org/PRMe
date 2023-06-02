@@ -47,8 +47,8 @@ const Test = () => {
   };
 
   const handleResult = () => {
-    // 결과 보기 버튼을 클릭했을 때의 동작을 처리합니다.
-    // 여기에 원하는 동작을 추가하세요.
+    // 결과 보기 버튼을 클릭했을 때의 동작을 처리.
+    // 여기에 원하는 동작을 추가.
   };
 
   const currentQuestionText = questions[currentQuestion - 1];

@@ -14,36 +14,36 @@ const Friends = () => {
   const [friendsData, setFriendsData] = useState([
     // api데이터가 없어서 임의로 넣은 test용 데이터.
     // 실제 데이터 api넣어서 다시 test!
-    {
-      id: 1,
-      name: "김지원",
-      tags: ["#열정적", "#도전적", "#사교적"],
-      date: "2023.05.30",
-    },
-    {
-      id: 2,
-      name: "김지둘",
-      tags: ["#열정적", "#도전적", "#사교적"],
-      date: "2023.05.31",
-    },
-    {
-      id: 3,
-      name: "김지셋",
-      tags: ["#열정적", "#도전적", "#사교적"],
-      date: "2023.06.01",
-    },
-    {
-      id: 4,
-      name: "김지넷",
-      tags: ["#열정적", "#도전적", "#사교적"],
-      date: "2023.06.02",
-    },
-    {
-      id: 5,
-      name: "김지다",
-      tags: ["#열정적", "#도전적", "#사교적"],
-      date: "2023.06.03",
-    },
+    // {
+    //   id: 1,
+    //   name: "김지원",
+    //   tags: ["#열정적", "#도전적", "#사교적"],
+    //   date: "2023.05.30",
+    // },
+    // {
+    //   id: 2,
+    //   name: "김지둘",
+    //   tags: ["#열정적", "#도전적", "#사교적"],
+    //   date: "2023.05.31",
+    // },
+    // {
+    //   id: 3,
+    //   name: "김지셋",
+    //   tags: ["#열정적", "#도전적", "#사교적"],
+    //   date: "2023.06.01",
+    // },
+    // {
+    //   id: 4,
+    //   name: "김지넷",
+    //   tags: ["#열정적", "#도전적", "#사교적"],
+    //   date: "2023.06.02",
+    // },
+    // {
+    //   id: 5,
+    //   name: "김지다",
+    //   tags: ["#열정적", "#도전적", "#사교적"],
+    //   date: "2023.06.03",
+    // },
   ]);
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지를 관리하는 상태 변수
   const itemsPerPage = 5;
@@ -106,38 +106,51 @@ const Friends = () => {
 
   return (
     <div className='friends'>
-      {/* 친구 데이터를 사용하여 내용을 표시 */}
-      {getCurrentPageData().map((friend) => (
-        <div className={`friends-content ${friend.deleted ? 'hidden' : ''}`} key={friend.id}>
-          <div className='friends-content-top'>
-            <div className='friends-content-title'>
-              <div id='friends-name'>{friend.name}</div>
-              <div id='friends-others'>님이 보는 내 모습이예요!</div>
-            </div>
-            <button className='friends-delete' onClick={ () => handleDeleteFriend(friend.id)}>X</button>
-          </div>
 
-          <div className='friends-content-bottom'>
-            <div className='friends-tags'>
-              {friend.tags.map((tag, index) => (
-                <div className={`friends-tag${index + 1}`} key={index}>
-                  {tag}
-                </div>
-              ))}
-            </div>
-            <div className='friends-date'>{friend.date}</div>
+      {/* 친구 데이터가 없을 때 no-friend 섹션을 표시 */}
+      {friendsData.length === 0 ? (
+        <div className='no-friend'>
+          <div className='no-friend-text'>
+            친구에게 받은 테스트 결과가 없습니다. <br />
+            테스트 결과를 공유해 보세요😎
           </div>
         </div>
-      ))}
+      ) : (
+        <>
+        {/* 친구 데이터를 사용하여 내용을 표시 */}
+        {getCurrentPageData().map((friend) => (
+          <div className={`friends-content ${friend.deleted ? 'hidden' : ''}`} key={friend.id}>
+            <div className='friends-content-top'>
+              <div className='friends-content-title'>
+                <div id='friends-name'>{friend.name}</div>
+                <div id='friends-others'>님이 보는 내 모습이예요!</div>
+              </div>
+              <button className='friends-delete' onClick={ () => handleDeleteFriend(friend.id)}>X</button>
+            </div>
 
-      <div>
-        <Pagination
-          activePage={currentPage}
-          itemsCountPerPage={itemsPerPage}
-          totalItemsCount={friendsData.length}
-          onChange={handlePageChange}
-        />
-      </div>
+            <div className='friends-content-bottom'>
+              <div className='friends-tags'>
+                {friend.tags.map((tag, index) => (
+                  <div className={`friends-tag${index + 1}`} key={index}>
+                    {tag}
+                  </div>
+                ))}
+              </div>
+              <div className='friends-date'>{friend.date}</div>
+            </div>
+          </div>
+        ))}
+
+        <div>
+          <Pagination
+            activePage={currentPage}
+            itemsCountPerPage={itemsPerPage}
+            totalItemsCount={friendsData.length}
+            onChange={handlePageChange}
+          />
+        </div>
+      </>
+      )}
 
       <Modal3 open={modalOpen} close={closeModal} header="모달 제목">
         <span id='modal-text'>{modal_text}</span>
