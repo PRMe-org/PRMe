@@ -3,10 +3,11 @@ import React from 'react'
 const Result = ({ selectedOptions, questions }) => {
   const friendResults = questions.map((question, index) => {
     const selectedOption = selectedOptions[index];
+    const optionSymbol = selectedOption === "yes" ? "○" : selectedOption === "soso" ? "△" : "X";
     return (
-      <div key={index}>
+      <div className='friend-results-inner' key={index}>
         <p>{question}</p>
-        <p>{selectedOption}</p>
+        <p>{optionSymbol}</p>
       </div>
     );
   });
