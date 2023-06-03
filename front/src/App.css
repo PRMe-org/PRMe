@@ -941,7 +941,7 @@ to {
     align-items: center;
     
     width: 60rem;
-    margin: 2rem auto 0;
+    margin: 0 auto;
 }
 
 .test-content {
@@ -1419,19 +1419,13 @@ input[type=radio] + label {
     width: 100%;
 }
 
-.result-content-bottom {
-    width: 100%;
-    background-color: white;
-    border-radius: 2rem;
-}
-
 .result-content-top p {
     display: flex;
     justify-content: center;
-
+    
     margin: 0;
     margin-bottom: 1.5rem;
-
+    
     font-family: 'KOTRAHOPE';
     font-size: 2rem;
     letter-spacing: 0.2rem;
@@ -1443,4 +1437,29 @@ input[type=radio] + label {
 }
 #my-name {
     color: #ffc062;
+}
+
+.result-content-bottom {
+    width: 100%;
+    background-color: white;
+    border-radius: 2rem;
+    margin-bottom: 6rem;
+}
+
+.friend-results {
+    font-family: 'KOTRAHOPE';
+    font-size: 2rem;
+    letter-spacing: 0.2rem;
+    color: #101010;
+    padding: 2.5rem 4rem;
+    line-height: 5rem;
+}
+
+.friend-results-inner {
+    display: flex;
+    justify-content: space-between;
+}
+.friend-results-inner p {
+    padding: 0;
+    margin: 0;
 }

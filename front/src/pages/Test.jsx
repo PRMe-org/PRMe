@@ -64,7 +64,9 @@ const Test = () => {
 
   return (
     <div className='test'>
-      <div className='test-content'>
+      {showResult ? (
+        <Result selectedOptions={selectedOptions} questions={questions} />
+      ) : (      <div className='test-content'>
         <div className='test-content-top'>
           <div className="progress-bar">
             <div className="progress-bar-full" style={{ width: `${progressWidth}%` }}></div>
@@ -133,8 +135,6 @@ const Test = () => {
           )}
         </div>
       </div>
-      {showResult && (
-        <Result selectedOptions={selectedOptions} questions={questions} />
       )}
     </div>
   );
