@@ -22,8 +22,9 @@ export const Register = () => {
       password: password,
     })
     .then(response => { // then <= 위 코드와 동시작동 안하도록 사용
-      alert('회원가입 요청 성공!');
-      Navigate('/login');
+      console.log(response.data);
+      //alert('회원가입 요청 성공!');
+      // Navigate('/login');
     })
     .catch(error => {
       alert('회원가입 요청 실패')
