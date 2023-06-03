@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import Result from '../components/Result';
 
 const Test = () => {
   const [currentQuestion, setCurrentQuestion] = useState(1);
   const totalQuestions = 20;
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [progressWidth, setProgressWidth] = useState(0);
+  const [showResult, setShowResult] = useState(false);
   
   const questions = [
     "1. 피알미 성격 테스트 질문입니다.",
@@ -49,7 +51,7 @@ const Test = () => {
 
   const handleResult = () => {
     // 결과 보기 버튼을 클릭했을 때의 동작을 처리.
-    // 여기에 원하는 동작을 추가.
+    setShowResult(true);
   };
 
   useEffect(() => {
@@ -121,10 +123,19 @@ const Test = () => {
               다음
             </button>
           ) : (
-            <button className='test-button-result' onClick={handleResult}>테스트 결과 보기</button>
+            <button
+              className={`test-button-result${selectedOption === undefined ? ' test-button-result-disabled' : ''}`}
+              onClick={handleResult}
+              disabled={selectedOption === undefined}
+            >
+              테스트 결과 보기
+            </button>
           )}
         </div>
       </div>
+      {showResult && (
+        <Result selectedOptions={selectedOptions} questions={questions} />
+      )}
     </div>
   );
 };
