@@ -17,7 +17,7 @@ const Result = ({ selectedOptions, questions }) => {
       <div className='result-content-top'>
         <div className='friend-think'>
           <div className='result-title'>
-            <p><div id='friend-name'>김지투</div>님이 생각하는&nbsp; <div id='my-name'>피알미</div>님의 성격은?!</p>
+            <p><div id='friend-name'>김지둘</div>님이 생각하는&nbsp; <div id='my-name'>피알미</div>님의 성격은?!</p>
           </div>
             <table>
             <thead>
