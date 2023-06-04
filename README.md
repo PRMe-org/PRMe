@@ -65,6 +65,11 @@ React + Node.js + MySQL을 이용한 Web Project 입니다.
 - 두 테스트 비교 후 하나의 결과 도출
 
 <br>
++ 피알미 접속 시 첫 페이지</br>
+
+![Intro](./front/public/images/readme/intro.png)
+
+<br>
 
 ## 📑 PR Me! 사용법
 - npm start
