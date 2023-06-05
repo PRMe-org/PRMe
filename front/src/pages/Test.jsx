@@ -75,39 +75,65 @@ const Test = () => {
         </div>
 
         <div className='test-box'>
-          <div className='test-title'>{currentQuestionText}</div>
+        <div className='test-title'>{currentQuestionText}</div>
 
-          <form className='test-select'>
-            <input
-              type="radio"
-              name="option"
-              id='yes'
-              value="yes"
-              checked={selectedOption === "yes"}
-              onChange={handleOptionChange}
-            />
-            <label htmlFor="yes">○</label>
+        <form className='test-select'>
+          {currentQuestion <= 16 ? (
+            <>
+              <input
+                type="radio"
+                name="option"
+                id='yes'
+                value="yes"
+                checked={selectedOption === "yes"}
+                onChange={handleOptionChange}
+              />
+              <label htmlFor="yes">○</label>
 
-            <input
-              type="radio"
-              name="option"
-              id='soso'
-              value="soso"
-              checked={selectedOption === "soso"}
-              onChange={handleOptionChange}
-            />
-            <label htmlFor="soso">△</label>
+              <input
+                type="radio"
+                name="option"
+                id='soso'
+                value="soso"
+                checked={selectedOption === "soso"}
+                onChange={handleOptionChange}
+              />
+              <label htmlFor="soso">△</label>
 
-            <input
-              type="radio"
-              name="option"
-              id='no'
-              value="no"
-              checked={selectedOption === "no"}
-              onChange={handleOptionChange}
-            />
-            <label htmlFor="no">X</label>
-          </form>
+              <input
+                type="radio"
+                name="option"
+                id='no'
+                value="no"
+                checked={selectedOption === "no"}
+                onChange={handleOptionChange}
+              />
+              <label htmlFor="no">X</label>
+            </>
+            ) : (
+            <>
+              <input
+                type="radio"
+                name="option"
+                id='yes'
+                value="yes"
+                checked={selectedOption === "yes"}
+                onChange={handleOptionChange}
+              />
+              <label htmlFor="yes">○</label>
+
+              <input
+                type="radio"
+                name="option"
+                id='no'
+                value="no"
+                checked={selectedOption === "no"}
+                onChange={handleOptionChange}
+              />
+              <label htmlFor="no">X</label>
+            </>
+          )}
+        </form>
         </div>
 
         <div className='test-buttons'>
