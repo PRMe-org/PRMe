@@ -123,6 +123,9 @@ body {
     .sub {
         font-size: 1.5rem;
     }
+    .titles {
+        margin: 0;
+    }
 }
 
 /* ----------- Selectbox.jsx ----------- */
@@ -141,7 +144,7 @@ body {
     display: flex;
 
     cursor: pointer;
-    width: 10rem;
+    width: 9rem;
     height: 2rem;
     justify-content: center;
     align-items: center;
@@ -151,14 +154,13 @@ body {
     color: #101010;
     background-color: white;
     border-radius: 0.5rem;
-    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.3);
 }
 
 .selectbox span {
     color: #0CBA67;
     font-size: 1rem;
     position: absolute;
-    margin-left: 7.5rem;
+    margin-left: 6.5rem;
 }
 
 .selectbox ul {
@@ -172,7 +174,7 @@ body {
     padding: 0;
     margin-top: 0.5rem;
 
-    width: 10rem;
+    width: 9rem;
     overflow: hidden;
 }
 
@@ -730,6 +732,11 @@ to {
         width: 90%;
     }
 }
+@media (max-width: 870px) {
+    table {
+        width: 18rem !important;
+    }
+}
 /* phone */
 @media (max-width: 768px) {
     .home {
@@ -764,17 +771,20 @@ to {
     .friend-think {
         width: 100% !important;
     }
-    table {
-        width: 18rem !important;
-    }
     .three {
-        padding: 1.5rem 0 2rem 0 !important;
+        padding: 1.5rem 0 0rem 0 !important;
     }
     .chart-title {
         font-size: 1.5rem !important;
     }
     .piechart {
         height: 16.5rem !important;
+    }
+    .home-buttons {
+        flex-direction: column;
+    }
+    .home-buttons button {
+        padding: 1rem !important;
     }
 }
 
