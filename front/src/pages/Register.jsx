@@ -4,7 +4,7 @@ import { Link, Navigate, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 export const Register = () => {
-  const server = 'http://localhost:3002'
+  const server = 'http://localhost:3002';
   const Navigate = useNavigate();
 
   // input 값을 변수에 저장
@@ -22,7 +22,6 @@ export const Register = () => {
       password: password,
     })
     .then(response => { // then <= 위 코드와 동시작동 안하도록 사용
-      console.log(response.data);
       alert(JSON.stringify(response.data.state));
       // 회원가입 완료 시에만 login 페이지 이동
       if(JSON.stringify(response.data.state) === '"가입 완료"'){
@@ -69,12 +68,12 @@ export const Register = () => {
               onInput={ onlyEng }
               onChange={(event) => {
                 setEmail(event.target.value);
-                console.log(event.target.value);
+                // console.log(event.target.value);
                 }}
               />
 
             <p id='subtitle'>비밀번호</p>
-            <input id='input' type="password" placeholder='7자 이하'
+            <input id='input' type="password" placeholder='5~12자 사이'
               onChange={(event) => {
                 setPassword(event.target.value);
                 }}

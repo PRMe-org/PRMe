@@ -3,6 +3,7 @@ const express = require('express');
 const cors = require('cors'); // CORS 
 const bodyParser = require("body-parser"); // 데이터 파싱
 const mysql = require("mysql"); // DB
+const bcrypt = require('bcrypt') // 비밀번호 해싱
 const nodemailer = require("nodemailer"); // 메일
 
 const app = express();
@@ -33,7 +34,7 @@ const db = mysql.createPool({
 
 
 /* --------------------- 회원가입 / 로그인 처리 함수 --------------------- */
-// Get 요청 시 requested에 1이 저장되는 코드 (성공)
+// [[ TEST ]] Get 요청 시 requested에 1이 저장되는 코드 (성공)
 app.get("/", (req, res) => {
   const testSqlQuery = "INSERT INTO requested (rowno) VALUES (1)";
   db.query(testSqlQuery, (err, result) => {
@@ -49,25 +50,24 @@ app.post("/register", async(req, res) => { // 데이터 받아서 전송
   const password = req.body.password;
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // 이메일 유효성 검사를 위한 정규표현식
-
   const sendTest = { state: ""  };
 
   if (!name || !email || !password) { 
     sendTest.state = "빈칸 없이 채워주세요.";
-    res.json(sendTest);
+    return res.json(sendTest);
   } else {
     // 비밀번호 길이 검사
     if (password.length < 5 || password.length > 12){
       sendTest.state = "비밀번호는 5~12자리로 설정하세요.";
-      res.json(sendTest);
+      return res.json(sendTest);
     } else if(name.length > 10) {
       // 닉네임 길이 검사
       sendTest.state = "닉네임은 10자 이하로 설정하세요.";
-      res.json(sendTest);
+      return res.json(sendTest);
     } else if (!emailRegex.test(email)) {
       // 이메일 유효성 검사
       sendTest.state = "유효한 이메일 주소를 입력해주세요.";
-      res.json(sendTest);
+      return res.json(sendTest);
     } else {
       try {
         // 이메일 중복 검사
@@ -75,26 +75,28 @@ app.post("/register", async(req, res) => { // 데이터 받아서 전송
           if(err) throw err;
           if(result.length > 0) {
             sendTest.state = "이미 가입된 이메일 입니다.";
-            res.json(sendTest);
+            return res.json(sendTest);
           } else {
             // 닉네임 중복 검사
             db.query("SELECT * FROM user WHERE name = ?", [name], function(err,result){
               if(err) throw err;
               if(result.length > 0) {
                 sendTest.state = "중복된 닉네임 입니다.";
-                res.json(sendTest);
+                return res.json(sendTest);
               } else {
+                // 비밀번호 해싱
+                const hasedPassword = bcrypt.hashSync(password, 10);
                 // 회원가입
-                db.query("INSERT INTO user (email, name, password) VALUES (?,?,?)", [email, name, password]);
-                sendTest.state = "확인완료";
-                res.json(sendTest);
+                db.query("INSERT INTO user (email, name, password) VALUES (?,?,?)", [email, name, hasedPassword]);
+                sendTest.state = "가입 완료";
+                return res.json(sendTest);
               }
             })
           }
         })
     } catch (error){
-        sendTEst.state = "오류가 발생했습니다.";
-        res.json(sendTest);
+        sendTest.state = "오류가 발생했습니다.";
+        return res.json(sendTest);
       }
     }
   };
@@ -109,28 +111,40 @@ app.post("/login", (req, res) => { // 데이터 받아서 전송
 
   const sendData = { isLogin: "", name: "" };
 
-  db.query("SELECT * FROM user WHERE email = ?", [email], function(err, result){
-    if (err){
-      console.error("로그인 쿼리 오류:", err);
-      return res.status(500).send("로그인 처리 중 오류가 발생하였습니다.")
-    }
-
-    if (result.length === 0){ // 일치하는 이메일이 없는 경우
-      sendData.isLogin = "로그인 실패";
+  if (!email || !password) { 
+    sendData.isLogin = "빈칸 없이 채워주세요.";
+    return res.json(sendData);
+  } else {
+    try{
+      // 이메일 검사
+      db.query("SELECT * FROM user WHERE email = ?", [email], function(err, result){
+        if (err) throw err;
+        if (result.length > 0){ // 일치하는 이메일이 있을 때
+          const user = result[0] // 쿼리 결과의 첫 번째 사용자 정보
+          // 비밀번호 검사
+          bcrypt.compare(password, user.password, (err, result) => {
+            if(err) throw err;
+            if(result === true){ 
+              sendData.isLogin = "성공";
+              sendData.name = user.name;
+              return res.json(sendData);
+            } else {
+              sendData.isLogin = "이메일 또는 비밀번호를 확인하여주세요.";
+              return res.json(sendData);
+            }
+          })
+        } else {
+          // 일치하느 이메일이 없을 때
+          sendData.isLogin = "이메일 또는 비밀번호를 확인하여주세요.";
+          return res.json(sendData);
+        }
+      });
+    } catch (error){
+      sendData.isLogin = "오류가 발생했습니다.";
       return res.json(sendData);
     }
+  }
 
-    const user = result[0] // 쿼리 결과의 첫 번째 사용자 정보
-    
-    if (password === user.password) { // 비밀번호 일치
-      sendData.isLogin = "로그인 성공";
-      sendData.name = user.name;
-    } else { 
-      sendData.isLogin = "False";
-    }
-
-    return res.json(sendData);
-  });
 });
 
 
