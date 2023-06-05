@@ -50,11 +50,10 @@ app.post("/register", async(req, res) => { // 데이터 받아서 전송
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // 이메일 유효성 검사를 위한 정규표현식
 
-  const sendData = { isLogin: "", name: "" };
   const sendTest = { state: ""  };
 
   if (!name || !email || !password) { 
-    sendTest.d = "빈칸 없이 채워주세요.";
+    sendTest.state = "빈칸 없이 채워주세요.";
     res.json(sendTest);
   } else {
     // 비밀번호 길이 검사

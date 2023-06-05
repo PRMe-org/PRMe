@@ -24,7 +24,10 @@ export const Register = () => {
     .then(response => { // then <= 위 코드와 동시작동 안하도록 사용
       console.log(response.data);
       alert(JSON.stringify(response.data.state));
-      // Navigate('/login');
+      // 회원가입 완료 시에만 login 페이지 이동
+      if(JSON.stringify(response.data.state) === '"가입 완료"'){
+        Navigate('/login');
+      }
     })
     .catch(error => {
       alert('회원가입 요청 실패')
