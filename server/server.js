@@ -31,16 +31,11 @@ const db = mysql.createPool({
     database: "testdb",
   });
 
-  
-/* ----------------------------- 변수 저장 ----------------------------- */
-const testSqlQuery = "INSERT INTO requested (rowno) VALUES (1)";
-const registerQuery = "INSERT INTO user (email, name, password) VALUES (?,?,?)"; // 회원가입 쿼리
-const loginQuery = "SELECT * FROM user WHERE email = ?"; // email검사 쿼리
-
 
 /* --------------------- 회원가입 / 로그인 처리 함수 --------------------- */
 // Get 요청 시 requested에 1이 저장되는 코드 (성공)
 app.get("/", (req, res) => {
+  const testSqlQuery = "INSERT INTO requested (rowno) VALUES (1)";
   db.query(testSqlQuery, (err, result) => {
     res.send("success!");
   });
@@ -53,33 +48,54 @@ app.post("/register", async(req, res) => { // 데이터 받아서 전송
   const email = req.body.email;
   const password = req.body.password;
 
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // 이메일 유효성 검사를 위한 정규표현식
+
   const sendData = { isLogin: "", name: "" };
-  const sendTEst = { d: ""  };
+  const sendTest = { state: ""  };
 
   if (!name || !email || !password) { 
-    sendTEst.d = "빈칸 없이 채워주세요.";
-    res.send(sendTEst);
+    sendTest.d = "빈칸 없이 채워주세요.";
+    res.json(sendTest);
   } else {
+    // 비밀번호 길이 검사
     if (password.length < 5 || password.length > 12){
-      sendTEst.d = "비밀번호는 5~12자리로 설정하세요.";
-      res.send(sendTEst);
-    } else{
+      sendTest.state = "비밀번호는 5~12자리로 설정하세요.";
+      res.json(sendTest);
+    } else if(name.length > 10) {
+      // 닉네임 길이 검사
+      sendTest.state = "닉네임은 10자 이하로 설정하세요.";
+      res.json(sendTest);
+    } else if (!emailRegex.test(email)) {
+      // 이메일 유효성 검사
+      sendTest.state = "유효한 이메일 주소를 입력해주세요.";
+      res.json(sendTest);
+    } else {
       try {
-        db.query(loginQuery, [email], function(err, result){
+        // 이메일 중복 검사
+        db.query("SELECT * FROM user WHERE email = ?", [email], function(err, result){
           if(err) throw err;
           if(result.length > 0) {
-            sendTEst.d = "이미 있는 이메일 입니다.";
-            res.send(sendTEst);
+            sendTest.state = "이미 가입된 이메일 입니다.";
+            res.json(sendTest);
           } else {
-            sendTEst.d = "확인완료";
-            res.send(sendTEst);
-            // 회원가입
-            db.query(registerQuery, [email, name, password]);
+            // 닉네임 중복 검사
+            db.query("SELECT * FROM user WHERE name = ?", [name], function(err,result){
+              if(err) throw err;
+              if(result.length > 0) {
+                sendTest.state = "중복된 닉네임 입니다.";
+                res.json(sendTest);
+              } else {
+                // 회원가입
+                db.query("INSERT INTO user (email, name, password) VALUES (?,?,?)", [email, name, password]);
+                sendTest.state = "확인완료";
+                res.json(sendTest);
+              }
+            })
           }
         })
     } catch (error){
-        sendTEst.d = "오류가 발생했습니다.";
-        res.send(sendTEst);
+        sendTEst.state = "오류가 발생했습니다.";
+        res.json(sendTest);
       }
     }
   };
@@ -94,7 +110,7 @@ app.post("/login", (req, res) => { // 데이터 받아서 전송
 
   const sendData = { isLogin: "", name: "" };
 
-  db.query(loginQuery, [email], function(err, result){
+  db.query("SELECT * FROM user WHERE email = ?", [email], function(err, result){
     if (err){
       console.error("로그인 쿼리 오류:", err);
       return res.status(500).send("로그인 처리 중 오류가 발생하였습니다.")

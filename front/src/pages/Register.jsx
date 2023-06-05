@@ -23,7 +23,7 @@ export const Register = () => {
     })
     .then(response => { // then <= 위 코드와 동시작동 안하도록 사용
       console.log(response.data);
-      //alert('회원가입 요청 성공!');
+      alert(JSON.stringify(response.data.state));
       // Navigate('/login');
     })
     .catch(error => {
