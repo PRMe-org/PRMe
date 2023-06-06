@@ -7,7 +7,7 @@ const Navbar2 = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   
-  // 뷰포트 크기가 768px 이하가 되면 help2-phone만 보이게 설정
+  // 뷰포트 크기가 768px 이하가 되면 Selectbox만 보이게 설정
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 768);
@@ -22,7 +22,7 @@ const Navbar2 = () => {
   }, []);
 
   return (
-    <div className='navbar1'>
+    <div className='navbar2'>
       <div className='titles'>
         <div className='title'>PR Me!</div>
         <div className='sub'>성격 찾기 프로젝트</div>
