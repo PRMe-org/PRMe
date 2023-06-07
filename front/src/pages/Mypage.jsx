@@ -27,7 +27,7 @@ const Mypage = () => {
             <img src={imgUrl} className='default'/>
           </div>
           <div className='mypage-settings'>
-            <div className='mypage-settings-title'>기본 정보</div>
+          <div className={`mypage-settings-title ${window.innerWidth <= 768 ? 'hide-title' : ''}`}>기본 정보</div>
 
             <div className='mypage-setting1'>
               <div className='mypage-subtitle'>닉네임</div>
@@ -55,7 +55,7 @@ const Mypage = () => {
 
       <div className='mypage-buttons'>
         <button>테스트 결과 보기</button>
-        <button>테스트 다시 하기</button>
+        <button id='retry'>테스트 다시 하기</button>
       </div>
 
       <Modal2 open={modalOpen} close={closeModal} header="모달 제목">
@@ -66,4 +66,4 @@ const Mypage = () => {
   )
 }
 
-export default Mypage
+export default Mypage;
