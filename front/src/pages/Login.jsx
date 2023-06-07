@@ -16,7 +16,7 @@ const Login = () => {
     const filterText = inputText.replace(/[ㄱ-ㅎㅏ-ㅣ가-힣]/g, ''); // 한글 입력 제거
     event.target.value = filterText;
   };
-
+  // Enter 눌러도 login 동작
   const enterKeyPress = (event) => {
     if(event.key == 'Enter'){
       login();

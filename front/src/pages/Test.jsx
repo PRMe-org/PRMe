@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import Result from '../components/Result';
+import axios from 'axios';
 
 const Test = () => {
+  const server = 'http://localhost:3002';
+
   const [currentQuestion, setCurrentQuestion] = useState(1);
   const totalQuestions = 20;
   const [selectedOptions, setSelectedOptions] = useState([]);
@@ -9,45 +12,68 @@ const Test = () => {
   const [showResult, setShowResult] = useState(false);
   
   const questions = [
-    "1. 피알미 성격 테스트 질문입니다.",
-    "2. 다음 질문입니다.",
-    "3. 다음 질문입니다.",
-    "4. 다음 질문입니다.",
-    "5. 다음 질문입니다.",
-    "6. 다음 질문입니다.",
-    "7. 다음 질문입니다.",
-    "8. 다음 질문입니다.",
-    "9. 다음 질문입니다.",
-    "10. 다음 질문입니다.",
-    "11. 피알미 성격 테스트 질문입니다.",
-    "12. 다음 질문입니다.",
-    "13. 다음 질문입니다.",
-    "14. 다음 질문입니다.",
-    "15. 다음 질문입니다.",
-    "16. 다음 질문입니다.",
-    "17. 다음 질문입니다.",
-    "18. 다음 질문입니다.",
-    "19. 다음 질문입니다.",
-    "20. 다음 질문입니다.",
+    "1. ISTJ 인가요?",
+    "2. ISFJ 인가요?",
+    "3. INFJ 인가요?",
+    "4. INTJ 인가요?",
+    "5. ISTP 인가요?",
+    "6. ISFP 인가요?",
+    "7. INFP 인가요?",
+    "8. INTP 인가요?",
+    "9. ESTP 인가요?",
+    "10. ESFP 인가요?",
+    "11. ENFP인가요?",
+    "12. ENTP 인가요?",
+    "13. ESTJ 인가요?",
+    "14. ESFJ 인가요?",
+    "15. ENFJ 인가요?",
+    "16. ENTJ 인가요?",
+    "17. E (O X) 질문입니다",
+    "18. N (O X) 질문입니다?",
+    "19. F (O X) 질문입니다",
+    "20. J (O X) 질문입니다",
   ];
 
+  // 다음 질문으로
   const handleNext = () => {
     if (selectedOptions[currentQuestion - 1] !== undefined && currentQuestion < totalQuestions) {
       setCurrentQuestion(currentQuestion + 1);
     }
   };
-
+  // 이전 질문으로
   const handlePrevious = () => {
     if (currentQuestion > 1) {
       setCurrentQuestion(currentQuestion - 1);
     }
   };
 
+  // 선택한 결과를 배열로 만들기
   const handleOptionChange = (e) => {
     const updatedOptions = [...selectedOptions];
-    updatedOptions[currentQuestion - 1] = e.target.value;
-    setSelectedOptions(updatedOptions);
+    updatedOptions[currentQuestion - 1] = e.target.value; // select한 결과를 배열로
+    setSelectedOptions(updatedOptions); // select한 결과 저장
+
+    return updatedOptions; // myTestSave에 배열 전달을 위해 반환
   };
+   // 결과 DB 저장 요청
+   const myTestSave = (e) => {
+    const result = handleOptionChange(e); // 함수를 호출하여 배열 받기
+    axios
+    .get(`${ server }/home/test`, {
+      params: {
+        result: result,
+      },
+    })
+    .then(response => {
+      alert("요청 성공");
+      console.log(response.data);
+    })
+    .catch(error => {
+      alert("실패했어요");
+      console.log('실패했어요:', error.response);
+    })
+  };
+
 
   const handleResult = () => {
     // 결과 보기 버튼을 클릭했을 때의 동작을 처리.
@@ -84,8 +110,8 @@ const Test = () => {
                 type="radio"
                 name="option"
                 id='yes'
-                value="yes"
-                checked={selectedOption === "yes"}
+                value="2"
+                checked={selectedOption === "2"}
                 onChange={handleOptionChange}
               />
               <label htmlFor="yes">○</label>
@@ -94,8 +120,8 @@ const Test = () => {
                 type="radio"
                 name="option"
                 id='soso'
-                value="soso"
-                checked={selectedOption === "soso"}
+                value="1"
+                checked={selectedOption === "1"}
                 onChange={handleOptionChange}
               />
               <label htmlFor="soso">△</label>
@@ -104,8 +130,8 @@ const Test = () => {
                 type="radio"
                 name="option"
                 id='no'
-                value="no"
-                checked={selectedOption === "no"}
+                value="0"
+                checked={selectedOption === "0"}
                 onChange={handleOptionChange}
               />
               <label htmlFor="no">X</label>
@@ -116,8 +142,8 @@ const Test = () => {
                 type="radio"
                 name="option"
                 id='yes'
-                value="yes"
-                checked={selectedOption === "yes"}
+                value="0.5"
+                checked={selectedOption === "0.5"}
                 onChange={handleOptionChange}
               />
               <label htmlFor="yes">○</label>
@@ -126,8 +152,8 @@ const Test = () => {
                 type="radio"
                 name="option"
                 id='no'
-                value="no"
-                checked={selectedOption === "no"}
+                value="0"
+                checked={selectedOption === "0"}
                 onChange={handleOptionChange}
               />
               <label htmlFor="no">X</label>
@@ -137,6 +163,7 @@ const Test = () => {
         </div>
 
         <div className='test-buttons'>
+          <button className='test-button-prev' onClick={ myTestSave }> 테스트버튼 </button>
           {currentQuestion !== 1 ? (
             <button className='test-button-prev' onClick={handlePrevious}>이전</button>
           ) : (

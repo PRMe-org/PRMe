@@ -179,3 +179,17 @@ app.post("/sendmail", (req, res) => {
     }
   });
 });
+
+
+/* --------------------- myTest 함수 --------------------- */
+app.get("/home/test", (req, res) => {
+  const result = req.query.result;
+  const testResult = 3; // int값은 되지만 배열이 안됨
+  const testEmail = 'cs@naver.com'; 
+  const sendTest = result;
+
+  const resultQuery = "INSERT INTO mytestsave(email,ISTJ)VALUES (?,?)";
+  db.query(resultQuery, [testEmail, testResult], (err, result) => {
+    res.send(sendTest);
+  });
+});
