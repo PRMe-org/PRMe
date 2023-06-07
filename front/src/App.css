@@ -1598,6 +1598,7 @@ input[type=radio] + label {
     outline: none;
     background-color: #ddd;
     border-radius: 50%;
+    font-size: 1rem;
     font-family: 'Pretendard-Regular';
 }
 .friends-content-top button:hover {
@@ -1630,6 +1631,54 @@ input[type=radio] + label {
 .friends-tags {
     display: flex;
     gap: 0.5rem;
+}
+
+/* home-content 반응형 */
+/* tablet */
+@media (max-width: 1024px) {
+    .friends {
+        width: 90%;
+    }
+    .friends-content-title {
+        font-size: 2rem;
+    }
+}
+
+/* mobile */
+@media (max-width: 768px) {
+    .friends {
+        width: 85%;
+    }
+    .no-friend {
+        border-radius: 1.5rem;
+    }
+    .no-friend-text {
+        font-size: 1rem;
+        line-height: 2rem;
+        padding: 1.5rem;
+    }
+    .friends-content {
+        border-radius: 1.5rem;
+    }
+    .friends-content-top {
+        padding: 1rem 2.5rem 0.5rem 2.5rem;
+    }
+    .friends-content-bottom {
+        padding: 0 2.5rem 1rem 2.5rem;
+        font-size: 0.7rem;
+    }
+    .friends-tags {
+        gap: 0.2rem;
+    }
+    .friends-content-title {
+        font-size: 1rem;
+        letter-spacing: 0.1rem;
+    }
+    .friends-content-top button {
+        width: 1.5rem;
+        height: 1.5rem;
+        font-size: 0.5rem;
+    }
 }
 
 /* ----------- Pagination.jsx ----------- */
