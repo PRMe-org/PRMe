@@ -609,6 +609,28 @@ body {
     background: radial-gradient(circle, rgba(255,201,45,1) 0%, rgba(255,133,12,1) 100%);
 }
 
+/* Register.jsx 반응형 */
+/* mobile */
+@media (max-width: 768px) {
+    .form {
+        width: 85%;
+    }
+    .tab-header {
+        width: 100%;
+        height: 3rem;
+        line-height: 3rem;
+        font-size: 1.4rem;
+    }
+    .tab-content {
+        width: 100%;
+    }
+    #input {
+        width: 100%;
+        padding: 0;
+    }
+}
+
+
 /* ----------- Login.jsx ----------- */
 
 #login-register-tab {
@@ -653,7 +675,8 @@ body {
 }
 
 .pwfind-smile {
-    height: 30em;
+    margin-top: 2.7rem;
+    height: 18rem;
 }
 
 .pwfind-loginbuttons {
@@ -686,6 +709,18 @@ body {
 
     font-family: 'Pretendard-Regular'; /*글꼴*/
     font-size: 1rem;
+}
+
+/* Pwfind.jsx 반응형 */
+/* mobile */
+@media (max-width: 768px) {
+    #pwfind {
+        width: 20rem;
+        height: 3.5rem;
+    }
+    .pwfind-smile {
+        height: 17rem;
+    }
 }
 
 /* ----------- Modal.jsx ----------- */
