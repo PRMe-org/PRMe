@@ -184,12 +184,14 @@ app.post("/sendmail", (req, res) => {
 /* --------------------- myTest 함수 --------------------- */
 app.get("/home/test", (req, res) => {
   const result = req.query.result;
-  const testResult = 3; // int값은 되지만 배열이 안됨
-  const testEmail = 'cs@naver.com'; 
-  const sendTest = result;
+  const intResult = result.map((value) => parseFloat(value)); // 문자형 -> 실수형
 
-  const resultQuery = "INSERT INTO mytestsave(email,ISTJ)VALUES (?,?)";
-  db.query(resultQuery, [testEmail, testResult], (err, result) => {
+  const testEmail = 'cs@naver.com'; // Test
+  const testResult = [4, 5]; // Test
+  const sendTest = result; // Test
+
+  const resultQuery = "INSERT INTO mytestsave(email,ISTJ,ISFJ,INFJ,INTJ,ISTP,ISFP,TNFP,INTP,ESTP,ESFP,ENFP,ENTP,ESTJ,ESFJ,ENFJ,ENTJ,E,N,F,J)VALUES (?,?)";
+  db.query(resultQuery, [testEmail, intResult], (err, result) => {
     res.send(sendTest);
   });
 });

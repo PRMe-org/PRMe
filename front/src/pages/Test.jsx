@@ -55,9 +55,13 @@ const Test = () => {
 
     return updatedOptions; // myTestSave에 배열 전달을 위해 반환
   };
-   // 결과 DB 저장 요청
-   const myTestSave = (e) => {
-    const result = handleOptionChange(e); // 함수를 호출하여 배열 받기
+
+  // 결과 DB 저장 요청
+  const myTestSave = () => {
+    const event = { target: // handleOptionChange()함수를 그냥 호출 할 시 배열의 마지막 원소가 출력되지 않는 오류 수정을 위한 코드
+      { value: selectedOptions[currentQuestion - 1] || '' } 
+    }; 
+    const result = handleOptionChange(event); // 함수를 호출하여 배열 받기
     axios
     .get(`${ server }/home/test`, {
       params: {
@@ -67,13 +71,13 @@ const Test = () => {
     .then(response => {
       alert("요청 성공");
       console.log(response.data);
+      handleResult();
     })
     .catch(error => {
       alert("실패했어요");
       console.log('실패했어요:', error.response);
     })
   };
-
 
   const handleResult = () => {
     // 결과 보기 버튼을 클릭했을 때의 동작을 처리.
@@ -163,7 +167,6 @@ const Test = () => {
         </div>
 
         <div className='test-buttons'>
-          <button className='test-button-prev' onClick={ myTestSave }> 테스트버튼 </button>
           {currentQuestion !== 1 ? (
             <button className='test-button-prev' onClick={handlePrevious}>이전</button>
           ) : (
@@ -180,7 +183,7 @@ const Test = () => {
           ) : (
             <button
               className={`test-button-result${selectedOption === undefined ? ' test-button-result-disabled' : ''}`}
-              onClick={handleResult}
+              onClick={ myTestSave }
               disabled={selectedOption === undefined}
             >
               테스트 결과 보기
