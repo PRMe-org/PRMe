@@ -186,12 +186,24 @@ app.get("/home/test", (req, res) => {
   const result = req.query.result;
   const intResult = result.map((value) => parseFloat(value)); // 문자형 -> 실수형
 
-  const testEmail = 'cs@naver.com'; // Test
-  const testResult = [4, 5]; // Test
   const sendTest = result; // Test
+  const testEmail = 'czmcm5@gmail.com'; // Test
 
-  const resultQuery = "INSERT INTO mytestsave(email,ISTJ,ISFJ,INFJ,INTJ,ISTP,ISFP,TNFP,INTP,ESTP,ESFP,ENFP,ENTP,ESTJ,ESFJ,ENFJ,ENTJ,E,N,F,J)VALUES (?,?)";
-  db.query(resultQuery, [testEmail, intResult], (err, result) => {
-    res.send(sendTest);
+  // 이메일 검사
+  db.query("SELECT * FROM mytestsave WHERE email = ?", [testEmail], function(err, result){
+    if (err) throw err;
+    if (result.length > 0){ // 일치하는 이메일이 있을 때
+      const myTestUpdateQuery = 'UPDATE mytestsave SET ISTJ=?,ISFJ=?,INFJ=?,INTJ=?,ISTP=?,ISFP=?,INFP=?,INTP=?,ESTP=?,ESFP=?,ENFP=?,ENTP=?,ESTJ=?,ESFJ=?,ENFJ=?,ENTJ=?,E=?,N=?,F=?,J=? WHERE email = ?';
+      db.query(myTestUpdateQuery, [...intResult, testEmail], (err, result) => {
+        res.send(sendTest);
+      });
+
+    } else {
+      res.send("없는 이메일 이에요.");
+      const resultQuery = "INSERT INTO mytestsave(email,ISTJ,ISFJ,INFJ,INTJ,ISTP,ISFP,INFP,INTP,ESTP,ESFP,ENFP,ENTP,ESTJ,ESFJ,ENFJ,ENTJ,E,N,F,J)VALUES (?,?)";
+      db.query(resultQuery, [testEmail, intResult], function(err, result) {
+        res.send(sendTest);
+      });
+    }
   });
 });
