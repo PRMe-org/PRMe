@@ -5,20 +5,22 @@ const bodyParser = require("body-parser"); // 데이터 파싱
 const mysql = require("mysql"); // DB
 const bcrypt = require('bcrypt') // 비밀번호 해싱
 const nodemailer = require("nodemailer"); // 메일
+const dotenv = require('dotenv'); // 환경변수 관리
+const cookieParser = require('cookie-parser'); // 쿠키
 
 const app = express();
-const PORT = process.env.port || 3002;
+dotenv.config();
 
 /* --------------------------- 환경 설정 ------------------------------- */
+app.listen(process.env.PORT, ()=>{
+  console.log(`running on port ${process.env.PORT}`); // 포트번호는 .env에
+});
+
 // CORS 활성화
 app.use(cors({ 
   origin: "http://localhost:3000", // 도메인 허용 옵션
   credentials: true, // 
 })); 
-
-app.listen(PORT, ()=>{
-    console.log(`running on port ${PORT}`); // 포트번호 3002
-});
 
 // josn 형태로 데이터 파싱
 app.use(bodyParser.json());
