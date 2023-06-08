@@ -33,12 +33,13 @@ const Login = () => {
       password: password,
     })
     .then(response => {
-      // 로그인 완료 시에만 home 페이지 이동
-      if(JSON.stringify(response.data.isLogin) === '"성공"'){
+      console.log(response.data);
+      /* 로그인 완료 시에만 home 페이지 이동
+      if(JSON.stringify(response.data.isLogin) === '"성공"(토큰완료시지우세요)'){
         Navigate('/home');
       } else{
         alert(JSON.stringify(response.data.isLogin))
-      }
+      } */
     })
     .catch(error => {
       alert("실패했어요");
@@ -70,7 +71,7 @@ const Login = () => {
              />
 
             <p id='subtitle'>비밀번호</p>
-            <input id='input' type="password" placeholder='5~12자 사이' maxlength="12"
+            <input id='input' type="password" placeholder='5~12자 사이' maxLength="12"
               onChange={(event) => {
                 setPassword(event.target.value);
               }}

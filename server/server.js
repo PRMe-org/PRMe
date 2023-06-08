@@ -6,6 +6,7 @@ const mysql = require("mysql"); // DB
 const bcrypt = require('bcrypt') // 비밀번호 해싱
 const nodemailer = require("nodemailer"); // 메일
 const dotenv = require('dotenv'); // 환경변수 관리
+const jwt = require('jsonwebtoken'); // jwt
 const cookieParser = require('cookie-parser'); // 쿠키
 
 const app = express();
@@ -123,13 +124,50 @@ app.post("/login", (req, res) => { // 데이터 받아서 전송
         if (err) throw err;
         if (result.length > 0){ // 일치하는 이메일이 있을 때
           const user = result[0] // 쿼리 결과의 첫 번째 사용자 정보
-          // 비밀번호 검사
-          bcrypt.compare(password, user.password, (err, result) => {
+
+          bcrypt.compare(password, user.password, (err, result) => { // 비밀번호 검사
             if(err) throw err;
             if(result === true){ 
-              sendData.isLogin = "성공";
-              sendData.name = user.name;
-              return res.json(sendData);
+
+              try{
+                // access Token 발급
+                const accesstoken = jwt.sign({
+                  email: user.email,
+                  username: user.name
+                }, process.env.ACCESS_SECRET, {
+                  expiresIn : '1m',
+                  issuer : 'About Tech', 
+                });
+
+                // refresh Token 발급
+                const refreshtoken = jwt.sign({
+                  email: user.email,
+                  username: user.name
+                }, process.env.REFRESH_SECRET, {
+                  expiresIn : '24h',
+                  issuer : 'About Tech', 
+                });
+  
+                // token을 cookie에 담아 Front(client)로 전달
+                // 지금 쿠키에 안담겨짐 ㅜㅜ !!
+                res.cookie("accesstoken", accesstoken, {
+                  secure : false,
+                  httpOnly : true,
+                });
+  
+                res.cookie("refreshtoken", refreshtoken, {
+                  secure : false,
+                  httpOnly : true,
+                });
+  
+                sendData.isLogin = "성공";
+                sendData.name = user.name;
+                return res.json(accesstoken);
+                
+              } catch (error) {
+                res.status(500).json(error);
+              }
+
             } else {
               sendData.isLogin = "이메일 또는 비밀번호를 확인하여주세요.";
               return res.json(sendData);
