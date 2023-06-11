@@ -1,7 +1,18 @@
 import React, { useRef, useState } from 'react';
 import Piechart from '../components/Piechart';
 
-const Home = () => {
+import { useDispatch } from "react-redux";
+import { bindActionCreators as userAction } from "../../node_modules/redux/lib/redux";
+// redux/modules/user
+const Home = (props) => {
+
+  // Login.jsx 리다이렉트
+  const dispatch = useDispatch();
+  let code = new URL(window.location.href).searchParams.get("code");
+  React.useEffect(() => {
+    dispatch(userAction.kakaoLoginAC(code));
+  })
+
   const imgUrl = '/images/default.svg';
 
   const nicknamesRef = useRef(null);
