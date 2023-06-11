@@ -854,7 +854,7 @@ to {
     border-radius: 2rem;
 }
 
-/* home-content 반응형 */
+/* home.jsx 반응형 */
 /* tablet */
 @media (max-width: 1024px) {
     .home {
@@ -1402,9 +1402,6 @@ input[type=radio] + label {
     .test {
         width: 90%;
     }
-    .test-content {
-        width: 90%;
-    }
     .progress-bar-text {
         font-size: 0.9rem;
         letter-spacing: 0.1rem;
@@ -1419,6 +1416,11 @@ input[type=radio] + label {
 @media (max-width: 768px) {
     .test {
         width: 90%;
+        justify-content: center;
+        align-items: center;
+    }
+    .test-content {
+        margin-top: 2rem;
     }
     .progress-bar {
         width: 84%;
@@ -1598,7 +1600,7 @@ input[type=radio] + label {
     outline: 0.1rem dashed #101010;
 }
 
-/* Mypage.jsx 반응형 */
+/* test.jsx 반응형 */
 /* tablet */
 @media (max-width: 1024px) {
     .mypage {
@@ -1925,4 +1927,36 @@ input[type=radio] + label {
 .friend-results-inner p {
     padding: 0;
     margin: 0;
+}
+
+/* result.jsx 반응형 */
+/* tablet */
+@media (max-width: 1024px) {
+    .result {
+        width: 100%;
+        padding: 0;
+    }
+}
+
+/* mobile */
+@media (max-width: 768px) {
+    .result {
+        width: 95%;
+    }
+    .result-content-top {
+        margin-bottom: 2.5rem;
+        padding: 1.5rem 0 0 0;
+    }
+    .result-content-top p {
+        font-size: 1rem;
+    }
+    .friend-results {
+        font-size: 0.7rem;
+        letter-spacing: 0.05rem;
+        padding: 1rem 1.5rem;
+    }
+    .friend-results-inner {
+        height: 2.5rem;
+        align-items: center;
+    }
 }

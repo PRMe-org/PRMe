@@ -77,6 +77,8 @@ const Test = () => {
       alert("실패했어요");
       console.log('실패했어요:', error.response);
     })
+    // alert("test");
+    // handleResult();
   };
 
   const handleResult = () => {
