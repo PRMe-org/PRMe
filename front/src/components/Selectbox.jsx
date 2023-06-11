@@ -17,7 +17,7 @@ const Selectbox = () => {
 
     if (option === 'HOME') {
       navigate('/home');
-    } else if (option === '성격 테스트') {
+    } else if (option === '테스트 결과') {
       navigate('/home/friends');
     } else if (option === '내 정보') {
       navigate('/home/mypage');
@@ -31,7 +31,7 @@ const Selectbox = () => {
   };
 
   const renderOptions = () => {
-    const options = ['HOME', '성격 테스트', '내 정보', '로그아웃'];
+    const options = ['HOME', '테스트 결과', '내 정보', '로그아웃'];
 
     return (
       <ul>
