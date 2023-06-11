@@ -31,7 +31,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const db = mysql.createPool({
     host: "localhost",
     user: "root",
-    password: "1234",
+    password: "wjflrkfk",
     database: "testdb",
   });
 
@@ -112,7 +112,7 @@ app.post("/login", (req, res) => { // 데이터 받아서 전송
   const email = req.body.email;
   const password = req.body.password;
 
-  const sendData = { isLogin: "", name: "" };
+  const sendData = { isLogin: "", name: "", accesstoken: "", refreshtoken: "" };
 
   if (!email || !password) { 
     sendData.isLogin = "빈칸 없이 채워주세요.";
@@ -148,21 +148,11 @@ app.post("/login", (req, res) => { // 데이터 받아서 전송
                   issuer : 'About Tech', 
                 });
   
-                // token을 cookie에 담아 Front(client)로 전달
-                // 지금 쿠키에 안담겨짐 ㅜㅜ !!
-                res.cookie("accesstoken", accesstoken, {
-                  secure : false,
-                  httpOnly : true,
-                });
-  
-                res.cookie("refreshtoken", refreshtoken, {
-                  secure : false,
-                  httpOnly : true,
-                });
-  
                 sendData.isLogin = "성공";
                 sendData.name = user.name;
-                return res.json(accesstoken);
+                sendData.accesstoken = accesstoken;
+                sendData.refreshtoken = refreshtoken;
+                return res.json(sendData);
                 
               } catch (error) {
                 res.status(500).json(error);

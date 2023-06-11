@@ -33,13 +33,19 @@ const Login = () => {
       password: password,
     })
     .then(response => {
-      console.log(response.data);
-      /* 로그인 완료 시에만 home 페이지 이동
-      if(JSON.stringify(response.data.isLogin) === '"성공"(토큰완료시지우세요)'){
+      // 로그인 완료 시에만 home 페이지 이동
+      if(JSON.stringify(response.data.isLogin) === '"성공"'){
+        // 서버로부터 토큰을 받아서 쿠키에 저장
+       const accessToken = response.data.accesstoken;
+       const refreshToken = response.data.refreshtoken;
+       // 쿠키에 토큰 저장
+       document.cookie = `accessToken=${ accessToken }; path=/;`
+       document.cookie = `refreshToken=${ refreshToken }; path=/;`
+
         Navigate('/home');
       } else{
         alert(JSON.stringify(response.data.isLogin))
-      } */
+      }
     })
     .catch(error => {
       alert("실패했어요");
