@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 const Selectbox = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [currentValue, setCurrentValue] = useState('HOME');
+  const [currentValue, setCurrentValue] = useState('-');
   const navigate = useNavigate();
 
   const handleOptionClick = (option) => {
