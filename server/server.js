@@ -164,7 +164,7 @@ app.post("/login", (req, res) => { // 데이터 받아서 전송
             }
           })
         } else {
-          // 일치하느 이메일이 없을 때
+          // 일치하는 이메일이 없을 때
           sendData.isLogin = "이메일 또는 비밀번호를 확인하여주세요.";
           return res.json(sendData);
         }

@@ -1,8 +1,17 @@
 import React, { useState, KeyboardEvent } from 'react';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-
+  
 const Login = () => {
+
+  // 카카오 로그인
+  const REST_API_KEY = 'a29a3d743f55295b46cbfb49ba08a3ce';
+  const REDIRECT_URI = 'http://localhost:3000/home/oauth';
+  const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}`
+  const kakaoLogin = () => {
+    window.location.href = KAKAO_AUTH_URL;
+  }
+
   const server = 'http://localhost:3002';
   const Navigate = useNavigate();
   
@@ -89,7 +98,7 @@ const Login = () => {
           <button onClick={ login } id='register-register'>
             로그인
           </button>
-          <button id='register-login'>
+          <button onClick={kakaoLogin} id='register-login'>
             <img src={imgUrl} className='kakao'/>  
             카카오톡으로 로그인
           </button>
