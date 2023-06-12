@@ -32,8 +32,6 @@ const Login = () => {
     }
   };
 
-  
-
   // 로그인 요청
   const login = () => {
     axios
@@ -51,13 +49,45 @@ const Login = () => {
        document.cookie = `accessToken=${ accessToken }; path=/;`
        document.cookie = `refreshToken=${ refreshToken }; path=/;`
 
-        Navigate('/home');
+        //Navigate('/home/test');
       } else{
         alert(JSON.stringify(response.data.isLogin))
       }
     })
     .catch(error => {
       alert("실패했어요");
+      console.log('실패했어요:', error.response);
+    })
+  };
+
+  // accessToken 테스트 함수
+  const accessT = () => {
+    const cookieString = document.cookie; // 하나의 Stirng으로 나옴
+    const cookies = cookieString.split(';'); // 두 개([AcessToken= ,RefreshToken= ])로 나옴
+
+    let cookieValue = "";
+    let foundToken = false;
+
+    for (let i=0; i<2; i++){
+      const cookie = cookies[i].trim();
+      if(cookie.startsWith('accessToken=')){
+        cookieValue = cookie.substring(12);
+        foundToken = true;
+        break; // accessToken을 찾으면 루프 종료
+      }
+      if (!foundToken){
+        cookieValue = "실패";
+      }
+    };
+
+    axios
+    .get(`${ server }/accessT`, {
+      withCredentials: true, // 요청 시 쿠키를 포함
+    })
+    .then(response => {
+      console.log(response.data);      
+    })
+    .catch(error => {
       console.log('실패했어요:', error.response);
     })
   };
@@ -94,7 +124,9 @@ const Login = () => {
             />
 
           </div>
-
+          <button onClick={ accessT } id='register-register'>
+            JWT 토큰 인증 (테스트)
+          </button>
           <button onClick={ login } id='register-register'>
             로그인
           </button>

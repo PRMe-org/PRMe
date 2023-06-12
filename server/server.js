@@ -177,6 +177,24 @@ app.post("/login", (req, res) => { // 데이터 받아서 전송
 
 });
 
+app.get("/accessT", (req, res) => {
+  try {
+      const token = req.cookies.accessToken; // accessToken의 value
+      const data = jwt.verify(token, process.env.ACCESS_SECRET);
+  
+      const userData = { email:"", name:"" };
+  
+      // userData.email = data.email;
+      // userData.name = data.name;
+      return res.send("성공");
+  
+    } catch (error){
+      return res.send("응답실패... " + error);
+    }
+  
+});
+
+
 
 /* --------------------- 이메일 전송 함수 --------------------- */
 app.post("/sendmail", (req, res) => {
