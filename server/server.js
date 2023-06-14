@@ -26,6 +26,8 @@ app.use(cors({
 // josn 형태로 데이터 파싱
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+// Cookie-parser 쿠키 구문 분석 설정
+app.use(cookieParser());
 
 // DB 연동
 const db = mysql.createPool({
@@ -135,8 +137,8 @@ app.post("/login", (req, res) => { // 데이터 받아서 전송
                   email: user.email,
                   username: user.name
                 }, process.env.ACCESS_SECRET, {
-                  expiresIn : '1m',
-                  issuer : 'About Tech', 
+                  expiresIn : '1h',
+                  issuer : 'PRMe', 
                 });
 
                 // refresh Token 발급
@@ -145,11 +147,12 @@ app.post("/login", (req, res) => { // 데이터 받아서 전송
                   username: user.name
                 }, process.env.REFRESH_SECRET, {
                   expiresIn : '24h',
-                  issuer : 'About Tech', 
+                  issuer : 'PRMe', 
                 });
   
                 sendData.isLogin = "성공";
                 sendData.name = user.name;
+                
                 sendData.accesstoken = accesstoken;
                 sendData.refreshtoken = refreshtoken;
                 return res.json(sendData);
@@ -186,7 +189,7 @@ app.get("/accessT", (req, res) => {
   
       // userData.email = data.email;
       // userData.name = data.name;
-      return res.send("성공");
+      return res.send(data);
   
     } catch (error){
       return res.send("응답실패... " + error);
