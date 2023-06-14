@@ -66,11 +66,32 @@ const Login = () => {
   const accessT = () => {
     axios
     .get(`${ server }/accessT`, {
-       // 요청 시 쿠키를 포함
-       withCredentials: true,
+       withCredentials: true, // 요청 시 쿠키를 포함
     })
     .then(response => {
       console.log(response.data);      
+    })
+    .catch(error => {
+      console.log('실패했어요:', error.response);
+    })
+  };
+
+  // refreshToken 테스트 함수
+  const refreshT = () => {
+    axios
+    .get(`${ server }/refreshT`, {
+       withCredentials: true, // 요청 시 쿠키를 포함
+    })
+    .then(response => {
+      // accessToken 갱신완료 시
+      if(JSON.stringify(response.data.isLogin) === '"성공"'){
+        // 서버로부터 토큰을 받아서 쿠키에 저장
+       const accessToken = response.data.accesstoken;
+       const refreshToken = response.data.refreshtoken;
+       // 쿠키에 토큰 저장
+       document.cookie = `accessToken=${ accessToken }; path=/;`
+       document.cookie = `refreshToken=${ refreshToken }; path=/;`
+      }     
     })
     .catch(error => {
       console.log('실패했어요:', error.response);
@@ -110,7 +131,10 @@ const Login = () => {
 
           </div>
           <button onClick={ accessT } id='register-register'>
-            JWT 토큰 인증 (테스트)
+            access Token 확인
+          </button>
+          <button onClick={ refreshT } id='register-register'>
+            access Token 재발행
           </button>
           <button onClick={ login } id='register-register'>
             로그인
