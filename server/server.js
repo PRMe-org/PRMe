@@ -135,16 +135,16 @@ app.post("/login", (req, res) => { // 데이터 받아서 전송
                 // access Token 발급
                 const accesstoken = jwt.sign({
                   email: user.email,
-                  username: user.name
+                  name: user.name
                 }, process.env.ACCESS_SECRET, {
-                  expiresIn : '1h',
+                  expiresIn : '1m',
                   issuer : 'PRMe', 
                 });
 
                 // refresh Token 발급
                 const refreshtoken = jwt.sign({
                   email: user.email,
-                  username: user.name
+                  name: user.name
                 }, process.env.REFRESH_SECRET, {
                   expiresIn : '24h',
                   issuer : 'PRMe', 
@@ -180,17 +180,66 @@ app.post("/login", (req, res) => { // 데이터 받아서 전송
 
 });
 
+// accessToken 인증 (만료기간이 있음)
 app.get("/accessT", (req, res) => {
   try {
-      const token = req.cookies.accessToken; // accessToken의 value
-      const data = jwt.verify(token, process.env.ACCESS_SECRET);
+    const token = req.cookies.accessToken; // (만료기간이 있는 데이터) 쿠키에 있는 accessToken의 value 빼내옴
+    const data = jwt.verify(token, process.env.ACCESS_SECRET); // (만료기간이 있는 데이터) accessToken검증 후 데이터 가져오기
+
+    const email = data.email; // (만료기간이 있는 데이터) accessToken으로 인증된 email
+    db.query("SELECT * FROM user WHERE email = ?", [email], function(err, result){
+      if (result.length > 0){ // 일치하는 이메일이 있을 때
+        const user = result[0] // 쿼리 결과의 첫 번째 사용자 정보
+
+        const userData = { email:"", name:"" }; // 만료기간이 없는 데이터
+        userData.email = user.email;
+        userData.name = user.name;
+    
+        return res.send(userData); 
+      }})
+    } catch (error){
+      return res.send("응답실패... " + error);
+    }
+});
+
+// refreshToken - 만료된 accessToken 갱신
+app.get("/refreshT", (req, res) => {
+  try {
+      const token = req.cookies.refreshToken; // refreshToken의 value
+      const data = jwt.verify(token, process.env.REFRESH_SECRET); // refreshToken검증 후 데이터 가져오기
   
-      const userData = { email:"", name:"" };
+      // db email과 같을 시 accessToken발급
+      const email = data.email; // refreshToken으로 인증된 email
+    db.query("SELECT * FROM user WHERE email = ?", [email], function(err, result){
+      if (result.length > 0){ // 일치하는 이메일이 있을 때
+        const user = result[0] // 쿼리 결과의 첫 번째 사용자 정보
+        
+        // accessToken 새로 발급
+        const accesstoken = jwt.sign({
+          email: user.email,
+          name: user.name
+        }, process.env.ACCESS_SECRET, {
+          expiresIn : '1m',
+          issuer : 'PRMe', 
+        });
   
-      // userData.email = data.email;
-      // userData.name = data.name;
-      return res.send(data);
-  
+        // refresh Token 발급
+        const refreshtoken = jwt.sign({
+          email: user.email, // user을 db검사 쿼리해서 나온 배열로 바꾸기
+          name: user.name
+        }, process.env.REFRESH_SECRET, {
+          expiresIn : '24h',
+          issuer : 'PRMe', 
+        });
+
+        const sendData = { isLogin: "", name: "", accesstoken: "", refreshtoken: "" };
+        sendData.isLogin = "성공";
+        sendData.name = user.name;
+        sendData.accesstoken = accesstoken;
+        sendData.refreshtoken = refreshtoken;
+
+        return res.json(sendData);
+      }});
     } catch (error){
       return res.send("응답실패... " + error);
     }
@@ -243,14 +292,13 @@ app.get("/home/test", (req, res) => {
   // 이메일 검사
   db.query("SELECT * FROM mytestsave WHERE email = ?", [testEmail], function(err, result){
     if (err) throw err;
-    if (result.length > 0){ // 일치하는 이메일이 있을 때
+    if (result.length > 0){ // 일치하는 이메일이 있으면 Update
       const myTestUpdateQuery = 'UPDATE mytestsave SET ISTJ=?,ISFJ=?,INFJ=?,INTJ=?,ISTP=?,ISFP=?,INFP=?,INTP=?,ESTP=?,ESFP=?,ENFP=?,ENTP=?,ESTJ=?,ESFJ=?,ENFJ=?,ENTJ=?,E=?,N=?,F=?,J=? WHERE email = ?';
       db.query(myTestUpdateQuery, [...intResult, testEmail], (err, result) => {
         res.send(sendTest);
       });
 
-    } else {
-      res.send("없는 이메일 이에요.");
+    } else { // 이메일이 없으면 Insert
       const resultQuery = "INSERT INTO mytestsave(email,ISTJ,ISFJ,INFJ,INTJ,ISTP,ISFP,INFP,INTP,ESTP,ESFP,ENFP,ENTP,ESTJ,ESFJ,ENFJ,ENTJ,E,N,F,J)VALUES (?,?)";
       db.query(resultQuery, [testEmail, intResult], function(err, result) {
         res.send(sendTest);
