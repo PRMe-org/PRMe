@@ -1,8 +1,10 @@
 import React, { useState }  from 'react'
 import Modal2 from '../components/Modal2';
-
+import axios from 'axios';
 
 const Mypage = () => {
+  const server = 'http://localhost:3002';
+
   const imgUrl = '/images/default.svg';
   const modal_text = '정말 탈퇴하시겠습니까?'; 
   const modal_emoji = '😭';
@@ -15,6 +17,55 @@ const Mypage = () => {
   };
   const closeModal = () => {
     setModalOpen(false);
+  };
+
+   // accessToken 인증
+   const accessT = () => {
+    axios
+    .get(`${ server }/accessT`, {
+       withCredentials: true, // 요청 시 쿠키를 포함
+    })
+    .then(response => {
+      if(response.data === 'TokenExpiredError'){ // accessToken 만료 시
+        refreshT(); // Token 재발행
+
+      } else {
+        console.log("안녕하세요, " + response.data.email + "님");
+        const useremail = response.data.email;
+
+       return useremail;
+      }
+    })
+    .catch(error => {
+      console.log('실패했어요:', error.response);
+    })
+  };
+
+  // refreshToken으로 accessToken 재발행
+  const refreshT = () => {
+    axios
+    .get(`${ server }/refreshT`, {
+       withCredentials: true, // 요청 시 쿠키를 포함
+    })
+    .then(response => {
+      // accessToken 갱신완료 시
+      if(JSON.stringify(response.data.isLogin) === '"성공"'){
+        // 서버로부터 토큰을 받아서 쿠키에 저장
+       const accessToken = response.data.accesstoken;
+       const refreshToken = response.data.refreshtoken;
+       // 쿠키에 토큰 저장
+       document.cookie = `accessToken=${ accessToken }; path=/;`
+       document.cookie = `refreshToken=${ refreshToken }; path=/;`
+
+       console.log("안녕하세요, " + response.data.email + "님")
+       const useremail = response.data.email;
+
+       return useremail;
+      }     
+    })
+    .catch(error => {
+      console.log('실패했어요:', error.response);
+    })
   };
 
   return (
@@ -36,7 +87,7 @@ const Mypage = () => {
 
             <div className='mypage-setting2'>
               <div className='mypage-subtitle'>이메일</div>
-              <div className='mypage-fixed'>example@gmail.com</div>
+              <div className='mypage-fixed'>Test중</div>
             </div>
 
             <div className='mypage-setting3'>
@@ -54,6 +105,7 @@ const Mypage = () => {
       </div>
 
       <div className='mypage-buttons'>
+        <button onClick={ accessT }>로그인 사용자 조희 Test</button>
         <button>테스트 결과 보기</button>
         <button id='retry'>테스트 다시 하기</button>
       </div>

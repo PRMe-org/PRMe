@@ -198,7 +198,7 @@ app.get("/accessT", (req, res) => {
         return res.send(userData); 
       }})
     } catch (error){
-      return res.send("응답실패... " + error);
+      return res.send(error.name);
     }
 });
 
@@ -243,7 +243,6 @@ app.get("/refreshT", (req, res) => {
     } catch (error){
       return res.send("응답실패... " + error);
     }
-  
 });
 
 
@@ -305,4 +304,10 @@ app.get("/home/test", (req, res) => {
       });
     }
   });
+});
+
+
+/* --------------------- myPage 함수 --------------------- */
+app.get("/home/mypage", (req, res) =>{
+
 });
