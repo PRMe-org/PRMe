@@ -15,7 +15,7 @@ const Selectbox = () => {
     setCurrentValue(option);
     setIsOpen(false);
 
-     // 쿠키삭제 함수 예시
+     // 로그아웃 (쿠키삭제 예시)
      function deleteCookie(name) {
       document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
     }  
