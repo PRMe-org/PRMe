@@ -15,11 +15,6 @@ const Selectbox = () => {
     setCurrentValue(option);
     setIsOpen(false);
 
-     // 로그아웃 (쿠키삭제 예시)
-     function deleteCookie(name) {
-      document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
-    }  
-
     // 화면 일정 비율 이하시 보이는 selectBox 
     if (option === 'HOME') {
       navigate('/home');
@@ -28,7 +23,9 @@ const Selectbox = () => {
     } else if (option === '내 정보') {
       navigate('/home/mypage');
     } else if (option === '로그아웃') {
-      // 로그아웃 시 토큰 삭제 후 시작페이지로 이동
+      function deleteCookie(name) { // 쿠키 삭제
+        document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+    };
       deleteCookie('accessToken');
       deleteCookie('refreshToken');
       navigate('/');

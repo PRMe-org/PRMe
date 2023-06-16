@@ -1,10 +1,18 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Piechart from '../components/Piechart';
+import Modal from '../components/Modal';
+import axios from 'axios';
 
 import { useDispatch } from "react-redux";
 import { bindActionCreators as userAction } from "../../node_modules/redux/lib/redux";
 // redux/modules/user
 const Home = (props) => {
+  const server = 'http://localhost:3002';
+  const Navigate = useNavigate();
+
+  const [userName, setUserName] = useState('');
+  const [modalOpen, setModalOpen] = useState(false);
 
   // Login.jsx 리다이렉트
   /* const dispatch = useDispatch();
@@ -14,6 +22,8 @@ const Home = (props) => {
   }) */
 
   const imgUrl = '/images/default.svg';
+  const modal_text = 'url이 복사되었어요!'; 
+  const modal_emoji = '📑';
 
   const nicknamesRef = useRef(null);
   const [startX, setStartX] = useState(0);
@@ -42,6 +52,72 @@ const Home = (props) => {
     setIsDragging(false);
   };
 
+  // url 복사
+  const copyUrl = () => {
+    navigator.clipboard.writeText(window.location.href);
+    openModal(); // 모달 열기
+  };
+
+  // 모달창 - (디폴트 false) open일 때 true
+  const openModal = () => {
+    setModalOpen(true);
+  };
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+
+  // accessToken 인증
+  const accessT = () => {
+    axios
+    .get(`${ server }/accessT`, {
+       withCredentials: true, // 요청 시 쿠키를 포함
+    })
+    .then(response => {
+      if(response.data === 'TokenExpiredError'){ // accessToken 만료 시
+        refreshT(); // 토큰 재발행
+      } else {
+        setUserName(response.data.name);
+      }
+    })
+    .catch(error => {
+      console.log('실패했어요:', error.response);
+    })
+  };
+
+  // refreshToken으로 accessToken 재발행
+  const refreshT = () => {
+    axios
+    .get(`${ server }/refreshT`, {
+       withCredentials: true, // 요청 시 쿠키를 포함
+    })
+    .then(response => {
+      // accessToken 갱신완료 시
+      if(JSON.stringify(response.data.isLogin) === '"성공"'){
+        // 서버로부터 토큰을 받아서 쿠키에 저장
+       const accessToken = response.data.accesstoken;
+       const refreshToken = response.data.refreshtoken;
+       // 쿠키에 토큰 저장
+       document.cookie = `accessToken=${ accessToken }; path=/;`
+       document.cookie = `refreshToken=${ refreshToken }; path=/;`
+
+       setUserName(response.data.name);
+      }     
+    })
+    .catch(error => {
+      console.log('실패했어요:', error.response);
+    })
+  };
+
+  // 컴포넌트가 처음 마운트되었을 때 실행(처음 한번만)
+  useEffect(() => {
+    if(document.cookie){ // 쿠키가 존재하는 경우
+      accessT(); // accessToken 인증 검사
+    } else {
+      Navigate('/login') // 로그인 이동
+    }
+  }, []);
+
+
   return (
     <div className='home'>
 
@@ -55,7 +131,7 @@ const Home = (props) => {
               <div className='keyword1'>열정적</div>이고&nbsp;
               <div className='keyword2'>즉흥적</div>인
             </div>
-            <div className='tag-text-others'>피알미 입니다🎶</div>
+            <div className='tag-text-others'>{ userName } 입니다🎶</div>
           </div>
         </div>
 
@@ -113,7 +189,7 @@ const Home = (props) => {
 
       <div className='home-buttons'>
         <button className='share'>카카오톡 공유하기</button>
-        <button className='copy'>URL 복사하기</button>
+        <button className='copy' onClick={ copyUrl }>URL 복사하기</button>
         <button className='print'>프린트하기</button>
       </div>
 
@@ -141,6 +217,12 @@ const Home = (props) => {
           <button className='nick1'>윤다빈</button>
         </div>
       </div>
+
+
+      <Modal open={ modalOpen } close={ closeModal } header="모달 제목">
+        <span id='modal-text'> { modal_text } </span>
+        <span id='modal-emoji'> { modal_emoji } </span>
+      </Modal>
 
     </div>
   )
