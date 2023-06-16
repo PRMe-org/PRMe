@@ -1,6 +1,5 @@
-
-import React, { useState } from 'react'
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react'
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 export const Register = () => {
@@ -41,6 +40,13 @@ export const Register = () => {
     event.target.value = filterText;
   };
 
+  // 컴포넌트가 처음 마운트되었을 때 실행(처음 한번만)
+  useEffect(() => {
+    if(document.cookie){ // 쿠키가 존재하는 경우
+      Navigate('/home')
+    } 
+  }, []);
+
 
   const imgUrl = '/images/kakao.svg';
 
@@ -58,8 +64,7 @@ export const Register = () => {
             <p id='subtitle'>닉네임</p>
             <input id='input' type="text" placeholder='10자 이하'
               onChange={(event) => {
-                setName(event.target.value); // 이벤트로 일어난 값 => email로 지정
-                // console.log(event.target.value) // input에 입력하고 console에서 테스트
+                setName(event.target.value);
               }}
             />
 
@@ -68,7 +73,6 @@ export const Register = () => {
               onInput={ onlyEng }
               onChange={(event) => {
                 setEmail(event.target.value);
-                // console.log(event.target.value);
                 }}
               />
 

@@ -1,22 +1,23 @@
 import React, { useState, useEffect }  from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Modal2 from '../components/Modal2';
 import axios from 'axios';
 
 const Mypage = () => {
   const server = 'http://localhost:3002';
-  
   const Navigate = useNavigate();
+
+  // 변수 지정
+  const [userEmail, setUserEmail] = useState('');
+  const [userName, setUserName] = useState('');
+  const [userDate, setUserDate] =useState('');
+  
+  // 모달 창
+  const [modalOpen, setModalOpen] = useState(false);
   
   const imgUrl = '/images/default.svg';
   const modal_text = '정말 탈퇴하시겠습니까?'; 
   const modal_emoji = '😭';
-  
-  const [userEmail, setUserEmail] = useState('');
-  const [userName, setUserName] = useState('');
-  const [userDate, setUserDate] =useState('');
-  // useState를 사용하여 open상태를 변경한다. (open일때 true로 만들어 열리는 방식)
-  const [modalOpen, setModalOpen] = useState(false);
 
   const openModal = () => {
     setModalOpen(true);
@@ -25,8 +26,13 @@ const Mypage = () => {
     setModalOpen(false);
   };
 
-   // accessToken 인증
-   const accessT = () => {
+  // test 페이지로 이동 -- Link 쓰는게 더 나을지도
+  const test = () => {
+    Navigate('/home/test');
+  };
+
+  // accessToken 인증
+  const accessT = () => {
     axios
     .get(`${ server }/accessT`, {
        withCredentials: true, // 요청 시 쿠키를 포함
@@ -120,7 +126,7 @@ const Mypage = () => {
 
       <div className='mypage-buttons'>
         <button>테스트 결과 보기</button>
-        <button id='retry'>테스트 다시 하기</button>
+        <button id='retry' onClick={ test }>테스트 다시 하기</button>
       </div>
 
       <Modal2 open={modalOpen} close={closeModal} header="모달 제목">

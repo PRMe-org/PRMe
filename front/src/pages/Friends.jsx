@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Pagination from '../components/Pagination';
 import Modal3 from '../components/Modal3';
 
 
 const Friends = () => {
+  const server = 'http://localhost:3002';
+  const Navigate = useNavigate();
 
   const modal_text = '테스트 결과를 삭제하시겠습니까?'; 
   const modal_emoji = '🥲';
@@ -50,9 +53,10 @@ const Friends = () => {
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지를 관리하는 상태 변수
   const itemsPerPage = 5;
 
+  // 현재 페이지가 변경되면 데이터를 가져오기 위해 useEffect를 사용
   useEffect(() => {
-    // 현재 페이지가 변경되면 데이터를 가져오기 위해 useEffect를 사용
     fetchFriendsData();
+    // 로그인 시 머무르기 비 로그인시 login 이동 코드 추가
   }, [currentPage]);
 
   const fetchFriendsData = async () => {
@@ -96,13 +100,11 @@ const Friends = () => {
     return friendsData.slice(startIndex, endIndex);
   };
 
+  // 모달창
   const openModal = () => {
-    // 모달 열기
     setModalOpen(true);
   };
-
   const closeModal = () => {
-    // 모달 닫기
     setModalOpen(false);
   };
 

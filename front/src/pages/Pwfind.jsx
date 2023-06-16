@@ -64,6 +64,7 @@ const Pwfind = () => {
         <span id='modal-text'> { modal_text } </span>
         <span id='modal-emoji'> { modal_emoji } </span>
       </Modal>
+      
     </div>
 
   )

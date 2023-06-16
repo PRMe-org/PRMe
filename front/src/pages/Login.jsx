@@ -1,20 +1,21 @@
-import React, { useState, KeyboardEvent } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-  
-const Login = () => {
 
+const Login = () => {
+  const server = 'http://localhost:3002';
+  const Navigate = useNavigate();
+
+  const imgUrl = '/images/kakao.svg';
+  
   // 카카오 로그인
   const REST_API_KEY = 'a29a3d743f55295b46cbfb49ba08a3ce';
   const REDIRECT_URI = 'http://localhost:3000/home/oauth';
   const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}`
   const kakaoLogin = () => {
     window.location.href = KAKAO_AUTH_URL;
-  }
+  };
 
-  const server = 'http://localhost:3002';
-  const Navigate = useNavigate();
-  
   // input 값을 변수에 저장
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -49,7 +50,7 @@ const Login = () => {
        document.cookie = `accessToken=${ accessToken }; path=/;`
        document.cookie = `refreshToken=${ refreshToken }; path=/;`
 
-        Navigate('/home/mypage'); // home 고쳐지면 home으로 이동
+        Navigate('/home');
       } else{
         alert(JSON.stringify(response.data.isLogin))
       }
@@ -60,8 +61,13 @@ const Login = () => {
     })
   };
 
+  // 컴포넌트가 처음 마운트되었을 때 실행(처음 한번만)
+  useEffect(() => {
+    if(document.cookie){ // 쿠키가 있는 경우
+      Navigate('/home')
+    }
+  }, []);
   
-  const imgUrl = '/images/kakao.svg';
 
   return (
     <div className='form'>

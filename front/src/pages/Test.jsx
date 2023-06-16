@@ -86,6 +86,7 @@ const Test = () => {
     setShowResult(true);
   };
 
+  // 컴포넌트가 처음 마운트되었을 때 실행(처음 한번만)
   useEffect(() => {
     const width = ((currentQuestion - 1) / (totalQuestions - 1)) * 95 + 5;
     setProgressWidth(width);
