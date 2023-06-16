@@ -1,9 +1,12 @@
-import React, { useState, useEffect }  from 'react'
+import React, { useState, useEffect }  from 'react';
+import { useNavigate } from 'react-router-dom';
 import Modal2 from '../components/Modal2';
 import axios from 'axios';
 
 const Mypage = () => {
   const server = 'http://localhost:3002';
+  
+  const Navigate = useNavigate();
   
   const imgUrl = '/images/default.svg';
   const modal_text = '정말 탈퇴하시겠습니까?'; 
@@ -33,8 +36,9 @@ const Mypage = () => {
         refreshT(); // 토큰 재발행
       } else {
         setUserEmail(response.data.email);
-       setUserName(response.data.name);
-       setUserDate(response.data.date);
+        setUserName(response.data.name);
+        let date = response.data.date;
+        setUserDate(date.split('T')[0]); // YYYY-MM-DD
       }
     })
     .catch(error => {
@@ -60,7 +64,8 @@ const Mypage = () => {
 
        setUserEmail(response.data.email);
        setUserName(response.data.name);
-       setUserDate(response.data.date);
+       let date = response.data.date;
+       setUserDate(date.split('T')[0]); // YYYY-MM-DD
       }     
     })
     .catch(error => {
@@ -70,8 +75,11 @@ const Mypage = () => {
 
   // 컴포넌트가 처음 마운트되었을 때 실행(처음 한번만)
   useEffect(() => {
-    accessT();
-    
+    if(document.cookie){ // 쿠키가 존재하는 경우
+      accessT(); // accessToken 인증 검사
+    } else {
+      Navigate('/login') // 로그인으로 이동
+    }
   }, []);
 
   return (
@@ -98,7 +106,7 @@ const Mypage = () => {
 
             <div className='mypage-setting3'>
               <div className='mypage-subtitle'>검사일</div>
-              <div className='mypage-fixed'>(수정요망)</div>
+              <div className='mypage-fixed'>{ userDate }(*가입날짜로 되어있음 수정요망)</div>
             </div>
 
           </div>
@@ -111,7 +119,6 @@ const Mypage = () => {
       </div>
 
       <div className='mypage-buttons'>
-        <button onClick={ accessT }>로그인 사용자 조희 Test</button>
         <button>테스트 결과 보기</button>
         <button id='retry'>테스트 다시 하기</button>
       </div>
