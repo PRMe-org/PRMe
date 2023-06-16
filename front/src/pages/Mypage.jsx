@@ -1,14 +1,17 @@
-import React, { useState }  from 'react'
+import React, { useState, useEffect }  from 'react'
 import Modal2 from '../components/Modal2';
 import axios from 'axios';
 
 const Mypage = () => {
   const server = 'http://localhost:3002';
-
+  
   const imgUrl = '/images/default.svg';
   const modal_text = '정말 탈퇴하시겠습니까?'; 
   const modal_emoji = '😭';
-
+  
+  const [userEmail, setUserEmail] = useState('');
+  const [userName, setUserName] = useState('');
+  const [userDate, setUserDate] =useState('');
   // useState를 사용하여 open상태를 변경한다. (open일때 true로 만들어 열리는 방식)
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -27,13 +30,11 @@ const Mypage = () => {
     })
     .then(response => {
       if(response.data === 'TokenExpiredError'){ // accessToken 만료 시
-        refreshT(); // Token 재발행
-
+        refreshT(); // 토큰 재발행
       } else {
-        console.log("안녕하세요, " + response.data.email + "님");
-        const useremail = response.data.email;
-
-       return useremail;
+        setUserEmail(response.data.email);
+       setUserName(response.data.name);
+       setUserDate(response.data.date);
       }
     })
     .catch(error => {
@@ -57,16 +58,21 @@ const Mypage = () => {
        document.cookie = `accessToken=${ accessToken }; path=/;`
        document.cookie = `refreshToken=${ refreshToken }; path=/;`
 
-       console.log("안녕하세요, " + response.data.email + "님")
-       const useremail = response.data.email;
-
-       return useremail;
+       setUserEmail(response.data.email);
+       setUserName(response.data.name);
+       setUserDate(response.data.date);
       }     
     })
     .catch(error => {
       console.log('실패했어요:', error.response);
     })
   };
+
+  // 컴포넌트가 처음 마운트되었을 때 실행(처음 한번만)
+  useEffect(() => {
+    accessT();
+    
+  }, []);
 
   return (
     <div className='mypage'>
@@ -82,17 +88,17 @@ const Mypage = () => {
 
             <div className='mypage-setting1'>
               <div className='mypage-subtitle'>닉네임</div>
-              <input type="text" placeholder='피알미'/>
+              <input type="text" placeholder={ userName }/>
             </div>
 
             <div className='mypage-setting2'>
               <div className='mypage-subtitle'>이메일</div>
-              <div className='mypage-fixed'>Test중</div>
+              <div className='mypage-fixed'>{ userEmail }</div>
             </div>
 
             <div className='mypage-setting3'>
               <div className='mypage-subtitle'>검사일</div>
-              <div className='mypage-fixed'>2023.05.30</div>
+              <div className='mypage-fixed'>(수정요망)</div>
             </div>
 
           </div>

@@ -191,9 +191,10 @@ app.get("/accessT", (req, res) => {
       if (result.length > 0){ // 일치하는 이메일이 있을 때
         const user = result[0] // 쿼리 결과의 첫 번째 사용자 정보
 
-        const userData = { email:"", name:"" }; // 만료기간이 없는 데이터
+        const userData = { email:"", name:"", data:"" }; // 만료기간이 없는 데이터
         userData.email = user.email;
         userData.name = user.name;
+        userData.date = user.date;
     
         return res.send(userData); 
       }})
@@ -232,8 +233,9 @@ app.get("/refreshT", (req, res) => {
           issuer : 'PRMe', 
         });
 
-        const sendData = { isLogin: "", name: "", accesstoken: "", refreshtoken: "" };
+        const sendData = { isLogin: "", email:"", name: "", accesstoken: "", refreshtoken: "" };
         sendData.isLogin = "성공";
+        sendData.email = user.email;
         sendData.name = user.name;
         sendData.accesstoken = accesstoken;
         sendData.refreshtoken = refreshtoken;
@@ -309,5 +311,5 @@ app.get("/home/test", (req, res) => {
 
 /* --------------------- myPage 함수 --------------------- */
 app.get("/home/mypage", (req, res) =>{
-
+ 
 });
