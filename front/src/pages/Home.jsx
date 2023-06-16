@@ -7,11 +7,11 @@ import { bindActionCreators as userAction } from "../../node_modules/redux/lib/r
 const Home = (props) => {
 
   // Login.jsx 리다이렉트
-  const dispatch = useDispatch();
+  /* const dispatch = useDispatch();
   let code = new URL(window.location.href).searchParams.get("code");
   React.useEffect(() => {
     dispatch(userAction.kakaoLoginAC(code));
-  })
+  }) */
 
   const imgUrl = '/images/default.svg';
 

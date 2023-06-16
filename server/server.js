@@ -233,10 +233,11 @@ app.get("/refreshT", (req, res) => {
           issuer : 'PRMe', 
         });
 
-        const sendData = { isLogin: "", email:"", name: "", accesstoken: "", refreshtoken: "" };
+        const sendData = { isLogin: "", email:"", name: "", date:"", accesstoken: "", refreshtoken: "" };
         sendData.isLogin = "성공";
         sendData.email = user.email;
         sendData.name = user.name;
+        sendData.date = user.date;
         sendData.accesstoken = accesstoken;
         sendData.refreshtoken = refreshtoken;
 
