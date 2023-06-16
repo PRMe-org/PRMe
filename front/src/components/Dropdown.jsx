@@ -1,5 +1,6 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 
 const Dropdown = () => {
@@ -16,6 +17,16 @@ const Dropdown = () => {
 
     const mypage = () => {
         Navigate('/home/mypage');
+        axios
+        .get(`${ server }/home/mypage`, {
+            withCredentials: true, // 요청 시 쿠키를 포함
+        })
+        .then(response => {
+            console.log(response.data + "님이 접속 중 입니다.");
+        })
+        .catch(error => {
+
+        })
     };
 
     const logout = () => {

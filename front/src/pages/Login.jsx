@@ -51,7 +51,7 @@ const Login = () => {
 
        alert("로그인완료")
 
-        Navigate('/home/mypage');
+        Navigate('/home/mypage'); // home 고쳐지면 home으로 이동
       } else{
         alert(JSON.stringify(response.data.isLogin))
       }
