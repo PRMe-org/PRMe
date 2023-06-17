@@ -5,20 +5,21 @@ import axios from 'axios';
 
 const Mypage = () => {
   const server = 'http://localhost:3002';
+  const front = 'http://localhost:3000';
   const Navigate = useNavigate();
 
   // 변수 지정
   const [userEmail, setUserEmail] = useState('');
   const [userName, setUserName] = useState('');
-  const [userDate, setUserDate] =useState('');
+  const [userDate, setUserDate] = useState('');
+  const [inputName, setInputName] = useState('');
   
-  // 모달 창
+  // 모달 - 변수 지정
   const [modalOpen, setModalOpen] = useState(false);
-  
   const imgUrl = '/images/default.svg';
   const modal_text = '정말 탈퇴하시겠습니까?'; 
   const modal_emoji = '😭';
-
+  // 모달 - on/off
   const openModal = () => {
     setModalOpen(true);
   };
@@ -29,6 +30,22 @@ const Mypage = () => {
   // test 페이지로 이동 -- Link 쓰는게 더 나을지도
   const test = () => {
     Navigate('/home/test');
+  };
+  // 닉네임 수정 요청
+  const saveName = () => {
+    accessT();
+    axios
+    .post(`${ server }/saveName`,
+      { name: inputName, },
+      { withCredentials: true,},
+    )
+    .then(response => {
+      alert(response.data);
+      window.location.href = `${ front }/home/mypage`;
+    })
+    .catch(error => {
+      console.log('요청이 실패했어요:', error.response);
+    });
   };
 
   // accessToken 인증
@@ -51,7 +68,6 @@ const Mypage = () => {
       console.log('실패했어요:', error.response);
     })
   };
-
   // refreshToken으로 accessToken 재발행
   const refreshT = () => {
     axios
@@ -95,14 +111,18 @@ const Mypage = () => {
         <div className='mypage-content-top'>
           <div className='profile-hover'>+</div>
           <div className='profile' id='mypage-prorile'>
-            <img src={imgUrl} className='default'/>
+            <img src={ imgUrl } className='default'/>
           </div>
           <div className='mypage-settings'>
           <div className={`mypage-settings-title ${window.innerWidth <= 768 ? 'hide-title' : ''}`}>기본 정보</div>
 
             <div className='mypage-setting1'>
               <div className='mypage-subtitle'>닉네임</div>
-              <input type="text" placeholder={ userName }/>
+              <input type="text" placeholder={ userName }
+                onChange={(event) => {
+                  setInputName(event.target.value);
+                }}
+              />
             </div>
 
             <div className='mypage-setting2'>
@@ -120,7 +140,7 @@ const Mypage = () => {
 
         <div className='delete-save'>
           <button onClick={ openModal } className='mypage-delete'>탈퇴하기</button>
-          <button className='mypage-save'>저장하기</button>
+          <button onClick={ saveName } className='mypage-save'>저장하기</button>
         </div>
       </div>
 
