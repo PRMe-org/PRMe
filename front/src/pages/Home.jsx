@@ -1,25 +1,45 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Piechart from '../components/Piechart';
 import Modal from '../components/Modal';
 import axios from 'axios';
 
 import { useDispatch } from "react-redux";
 import { bindActionCreators as userAction } from "../../node_modules/redux/lib/redux";
+// import { response } from 'express';
 // redux/modules/user
 const Home = (props) => {
+
+  // 카카오톡 로그인 시
+  // home/인가코드 형식으로 url 발급됨
+    // 인가코드 콘솔에 출력하는 법
+    // const code = new URL(window.location.href).searchParams.get("code");
+    // console.log(code)    
+
+  // useEffect 훅 안에 kakaoAccessT를 넣어두면 컴포넌트가 처음
+  // 마운트 될 때 한 번만 실행되도록 할 수 있다.
+  // useEffect(() => {
+  //   const kakaoAccessT = async () => {
+  //     const code = new URL(window.location.href).searchParams.get("code");
+  //     if (code) {
+  //       try {
+  //         const response = await axios.get(`${server2}/home?code=${code}`);
+  //         console.log(response.data);
+  //       } catch (error) {
+  //         console.log('실패:', error.response);
+  //       }
+  //     }
+  //   };
+  
+  //   kakaoAccessT();
+  // }, []);
+
+  // const server2 = 'http://localhost:3000';
   const server = 'http://localhost:3002';
   const Navigate = useNavigate();
 
   const [userName, setUserName] = useState('');
   const [modalOpen, setModalOpen] = useState(false);
-
-  // Login.jsx 리다이렉트
-  /* const dispatch = useDispatch();
-  let code = new URL(window.location.href).searchParams.get("code");
-  React.useEffect(() => {
-    dispatch(userAction.kakaoLoginAC(code));
-  }) */
 
   const imgUrl = '/images/default.svg';
   const modal_text = 'url이 복사되었어요!'; 
