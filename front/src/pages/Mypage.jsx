@@ -1,8 +1,7 @@
 import React, { useState, useEffect }  from 'react';
 import { useNavigate } from 'react-router-dom';
-import Modal from '../components/Modal';
-import Modal3 from '../components/Modal3';
 import axios from 'axios';
+import Modal3 from '../components/Modal3';
 
 const Mypage = () => {
   const server = 'http://localhost:3002';
@@ -39,6 +38,69 @@ const Mypage = () => {
   const saveCloseModal = () => {
     setSaveModalOpen(false);
   };
+
+  /* ------------------ jwt 인증 ------------------ */
+  const accessT = () => {
+    axios
+    .get(`${ server }/accessT`, {
+       withCredentials: true, // 요청 시 쿠키를 포함
+    })
+    .then(response => {
+      if(response.data === 'TokenExpiredError'){ // accessToken 만료 시
+        refreshT(); // 토큰 재발행
+      } else {
+        setUserEmail(response.data.email);
+        setUserName(response.data.name);
+      }
+    })
+    .catch(error => {
+      console.log('실패했어요:', error.response);
+    })
+  };
+
+  // 토큰 재발행
+  const refreshT = () => {
+    axios
+    .get(`${ server }/refreshT`, {
+       withCredentials: true, // 요청 시 쿠키를 포함
+    })
+    .then(response => {
+      // accessToken 갱신완료 시
+      if(JSON.stringify(response.data.isLogin) === '"성공"'){
+        // 서버로부터 토큰을 받아서 쿠키에 저장
+       const accessToken = response.data.accesstoken;
+       const refreshToken = response.data.refreshtoken;
+       // 쿠키에 토큰 저장
+       document.cookie = `accessToken=${ accessToken }; path=/;`
+       document.cookie = `refreshToken=${ refreshToken }; path=/;`
+
+       setUserEmail(response.data.email);
+       setUserName(response.data.name);
+      }     
+    })
+    .catch(error => {
+      console.log('실패했어요:', error.response);
+    })
+  };
+
+  /* ------------------ 최근 검사일 조회 요청 ------------------ */
+  const recently = () => {
+    axios
+    .post(`${ server }/recently`,
+      { },
+      { withCredentials: true,},)
+    .then(response => {
+      if(response.data === ""){
+        setUserDate("(미실시)");
+      } else {
+        let date = response.data;
+        setUserDate(date.split('T')[0]); // YYYY-MM-DD
+      };
+    })
+    .catch(error => {
+      console.log('실패했어요:', error.response);
+    })
+  }
 
    /* ------------------ 회원 탈퇴 요청  ------------------ */
   const secession = () => {
@@ -92,60 +154,13 @@ const Mypage = () => {
   // 중복 전송을 막기 위한 동기적 리다이렉트
   function redirect() {
     window.location.href = `${ front }/home/mypage`;
-  }
-
-   /* ------------------ jwt 인증 ------------------ */
-  const accessT = () => {
-    axios
-    .get(`${ server }/accessT`, {
-       withCredentials: true, // 요청 시 쿠키를 포함
-    })
-    .then(response => {
-      if(response.data === 'TokenExpiredError'){ // accessToken 만료 시
-        refreshT(); // 토큰 재발행
-      } else {
-        setUserEmail(response.data.email);
-        setUserName(response.data.name);
-        let date = response.data.date;
-        setUserDate(date.split('T')[0]); // YYYY-MM-DD
-      }
-    })
-    .catch(error => {
-      console.log('실패했어요:', error.response);
-    })
-  };
-
-  // 토큰 재발행
-  const refreshT = () => {
-    axios
-    .get(`${ server }/refreshT`, {
-       withCredentials: true, // 요청 시 쿠키를 포함
-    })
-    .then(response => {
-      // accessToken 갱신완료 시
-      if(JSON.stringify(response.data.isLogin) === '"성공"'){
-        // 서버로부터 토큰을 받아서 쿠키에 저장
-       const accessToken = response.data.accesstoken;
-       const refreshToken = response.data.refreshtoken;
-       // 쿠키에 토큰 저장
-       document.cookie = `accessToken=${ accessToken }; path=/;`
-       document.cookie = `refreshToken=${ refreshToken }; path=/;`
-
-       setUserEmail(response.data.email);
-       setUserName(response.data.name);
-       let date = response.data.date;
-       setUserDate(date.split('T')[0]); // YYYY-MM-DD
-      }     
-    })
-    .catch(error => {
-      console.log('실패했어요:', error.response);
-    })
   };
 
   /* ------------------ 페이지 첫 실행 ------------------ */
   useEffect(() => {
     if(document.cookie){
       accessT();
+      recently(); // 최근 검사일 출력
     } else {
       Navigate('/login')
     }
@@ -185,7 +200,7 @@ const Mypage = () => {
 
             <div className='mypage-setting3'>
               <div className='mypage-subtitle'>검사일</div>
-              <div className='mypage-fixed'>{ userDate }(*가입날짜로 되어있음 수정요망)</div>
+              <div className='mypage-fixed'>{ userDate }</div>
             </div>
 
           </div>
