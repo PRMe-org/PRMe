@@ -311,6 +311,7 @@ app.get("/home/test", (req, res) => {
 
 
 /* --------------------- myPage 함수 --------------------- */
+// 닉네임 수정
 app.post("/saveName", async(req, res) => {
   try {
     const token = req.cookies.accessToken;
@@ -326,6 +327,28 @@ app.post("/saveName", async(req, res) => {
         const updateNameQuery = 'UPDATE user SET name=? WHERE email = ?';
         db.query(updateNameQuery, [name, email], (err, result) => {
           return res.send("업데이트 완료")
+        });
+      }});
+  } catch (error) {
+    return res.send("응답실패... " + error);
+  }
+});
+
+// 회원 탈퇴
+app.post("/secession", async(req, res) => {
+  try {
+    const token = req.cookies.accessToken;
+    const data = jwt.verify(token, process.env.ACCESS_SECRET);
+    const email = data.email;
+
+    // 이메일 검사
+    db.query("SELECT * FROM user WHERE email = ?", [email], function(err, result){
+      if (err) throw err;
+      if (result.length > 0){ // 일치
+        // 유저 삭제
+        const deleteUserQuery = 'DELETE FROM user WHERE email = ?';
+        db.query(deleteUserQuery, [email], (err, result) => {
+          res.send("삭제");
         });
       }});
   } catch (error) {

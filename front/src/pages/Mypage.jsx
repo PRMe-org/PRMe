@@ -1,6 +1,7 @@
 import React, { useState, useEffect }  from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import Modal2 from '../components/Modal2';
+import { useNavigate } from 'react-router-dom';
+import Modal from '../components/Modal';
+import Modal3 from '../components/Modal3';
 import axios from 'axios';
 
 const Mypage = () => {
@@ -8,18 +9,19 @@ const Mypage = () => {
   const front = 'http://localhost:3000';
   const Navigate = useNavigate();
 
+  const imgUrl = '/images/default.svg';
+
   // 변수 지정
   const [userEmail, setUserEmail] = useState('');
   const [userName, setUserName] = useState('');
   const [userDate, setUserDate] = useState('');
   const [inputName, setInputName] = useState('');
   
-  // 모달 - 변수 지정
+  /* ------------------탈퇴 모달 ------------------ */
   const [modalOpen, setModalOpen] = useState(false);
-  const imgUrl = '/images/default.svg';
   const modal_text = '정말 탈퇴하시겠습니까?'; 
   const modal_emoji = '😭';
-  // 모달 - on/off
+
   const openModal = () => {
     setModalOpen(true);
   };
@@ -27,28 +29,74 @@ const Mypage = () => {
     setModalOpen(false);
   };
 
+   /* ------------------저장 모달 ------------------ */
+  const [saveModalOpen, setSaveModalOpen] = useState(false);
+  const save_modal_text = '닉네임을 저장하였습니다.'; 
+  const save_modal_emoji = '✅';
+  
+  const saveOpenModal = () => {
+    setSaveModalOpen(true);
+  };
+  const saveCloseModal = () => {
+    setSaveModalOpen(false);
+  };
+
   // test 페이지로 이동 -- Link 쓰는게 더 나을지도
   const test = () => {
     Navigate('/home/test');
   };
-  // 닉네임 수정 요청
-  const saveName = () => {
+
+   /* ------------------ 회원 탈퇴 요청  ------------------ */
+  const secession = () => {
+    // 토큰 검사
     accessT();
+    // 회원 탈퇴 요청
     axios
-    .post(`${ server }/saveName`,
-      { name: inputName, },
+    .post(`${ server }/secession`,
+      { },
       { withCredentials: true,},
     )
     .then(response => {
-      alert(response.data);
-      window.location.href = `${ front }/home/mypage`;
+      function deleteCookie(name) { // 쿠키삭제
+        document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+      }
+      deleteCookie('accessToken');
+      deleteCookie('refreshToken');
+      closeModal();
+      Navigate('/');
     })
     .catch(error => {
-      console.log('요청이 실패했어요:', error.response);
+      closeModal();
     });
   };
 
-  // accessToken 인증
+   /* ------------------닉네임 수정 요청  ------------------ */
+  const saveName = () => {
+    // 토큰 검사
+    accessT();
+    // 닉네임 수정 통신
+    if(inputName === ""){
+      alert("닉네임을 적어주세요.");
+    }
+    else {
+      axios
+      .post(`${ server }/saveName`,
+        { name: inputName, },
+        { withCredentials: true,},
+      )
+      .then(response => {
+        // 모달 on
+        saveOpenModal();
+        // 동기적인 페이지 리다이렉트가 필요함
+      })
+      .catch(error => {
+        alert("요청이 실패했어요.");
+        console.log('요청이 실패했어요:', error.response);
+      });
+    };
+  };
+
+   /* ------------------ jwt 인증 ------------------ */
   const accessT = () => {
     axios
     .get(`${ server }/accessT`, {
@@ -68,6 +116,7 @@ const Mypage = () => {
       console.log('실패했어요:', error.response);
     })
   };
+
   // refreshToken으로 accessToken 재발행
   const refreshT = () => {
     axios
@@ -95,14 +144,16 @@ const Mypage = () => {
     })
   };
 
-  // 컴포넌트가 처음 마운트되었을 때 실행(처음 한번만)
+
+   /* ------------------ 페이지 첫 실행 ------------------ */
   useEffect(() => {
-    if(document.cookie){ // 쿠키가 존재하는 경우
-      accessT(); // accessToken 인증 검사
+    if(document.cookie){
+      accessT();
     } else {
-      Navigate('/login') // 로그인으로 이동
+      Navigate('/login')
     }
   }, []);
+
 
   return (
     <div className='mypage'>
@@ -118,7 +169,7 @@ const Mypage = () => {
 
             <div className='mypage-setting1'>
               <div className='mypage-subtitle'>닉네임</div>
-              <input type="text" placeholder={ userName }
+              <input type="text" placeholder={ userName }  maxLength="10"
                 onChange={(event) => {
                   setInputName(event.target.value);
                 }}
@@ -149,10 +200,22 @@ const Mypage = () => {
         <button id='retry' onClick={ test }>테스트 다시 하기</button>
       </div>
 
-      <Modal2 open={modalOpen} close={closeModal} header="모달 제목">
-        <span id='modal-text'> { modal_text } </span>
-        <span id='modal-emoji'> { modal_emoji } </span>
-      </Modal2>
+      <Modal3 open={ modalOpen } close={ closeModal } header="탈퇴하기">
+        <span id='modal-text'>{ modal_text }</span>
+        <span id='modal-emoji'>{ modal_emoji }</span>
+        <footer>
+          <div className='modal2-buttons'>
+            <button id='modal-close' onClick={ secession }>확인</button>
+            <button id='modal-close' onClick={ closeModal }>취소</button>
+          </div>
+        </footer>
+      </Modal3>
+
+      <Modal open={ saveModalOpen } close={ saveCloseModal } header="저장하기">
+        <span id='modal-text'> { save_modal_text } </span>
+        <span id='modal-emoji'> { save_modal_emoji } </span>
+      </Modal>
+
     </div>
   )
 }
