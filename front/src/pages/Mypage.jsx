@@ -11,7 +11,6 @@ const Mypage = () => {
 
   const imgUrl = '/images/default.svg';
 
-  // 변수 지정
   const [userEmail, setUserEmail] = useState('');
   const [userName, setUserName] = useState('');
   const [userDate, setUserDate] = useState('');
@@ -31,19 +30,14 @@ const Mypage = () => {
 
    /* ------------------저장 모달 ------------------ */
   const [saveModalOpen, setSaveModalOpen] = useState(false);
-  const save_modal_text = '닉네임을 저장하였습니다.'; 
-  const save_modal_emoji = '✅';
+  const [modalText, setModalText] = useState('');
+  const [modalemoji, setModalEmoji] = useState('');
   
   const saveOpenModal = () => {
     setSaveModalOpen(true);
   };
   const saveCloseModal = () => {
     setSaveModalOpen(false);
-  };
-
-  // test 페이지로 이동 -- Link 쓰는게 더 나을지도
-  const test = () => {
-    Navigate('/home/test');
   };
 
    /* ------------------ 회원 탈퇴 요청  ------------------ */
@@ -62,7 +56,7 @@ const Mypage = () => {
       }
       deleteCookie('accessToken');
       deleteCookie('refreshToken');
-      closeModal();
+      closeModal(); // 모달 off
       Navigate('/');
     })
     .catch(error => {
@@ -85,16 +79,20 @@ const Mypage = () => {
         { withCredentials: true,},
       )
       .then(response => {
-        // 모달 on
-        saveOpenModal();
-        // 동기적인 페이지 리다이렉트가 필요함
+        setModalText(response.data.text);
+        setModalEmoji(response.data.emoji);
+        saveOpenModal(); // 모달 on
       })
       .catch(error => {
         alert("요청이 실패했어요.");
-        console.log('요청이 실패했어요:', error.response);
       });
     };
   };
+  
+  // 중복 전송을 막기 위한 동기적 리다이렉트
+  function redirect() {
+    window.location.href = `${ front }/home/mypage`;
+  }
 
    /* ------------------ jwt 인증 ------------------ */
   const accessT = () => {
@@ -117,7 +115,7 @@ const Mypage = () => {
     })
   };
 
-  // refreshToken으로 accessToken 재발행
+  // 토큰 재발행
   const refreshT = () => {
     axios
     .get(`${ server }/refreshT`, {
@@ -144,8 +142,7 @@ const Mypage = () => {
     })
   };
 
-
-   /* ------------------ 페이지 첫 실행 ------------------ */
+  /* ------------------ 페이지 첫 실행 ------------------ */
   useEffect(() => {
     if(document.cookie){
       accessT();
@@ -154,6 +151,11 @@ const Mypage = () => {
     }
   }, []);
 
+  // test 페이지로 이동 -- Link 쓰는게 더 나을지도
+  const test = () => {
+    Navigate('/home/test');
+  };
+  /* ---------------------------------------------------- */
 
   return (
     <div className='mypage'>
@@ -169,7 +171,7 @@ const Mypage = () => {
 
             <div className='mypage-setting1'>
               <div className='mypage-subtitle'>닉네임</div>
-              <input type="text" placeholder={ userName }  maxLength="10"
+              <input type="text" placeholder={ userName } id='name' maxLength="10"
                 onChange={(event) => {
                   setInputName(event.target.value);
                 }}
@@ -211,10 +213,15 @@ const Mypage = () => {
         </footer>
       </Modal3>
 
-      <Modal open={ saveModalOpen } close={ saveCloseModal } header="저장하기">
-        <span id='modal-text'> { save_modal_text } </span>
-        <span id='modal-emoji'> { save_modal_emoji } </span>
-      </Modal>
+      <Modal3 open={ saveModalOpen } close={ saveCloseModal } header="저장하기">
+        <span id='modal-text'> { modalText } </span>
+        <span id='modal-emoji'> { modalemoji } </span>
+        <footer>
+          <div className='modal2-buttons'>
+            <button id='modal-close' onClick={ redirect }>확인</button>
+          </div>
+        </footer>
+      </Modal3>
 
     </div>
   )
