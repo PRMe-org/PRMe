@@ -1,4 +1,3 @@
-//server.js
 const express = require('express');
 const cors = require('cors'); // CORS 
 const bodyParser = require("body-parser"); // 데이터 파싱
@@ -8,9 +7,38 @@ const nodemailer = require("nodemailer"); // 메일
 const dotenv = require('dotenv'); // 환경변수 관리
 const jwt = require('jsonwebtoken'); // jwt
 const cookieParser = require('cookie-parser'); // 쿠키
-
-const app = express();
+const app = express(); // espress 앱을 생성한다.
 dotenv.config();
+const axios = require('axios');
+
+/* --------------------------- 카카오 로그인 ------------------------------- */
+// 인가코드를 받기 위한 엔드포인트를 정의합니다.
+// app.get('/home', async (req, res) => {
+//   // home.jsx에서 전달된 인가코드를 가져옵니다.
+//   const authorizationCode = req.query.code;
+//   console.log(authorizationCode)
+  
+//   try {
+//     // 액세스 토큰을 발급받기 위한 요청을 보냅니다.
+//     const response = await axios.post('인증 서버의 액세스 토큰 엔드포인트 URL', {
+//       code: authorizationCode,
+//       client_id: a29a3d743f55295b46cbfb49ba08a3ce,
+//       client_secret: 'nPnyY3ZCu4A8ygSKTmmlAnVrBWFsWYZn',
+//       redirect_uri: 'http://localhost:3000/kakao',
+//       grant_type: 'authorization_code',
+//     });
+
+//     // 발급받은 액세스 토큰을 콘솔에 출력합니다.
+//     console.log('Access Token:', response.data.access_token);
+
+//     // 토큰을 성공적으로 받았음을 클라이언트에 응답합니다.
+//     res.send('Access token received.');
+//   } catch (error) {
+//     console.error('Access token request failed:', error);
+//     res.status(status).send(body);
+//   }
+// });
+
 
 /* --------------------------- 환경 설정 ------------------------------- */
 app.listen(process.env.PORT, ()=>{
@@ -33,7 +61,7 @@ app.use(cookieParser());
 const db = mysql.createPool({
     host: "localhost",
     user: "root",
-    password: "wjflrkfk",
+    password: "1234",
     database: "testdb",
   });
 
@@ -41,9 +69,9 @@ const db = mysql.createPool({
 /* --------------------- 회원가입 / 로그인 처리 함수 --------------------- */
 // [[ TEST ]] Get 요청 시 requested에 1이 저장되는 코드 (성공)
 app.get("/", (req, res) => {
-  const testSqlQuery = "INSERT INTO requested (rowno) VALUES (1)";
+  const testSqlQuery = "INSERT INTO requested (rowno) VALUES (3)";
   db.query(testSqlQuery, (err, result) => {
-    res.send("success!");
+    res.send("success!!!");
   });
 });
 

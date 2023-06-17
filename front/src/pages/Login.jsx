@@ -3,17 +3,19 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const Login = () => {
-  const server = 'http://localhost:3002';
-  const Navigate = useNavigate();
+  const server = 'http://localhost:3000';
+  const navigate = useNavigate();
 
   const imgUrl = '/images/kakao.svg';
   
   // 카카오 로그인
   const REST_API_KEY = 'a29a3d743f55295b46cbfb49ba08a3ce';
-  const REDIRECT_URI = 'http://localhost:3000/home/oauth';
-  const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}`
+  const REDIRECT_URI = 'http://localhost:3000/kakao';
+  const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`
   const kakaoLogin = () => {
     window.location.href = KAKAO_AUTH_URL;
+    // window.location.href = 자바스크립트에서 다른 페이지로 이동하는 방법
+    
   };
 
   // input 값을 변수에 저장
@@ -50,7 +52,7 @@ const Login = () => {
        document.cookie = `accessToken=${ accessToken }; path=/;`
        document.cookie = `refreshToken=${ refreshToken }; path=/;`
 
-        Navigate('/home');
+        navigate('/home');
       } else{
         alert(JSON.stringify(response.data.isLogin))
       }
