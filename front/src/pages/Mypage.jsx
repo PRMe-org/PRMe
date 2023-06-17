@@ -1,21 +1,22 @@
 import React, { useState, useEffect }  from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import Modal2 from '../components/Modal2';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Modal3 from '../components/Modal3';
 
 const Mypage = () => {
   const server = 'http://localhost:3002';
+  const front = 'http://localhost:3000';
   const Navigate = useNavigate();
 
-  // 변수 지정
+  const imgUrl = '/images/default.svg';
+
   const [userEmail, setUserEmail] = useState('');
   const [userName, setUserName] = useState('');
-  const [userDate, setUserDate] =useState('');
+  const [userDate, setUserDate] = useState('');
+  const [inputName, setInputName] = useState('');
   
-  // 모달 창
+  /* ------------------탈퇴 모달 ------------------ */
   const [modalOpen, setModalOpen] = useState(false);
-  
-  const imgUrl = '/images/default.svg';
   const modal_text = '정말 탈퇴하시겠습니까?'; 
   const modal_emoji = '😭';
 
@@ -26,12 +27,19 @@ const Mypage = () => {
     setModalOpen(false);
   };
 
-  // test 페이지로 이동 -- Link 쓰는게 더 나을지도
-  const test = () => {
-    Navigate('/home/test');
+   /* ------------------저장 모달 ------------------ */
+  const [saveModalOpen, setSaveModalOpen] = useState(false);
+  const [modalText, setModalText] = useState('');
+  const [modalemoji, setModalEmoji] = useState('');
+  
+  const saveOpenModal = () => {
+    setSaveModalOpen(true);
+  };
+  const saveCloseModal = () => {
+    setSaveModalOpen(false);
   };
 
-  // accessToken 인증
+  /* ------------------ jwt 인증 ------------------ */
   const accessT = () => {
     axios
     .get(`${ server }/accessT`, {
@@ -43,8 +51,6 @@ const Mypage = () => {
       } else {
         setUserEmail(response.data.email);
         setUserName(response.data.name);
-        let date = response.data.date;
-        setUserDate(date.split('T')[0]); // YYYY-MM-DD
       }
     })
     .catch(error => {
@@ -52,7 +58,7 @@ const Mypage = () => {
     })
   };
 
-  // refreshToken으로 accessToken 재발행
+  // 토큰 재발행
   const refreshT = () => {
     axios
     .get(`${ server }/refreshT`, {
@@ -70,8 +76,6 @@ const Mypage = () => {
 
        setUserEmail(response.data.email);
        setUserName(response.data.name);
-       let date = response.data.date;
-       setUserDate(date.split('T')[0]); // YYYY-MM-DD
       }     
     })
     .catch(error => {
@@ -79,14 +83,94 @@ const Mypage = () => {
     })
   };
 
-  // 컴포넌트가 처음 마운트되었을 때 실행(처음 한번만)
+  /* ------------------ 최근 검사일 조회 요청 ------------------ */
+  const recently = () => {
+    axios
+    .post(`${ server }/recently`,
+      { },
+      { withCredentials: true,},)
+    .then(response => {
+      if(response.data === ""){
+        setUserDate("(미실시)");
+      } else {
+        let date = response.data;
+        setUserDate(date.split('T')[0]); // YYYY-MM-DD
+      };
+    })
+    .catch(error => {
+      console.log('실패했어요:', error.response);
+    })
+  }
+
+   /* ------------------ 회원 탈퇴 요청  ------------------ */
+  const secession = () => {
+    // 토큰 검사
+    accessT();
+    // 회원 탈퇴 요청
+    axios
+    .post(`${ server }/secession`,
+      { },
+      { withCredentials: true,},
+    )
+    .then(response => {
+      function deleteCookie(name) { // 쿠키삭제
+        document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+      }
+      deleteCookie('accessToken');
+      deleteCookie('refreshToken');
+      closeModal(); // 모달 off
+      Navigate('/');
+    })
+    .catch(error => {
+      closeModal();
+    });
+  };
+
+   /* ------------------닉네임 수정 요청  ------------------ */
+  const saveName = () => {
+    // 토큰 검사
+    accessT();
+    // 닉네임 수정 통신
+    if(inputName === ""){
+      alert("닉네임을 적어주세요.");
+    }
+    else {
+      axios
+      .post(`${ server }/saveName`,
+        { name: inputName, },
+        { withCredentials: true,},
+      )
+      .then(response => {
+        setModalText(response.data.text);
+        setModalEmoji(response.data.emoji);
+        saveOpenModal(); // 모달 on
+      })
+      .catch(error => {
+        alert("요청이 실패했어요.");
+      });
+    };
+  };
+  
+  // 중복 전송을 막기 위한 동기적 리다이렉트
+  function redirect() {
+    window.location.href = `${ front }/home/mypage`;
+  };
+
+  /* ------------------ 페이지 첫 실행 ------------------ */
   useEffect(() => {
-    if(document.cookie){ // 쿠키가 존재하는 경우
-      accessT(); // accessToken 인증 검사
+    if(document.cookie){
+      accessT();
+      recently(); // 최근 검사일 출력
     } else {
-      Navigate('/login') // 로그인으로 이동
+      Navigate('/login')
     }
   }, []);
+
+  // test 페이지로 이동 -- Link 쓰는게 더 나을지도
+  const test = () => {
+    Navigate('/home/test');
+  };
+  /* ---------------------------------------------------- */
 
   return (
     <div className='mypage'>
@@ -95,14 +179,18 @@ const Mypage = () => {
         <div className='mypage-content-top'>
           <div className='profile-hover'>+</div>
           <div className='profile' id='mypage-prorile'>
-            <img src={imgUrl} className='default'/>
+            <img src={ imgUrl } className='default'/>
           </div>
           <div className='mypage-settings'>
           <div className={`mypage-settings-title ${window.innerWidth <= 768 ? 'hide-title' : ''}`}>기본 정보</div>
 
             <div className='mypage-setting1'>
               <div className='mypage-subtitle'>닉네임</div>
-              <input type="text" placeholder={ userName }/>
+              <input type="text" placeholder={ userName } id='name' maxLength="10"
+                onChange={(event) => {
+                  setInputName(event.target.value);
+                }}
+              />
             </div>
 
             <div className='mypage-setting2'>
@@ -112,7 +200,7 @@ const Mypage = () => {
 
             <div className='mypage-setting3'>
               <div className='mypage-subtitle'>검사일</div>
-              <div className='mypage-fixed'>{ userDate }(*가입날짜로 되어있음 수정요망)</div>
+              <div className='mypage-fixed'>{ userDate }</div>
             </div>
 
           </div>
@@ -120,7 +208,7 @@ const Mypage = () => {
 
         <div className='delete-save'>
           <button onClick={ openModal } className='mypage-delete'>탈퇴하기</button>
-          <button className='mypage-save'>저장하기</button>
+          <button onClick={ saveName } className='mypage-save'>저장하기</button>
         </div>
       </div>
 
@@ -129,10 +217,27 @@ const Mypage = () => {
         <button id='retry' onClick={ test }>테스트 다시 하기</button>
       </div>
 
-      <Modal2 open={modalOpen} close={closeModal} header="모달 제목">
-        <span id='modal-text'> { modal_text } </span>
-        <span id='modal-emoji'> { modal_emoji } </span>
-      </Modal2>
+      <Modal3 open={ modalOpen } close={ closeModal } header="탈퇴하기">
+        <span id='modal-text'>{ modal_text }</span>
+        <span id='modal-emoji'>{ modal_emoji }</span>
+        <footer>
+          <div className='modal2-buttons'>
+            <button id='modal-close' onClick={ secession }>확인</button>
+            <button id='modal-close' onClick={ closeModal }>취소</button>
+          </div>
+        </footer>
+      </Modal3>
+
+      <Modal3 open={ saveModalOpen } close={ saveCloseModal } header="저장하기">
+        <span id='modal-text'> { modalText } </span>
+        <span id='modal-emoji'> { modalemoji } </span>
+        <footer>
+          <div className='modal2-buttons'>
+            <button id='modal-close' onClick={ redirect }>확인</button>
+          </div>
+        </footer>
+      </Modal3>
+
     </div>
   )
 }

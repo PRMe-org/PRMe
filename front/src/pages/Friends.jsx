@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import Pagination from '../components/Pagination';
 import Modal3 from '../components/Modal3';
 
@@ -18,46 +19,40 @@ const Friends = () => {
     // api데이터가 없어서 임의로 넣은 test용 데이터.
     // 실제 데이터 api넣어서 다시 test!
 
-    // {
-    //   id: 1,
-    //   name: "김지원",
-    //   tags: ["#열정적", "#도전적", "#사교적"],
-    //   date: "2023.05.30",
-    // },
-    // {
-    //   id: 2,
-    //   name: "김지둘",
-    //   tags: ["#열정적", "#도전적", "#사교적"],
-    //   date: "2023.05.31",
-    // },
-    // {
-    //   id: 3,
-    //   name: "김지셋",
-    //   tags: ["#열정적", "#도전적", "#사교적"],
-    //   date: "2023.06.01",
-    // },
-    // {
-    //   id: 4,
-    //   name: "김지넷",
-    //   tags: ["#열정적", "#도전적", "#사교적"],
-    //   date: "2023.06.02",
-    // },
-    // {
-    //   id: 5,
-    //   name: "김지다",
-    //   tags: ["#열정적", "#도전적", "#사교적"],
-    //   date: "2023.06.03",
-    // },
+    {
+      id: 1,
+      name: "김지원",
+      tags: ["#열정적", "#도전적", "#사교적"],
+      date: "2023.05.30",
+    },
+    {
+      id: 2,
+      name: "김지둘",
+      tags: ["#열정적", "#도전적", "#사교적"],
+      date: "2023.05.31",
+    },
+    {
+      id: 3,
+      name: "김지셋",
+      tags: ["#열정적", "#도전적", "#사교적"],
+      date: "2023.06.01",
+    },
+    {
+      id: 4,
+      name: "김지넷",
+      tags: ["#열정적", "#도전적", "#사교적"],
+      date: "2023.06.02",
+    },
+    {
+      id: 5,
+      name: "김지다",
+      tags: ["#열정적", "#도전적", "#사교적"],
+      date: "2023.06.03",
+    },
     
   ]);
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지를 관리하는 상태 변수
   const itemsPerPage = 5;
-
-  // 현재 페이지가 변경되면 데이터를 가져오기 위해 useEffect를 사용
-  useEffect(() => {
-    fetchFriendsData();
-    // 로그인 시 머무르기 비 로그인시 login 이동 코드 추가
-  }, [currentPage]);
 
   const fetchFriendsData = async () => {
     try {
@@ -107,7 +102,60 @@ const Friends = () => {
   const closeModal = () => {
     setModalOpen(false);
   };
+   /* ------------------ jwt 인증 ------------------ */
+   const accessT = () => {
+    axios
+    .get(`${ server }/accessT`, {
+       withCredentials: true, // 요청 시 쿠키를 포함
+    })
+    .then(response => {
+      if(response.data === 'TokenExpiredError'){ // accessToken 만료 시
+        refreshT(); // 토큰 재발행
+      } else {
+        // 받을 데이터 처리
+      }
+    })
+    .catch(error => {
+      console.log('실패했어요:', error.response);
+    })
+  };
 
+  // 토큰 재발행
+  const refreshT = () => {
+    axios
+    .get(`${ server }/refreshT`, {
+       withCredentials: true, // 요청 시 쿠키를 포함
+    })
+    .then(response => {
+      // accessToken 갱신완료 시
+      if(JSON.stringify(response.data.isLogin) === '"성공"'){
+        // 서버로부터 토큰을 받아서 쿠키에 저장
+       const accessToken = response.data.accesstoken;
+       const refreshToken = response.data.refreshtoken;
+       // 쿠키에 토큰 저장
+       document.cookie = `accessToken=${ accessToken }; path=/;`
+       document.cookie = `refreshToken=${ refreshToken }; path=/;`
+
+       // 받을 데이터 처리
+      }     
+    })
+    .catch(error => {
+      console.log('실패했어요:', error.response);
+    })
+  };
+  
+  /* ------------------ 페이지 첫 실행 ------------------ */
+  // 현재 페이지가 변경되면 데이터를 가져오기 위해 useEffect를 사용
+  useEffect(() => {
+    if(document.cookie){
+      accessT();
+    } else {
+      Navigate('/login')
+    };
+    fetchFriendsData();
+  }, [currentPage]);
+  /* ---------------------------------------------------- */
+  
   return (
     <div className='friends'>
 
@@ -166,6 +214,7 @@ const Friends = () => {
           </div>
         </footer>
       </Modal3>
+      
     </div>
   );
 };

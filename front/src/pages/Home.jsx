@@ -41,15 +41,11 @@ const Home = (props) => {
   const [userName, setUserName] = useState('');
   const [modalOpen, setModalOpen] = useState(false);
 
-  const imgUrl = '/images/default.svg';
-  const modal_text = 'url이 복사되었어요!'; 
-  const modal_emoji = '📑';
-
   const nicknamesRef = useRef(null);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
-
+  
   const handleMouseDown = (event) => {
     setIsDragging(true);
     setStartX(event.clientX - nicknamesRef.current.offsetLeft);
@@ -71,14 +67,19 @@ const Home = (props) => {
   const handleMouseLeave = () => {
     setIsDragging(false);
   };
-
+  
   // url 복사
   const copyUrl = () => {
     navigator.clipboard.writeText(window.location.href);
     openModal(); // 모달 열기
   };
+ 
+  // 모달 - 변수
+  const imgUrl = '/images/default.svg';
+  const modal_text = 'url이 복사되었어요!'; 
+  const modal_emoji = '📑';
 
-  // 모달창 - (디폴트 false) open일 때 true
+  // 모달 - on/off
   const openModal = () => {
     setModalOpen(true);
   };
