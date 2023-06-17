@@ -311,6 +311,24 @@ app.get("/home/test", (req, res) => {
 
 
 /* --------------------- myPage 함수 --------------------- */
-app.get("/home/mypage", (req, res) =>{
- 
+app.post("/saveName", async(req, res) => {
+  try {
+    const token = req.cookies.accessToken;
+    const data = jwt.verify(token, process.env.ACCESS_SECRET);
+    const name = req.body.name;
+    const email = data.email;
+
+    // 이메일 검사
+    db.query("SELECT * FROM user WHERE email = ?", [email], function(err, result){
+      if (err) throw err;
+      if (result.length > 0){ // 일치
+        // Name 업데이트
+        const updateNameQuery = 'UPDATE user SET name=? WHERE email = ?';
+        db.query(updateNameQuery, [name, email], (err, result) => {
+          return res.send("업데이트 완료")
+        });
+      }});
+  } catch (error) {
+    return res.send("응답실패... " + error);
+  }
 });
