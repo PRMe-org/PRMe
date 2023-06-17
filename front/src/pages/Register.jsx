@@ -5,24 +5,24 @@ import axios from 'axios';
 export const Register = () => {
   const server = 'http://localhost:3002';
   const Navigate = useNavigate();
+  
+  const imgUrl = '/images/kakao.svg';
 
-  // input 값을 변수에 저장
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   
-  // 회원가입 요청
+  /* ------------------ 회원가입 요청 ------------------ */
   const register = () => {
-    // 코드 출처 - https://docs.strapi.io/dev-docs/plugins/users-permissions#registration
     axios
     .post(`${ server }/register`, {
-      name: name, // input값을 저장한 변수
+      name: name,
       email: email,
       password: password,
     })
-    .then(response => { // then <= 위 코드와 동시작동 안하도록 사용
+    .then(response => { 
       alert(JSON.stringify(response.data.state));
-      // 회원가입 완료 시에만 login 페이지 이동
+      // 회원가입 완료 시 login 페이지 이동
       if(JSON.stringify(response.data.state) === '"가입 완료"'){
         Navigate('/login');
       }
@@ -33,22 +33,21 @@ export const Register = () => {
     });
   };
 
-  // 한글키 금지
+  /* ------------------ 한글키 금지 ------------------ */
   const onlyEng = (event) => {
     const inputText = event.target.value;
     const filterText = inputText.replace(/[ㄱ-ㅎㅏ-ㅣ가-힣]/g, ''); // 한글 입력 제거
     event.target.value = filterText;
   };
 
-  // 컴포넌트가 처음 마운트되었을 때 실행(처음 한번만)
+  /* ------------------ 페이지 첫 실행 ------------------ */
   useEffect(() => {
     if(document.cookie){ // 쿠키가 존재하는 경우
       Navigate('/home')
     } 
   }, []);
+  /* ---------------------------------------------------- */
 
-
-  const imgUrl = '/images/kakao.svg';
 
   return (
     <div className='form'>
