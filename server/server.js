@@ -319,16 +319,35 @@ app.post("/saveName", async(req, res) => {
     const name = req.body.name;
     const email = data.email;
 
+    const sendData = { text:"", emoji:"" };
+
     // 이메일 검사
     db.query("SELECT * FROM user WHERE email = ?", [email], function(err, result){
       if (err) throw err;
       if (result.length > 0){ // 일치
-        // Name 업데이트
-        const updateNameQuery = 'UPDATE user SET name=? WHERE email = ?';
-        db.query(updateNameQuery, [name, email], (err, result) => {
-          return res.send("업데이트 완료")
+        // 닉네임 중복 검사
+        db.query("SELECT * FROM user WHERE name = ?", [name], function(err,result){
+          if(err) throw err;
+          if(result.length > 0) {
+            // 업데이트 실패
+            sendData.text = "중복된 닉네임 입니다.";
+            sendData.emoji = "❌";
+
+            return res.send(sendData);
+            
+          } else {
+            const updateNameQuery = 'UPDATE user SET name=? WHERE email = ?';
+            db.query(updateNameQuery, [name, email], (err, result) => {
+              // 업데이트 성공
+              sendData.text = "닉네임을 저장하였습니다.";
+              sendData.emoji = "✅";
+
+              return res.send(sendData);
+            });
+          }
         });
-      }});
+      };
+    });
   } catch (error) {
     return res.send("응답실패... " + error);
   }
