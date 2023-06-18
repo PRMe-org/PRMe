@@ -4,7 +4,7 @@ const bodyParser = require("body-parser"); // 데이터 파싱
 const mysql = require("mysql"); // DB
 const bcrypt = require('bcrypt') // 비밀번호 해싱
 const nodemailer = require("nodemailer"); // 메일
-const dotenv = require('dotenv'); // 환경변수 관리
+const dotenv = require('dotenv'); // 환경변c수 관리
 const jwt = require('jsonwebtoken'); // jwt
 const cookieParser = require('cookie-parser'); // 쿠키
 const app = express(); // espress 앱을 생성한다.
@@ -61,7 +61,7 @@ app.use(cookieParser());
 const db = mysql.createPool({
     host: "localhost",
     user: "root",
-    password: "1234",
+    password: "wjflrkfk",
     database: "testdb",
   });
 
@@ -321,7 +321,7 @@ app.get("/home/test", (req, res) => {
   db.query("SELECT * FROM mytestsave WHERE email = ?", [testEmail], function(err, result){
     if (err) throw err;
     if (result.length > 0){ // 일치하는 이메일이 있으면 Update
-      const myTestUpdateQuery = 'UPDATE mytestsave SET ISTJ=?,ISFJ=?,INFJ=?,INTJ=?,ISTP=?,ISFP=?,INFP=?,INTP=?,ESTP=?,ESFP=?,ENFP=?,ENTP=?,ESTJ=?,ESFJ=?,ENFJ=?,ENTJ=?,E=?,N=?,F=?,J=? WHERE email = ?';
+      const myTestUpdateQuery = 'UPDATE mytestsave SET ISTJ=?,ISFJ=?,INFJ=?,INTJ=?,ISTP=?,ISFP=?,INFP=?,INTP=?,ESTP=?,ESFP=?,ENFP=?,ENTP=?,ESTJ=?,ESFJ=?,ENFJ=?,ENTJ=?,E=?,N=?,F=?,J=?, date = CURDATE() WHERE email = ?';
       db.query(myTestUpdateQuery, [...intResult, testEmail], (err, result) => {
         res.send(sendTest);
       });
@@ -356,7 +356,7 @@ app.post("/recently", async(req, res) => {
       }
     });
   } catch (error) {
-    return res.send("응답실패... " + error);
+    return res.send("(새로고침 해주세요.)");
   }
 });
 

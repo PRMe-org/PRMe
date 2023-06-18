@@ -56,17 +56,17 @@ const Test = () => {
     return updatedOptions; // myTestSave에 배열 전달을 위해 반환
   };
 
-  // 결과 DB 저장 요청
+  // 테스트 결과 저장 요청
   const myTestSave = () => {
-    const event = { target: // handleOptionChange()함수를 그냥 호출 할 시 배열의 마지막 원소가 출력되지 않는 오류 수정을 위한 코드
+    // handleOptionChange()호출 시 배열 마지막 원소가 출력되지 않는 오류 수정을 위한 코드
+    const event = { target: 
       { value: selectedOptions[currentQuestion - 1] || '' } 
     }; 
-    const result = handleOptionChange(event); // 함수를 호출하여 배열 받기
+    const result = handleOptionChange(event); // 배열 받기
+    // 테스트 결과 insert 요청
     axios
     .get(`${ server }/home/test`, {
-      params: {
-        result: result,
-      },
+      params: { result: result, },
     })
     .then(response => {
       alert("요청 성공");
@@ -77,8 +77,6 @@ const Test = () => {
       alert("실패했어요");
       console.log('실패했어요:', error.response);
     })
-    // alert("test");
-    // handleResult();
   };
 
   const handleResult = () => {
