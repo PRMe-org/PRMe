@@ -4,7 +4,7 @@ const bodyParser = require("body-parser"); // 데이터 파싱
 const mysql = require("mysql"); // DB
 const bcrypt = require('bcrypt') // 비밀번호 해싱
 const nodemailer = require("nodemailer"); // 메일
-const dotenv = require('dotenv'); // 환경변c수 관리
+const dotenv = require('dotenv'); // 환경변수 관리
 const jwt = require('jsonwebtoken'); // jwt
 const cookieParser = require('cookie-parser'); // 쿠키
 const app = express(); // espress 앱을 생성한다.
@@ -59,7 +59,7 @@ app.use(cookieParser());
 
 // DB 연동
 const db = mysql.createPool({
-    host: "localhost",
+    host: "localhost",ㅛ
     user: "root",
     password: "wjflrkfk",
     database: "testdb",

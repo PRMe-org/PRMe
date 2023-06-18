@@ -114,7 +114,7 @@ const Mypage = () => {
     )
     .then(response => {
       function deleteCookie(name) { // 쿠키삭제
-        document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+        document.cookie = `${ name }=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
       }
       deleteCookie('accessToken');
       deleteCookie('refreshToken');
