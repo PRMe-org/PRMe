@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const Login = () => {
-  const server = 'http://localhost:3000';
+  const server = 'http://localhost:3002'; // server 포트
   const navigate = useNavigate();
 
   const imgUrl = '/images/kakao.svg';
