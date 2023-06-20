@@ -72,4 +72,4 @@ React + Node.js + MySQL을 이용한 Web Project 입니다.
 <br>
 
 ## 📑 PR Me! 사용법
-- npm start
+- npm start (localhost:3000)
