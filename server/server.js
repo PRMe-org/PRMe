@@ -59,9 +59,9 @@ app.use(cookieParser());
 
 // DB 연동
 const db = mysql.createPool({
-    host: "localhost",ㅛ
+    host: "localhost",
     user: "root",
-    password: "wjflrkfk",
+    password: "1234",
     database: "testdb",
   });
 
