@@ -46,9 +46,9 @@ const Kakao = () => {
 const sendAccessTokenToServer = (access_token) => {
   // 서버로 액세스 토큰을 전송하는 요청
   axios
-    .post('/api/kakao-token', { access_token }) // 서버의 적절한 엔드포인트로 변경해야 합니다.
+    .post('http://localhost:3002/api/kakao-token', { token: access_token }) // 서버의 적절한 엔드포인트로 변경해야 합니다.
     .then((res) => {
-      console.log('액세스 토큰 전송 성공:', res);
+      console.log('액세스 토큰 전송 성공:', res.data);
     })
     .catch((error) => {
       console.log('액세스 토큰 전송 실패:', error);
