@@ -428,3 +428,62 @@ app.post("/secession", async(req, res) => {
     return res.send("응답실패... " + error);
   }
 });
+
+/* --------------------- Home 함수 --------------------- */
+app.get("/home", (req, res) => {
+  try {
+    const token = req.cookies.accessToken;
+    const data = jwt.verify(token, process.env.ACCESS_SECRET);
+    const email = data.email;
+
+    db.query("SELECT * FROM MyTestSave WHERE email = ?", [email], function(err, result){
+      if (result.length > 0){ 
+        const user = result[0];
+
+        const sendData = { email: "", ISTJ:"", ISFJ:"",INFJ:"",INTJ:"",ISTP:"",ISFP:"",INFP:"",INTP:"",ESTP:"",ESFP:"",ENFP:"",ENTP:"",ESTJ:"",ESFJ:"",ENFJ:"",ENTJ:"",E:"",N:"",F:"",J:"" };
+        sendData.email = user.email;
+        sendData.ISTJ = user.ISTJ;
+        sendData.ISFJ = user.ISFJ;
+        sendData.INFJ = user.INFJ;
+        sendData.INTJ = user.INTJ;
+        sendData.ISTP = user.ISTP;
+        sendData.ISFP = user.ISFP;
+        sendData.INFP = user.INFP;
+        sendData.INTP = user.INTP;
+        sendData.ESTP = user.ESTP;
+        sendData.ESFP = user.ESFP;
+        sendData.ENFP = user.ENFP;
+        sendData.ENTP = user.ENTP;
+        sendData.ESTJ = user.ESTJ;
+        sendData.ESFJ = user.ESFJ;
+        sendData.ENFJ = user.ENFJ;
+        sendData.ENTJ = user.ENTJ;
+        sendData.E = user.E;
+        sendData.N = user.N;
+        sendData.F = user.F;
+        sendData.J = user.J;
+
+        // 그렇다(2점)
+        const score2 = {};
+        for (const key in sendData) {
+          if (sendData[key] === 2) {
+            score2[key] = sendData[key];
+          }
+        };
+
+        // 보통이다(1점)
+        const score1 = {};
+        for (const key in sendData) {
+          if (sendData[key] === 1) {
+            score1[key] = sendData[key];
+          }
+        };
+    
+        return res.send(score1); 
+      }
+    });
+  } catch(error){
+    return res.send("응답실패... " + error);
+  }
+
+})
