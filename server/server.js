@@ -311,28 +311,33 @@ app.post("/sendmail", (req, res) => {
 
 /* --------------------- myTest 함수 --------------------- */
 app.get("/home/test", (req, res) => {
-  const result = req.query.result;
-  const intResult = result.map((value) => parseFloat(value)); // 문자형 -> 실수형
-
-  const sendTest = result; // Test
-  const testEmail = 'czmcm5@gmail.com'; // Test
-
-  // 이메일 검사
-  db.query("SELECT * FROM mytestsave WHERE email = ?", [testEmail], function(err, result){
-    if (err) throw err;
-    if (result.length > 0){ // 일치하는 이메일이 있으면 Update
-      const myTestUpdateQuery = 'UPDATE mytestsave SET ISTJ=?,ISFJ=?,INFJ=?,INTJ=?,ISTP=?,ISFP=?,INFP=?,INTP=?,ESTP=?,ESFP=?,ENFP=?,ENTP=?,ESTJ=?,ESFJ=?,ENFJ=?,ENTJ=?,E=?,N=?,F=?,J=?, date = CURDATE() WHERE email = ?';
-      db.query(myTestUpdateQuery, [...intResult, testEmail], (err, result) => {
-        res.send(sendTest);
-      });
-
-    } else { // 이메일이 없으면 Insert
-      const resultQuery = "INSERT INTO mytestsave(email,ISTJ,ISFJ,INFJ,INTJ,ISTP,ISFP,INFP,INTP,ESTP,ESFP,ENFP,ENTP,ESTJ,ESFJ,ENFJ,ENTJ,E,N,F,J)VALUES (?,?)";
-      db.query(resultQuery, [testEmail, intResult], function(err, result) {
-        res.send(sendTest);
-      });
-    }
-  });
+  try {
+    const result = req.query.result;
+    const intResult = result.map((value) => parseFloat(value)); // 문자형 -> 실수형
+  
+    const token = req.cookies.refreshToken; 
+    const data = jwt.verify(token, process.env.REFRESH_SECRET); 
+    const email = data.email; 
+  
+    // 이메일 검사
+    db.query("SELECT * FROM mytestsave WHERE email = ?", [email], function(err, result){
+      if (err) throw err;
+      if (result.length > 0){ // 일치하는 이메일이 있으면 Update
+        const myTestUpdateQuery = 'UPDATE mytestsave SET ISTJ=?,ISFJ=?,INFJ=?,INTJ=?,ISTP=?,ISFP=?,INFP=?,INTP=?,ESTP=?,ESFP=?,ENFP=?,ENTP=?,ESTJ=?,ESFJ=?,ENFJ=?,ENTJ=?,E=?,N=?,F=?,J=?, date = CURDATE() WHERE email = ?';
+        db.query(myTestUpdateQuery, [...intResult, email], (err, result) => {
+          res.send(intResult);
+        });
+  
+      } else { // 이메일이 없으면 Insert
+        const resultQuery = "INSERT INTO mytestsave(email,ISTJ,ISFJ,INFJ,INTJ,ISTP,ISFP,INFP,INTP,ESTP,ESFP,ENFP,ENTP,ESTJ,ESFJ,ENFJ,ENTJ,E,N,F,J)VALUES (?,?)";
+        db.query(resultQuery, [email, intResult], function(err, result) {
+          res.send(intResult);
+        });
+      }
+    });
+  } catch (error) {
+    return res.send(error);
+  }
 });
 
 
