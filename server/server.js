@@ -12,33 +12,17 @@ dotenv.config();
 const axios = require('axios');
 
 /* --------------------------- 카카오 로그인 ------------------------------- */
-// 인가코드를 받기 위한 엔드포인트를 정의합니다.
-// app.get('/home', async (req, res) => {
-//   // home.jsx에서 전달된 인가코드를 가져옵니다.
-//   const authorizationCode = req.query.code;
-//   console.log(authorizationCode)
-  
-//   try {
-//     // 액세스 토큰을 발급받기 위한 요청을 보냅니다.
-//     const response = await axios.post('인증 서버의 액세스 토큰 엔드포인트 URL', {
-//       code: authorizationCode,
-//       client_id: a29a3d743f55295b46cbfb49ba08a3ce,
-//       client_secret: 'nPnyY3ZCu4A8ygSKTmmlAnVrBWFsWYZn',
-//       redirect_uri: 'http://localhost:3000/kakao',
-//       grant_type: 'authorization_code',
-//     });
 
-//     // 발급받은 액세스 토큰을 콘솔에 출력합니다.
-//     console.log('Access Token:', response.data.access_token);
+// kakao에서 전송한 access토큰을 잘 받았다면 성공메시지 콘솔 출력
 
-//     // 토큰을 성공적으로 받았음을 클라이언트에 응답합니다.
-//     res.send('Access token received.');
-//   } catch (error) {
-//     console.error('Access token request failed:', error);
-//     res.status(status).send(body);
-//   }
-// });
-
+app.post('/api/kakao-token', (req, res) => {
+  const { access_token } = req.body;
+  // access_token을 사용하여 필요한 로직을 수행하고 응답을 처리합니다.
+  // 예를 들어, access_token을 데이터베이스에 저장하거나 다른 API와 통신할 수 있습니다.
+  console.log('클라이언트에서 전송된 access_token:', access_token);
+  // 처리 완료 후 클라이언트에 응답을 보냅니다.
+  res.send('토큰을 성공적으로 받았습니다.');
+});
 
 /* --------------------------- 환경 설정 ------------------------------- */
 app.listen(process.env.PORT, ()=>{
