@@ -67,8 +67,23 @@ const Home = (props) => {
   const handleMouseLeave = () => {
     setIsDragging(false);
   };
+
+  /* ------------------ 결과 데이터 Home에 띄우는 요청 ------------------ */
+  const home = () => {
+    axios
+    .get(`${ server }/home`, {
+       withCredentials: true,
+    })
+    .then(response => {
+      console.log(response.data)
+    })
+    .catch(error => {
+      console.log('실패했어요:', error.response);
+    })
+  };
+
   
-  // url 복사
+   /* ------------------ url 복사 ------------------ */
   const copyUrl = () => {
     navigator.clipboard.writeText(window.location.href);
     openModal(); // 모달 열기
@@ -87,7 +102,7 @@ const Home = (props) => {
     setModalOpen(false);
   };
 
-  // accessToken 인증
+   /* ------------------ jwt 인증 ------------------ */
   const accessT = () => {
     axios
     .get(`${ server }/accessT`, {
@@ -105,7 +120,7 @@ const Home = (props) => {
     })
   };
 
-  // refreshToken으로 accessToken 재발행
+  // 토큰 재발행
   const refreshT = () => {
     axios
     .get(`${ server }/refreshT`, {
@@ -129,10 +144,11 @@ const Home = (props) => {
     })
   };
 
-  // 컴포넌트가 처음 마운트되었을 때 실행(처음 한번만)
+   /* ------------------ 페이지 첫 실행 ------------------ */
   useEffect(() => {
     if(document.cookie){ // 쿠키가 존재하는 경우
       accessT(); // accessToken 인증 검사
+      home()
     } else {
       Navigate('/login') // 로그인 이동
     }
