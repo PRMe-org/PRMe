@@ -66,7 +66,7 @@ const Login = () => {
   // 컴포넌트가 처음 마운트되었을 때 실행(처음 한번만)
   useEffect(() => {
     if(document.cookie){ // 쿠키가 있는 경우
-      Navigate('/home')
+      navigate('/home')
     }
   }, []);
   
