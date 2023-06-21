@@ -41,7 +41,7 @@ const Result = ({ selectedOptions, questions }) => {
         </div>
       <div className='result-content-bottom'>
         <div className='friend-results'>
-          {friendResults}
+          { friendResults }
         </div>
       </div>
     </div>
