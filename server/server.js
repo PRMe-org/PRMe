@@ -16,10 +16,10 @@ const axios = require('axios');
 // kakao에서 전송한 access토큰을 잘 받았다면 성공메시지 콘솔 출력
 
 app.post('/api/kakao-token', (req, res) => {
-  const { access_token } = req.body;
+
   // access_token을 사용하여 필요한 로직을 수행하고 응답을 처리합니다.
   // 예를 들어, access_token을 데이터베이스에 저장하거나 다른 API와 통신할 수 있습니다.
-  console.log('클라이언트에서 전송된 access_token:', access_token);
+  // console.log('클라이언트에서 전송된 access_token:');
   // 처리 완료 후 클라이언트에 응답을 보냅니다.
   res.send('토큰을 성공적으로 받았습니다.');
 });
