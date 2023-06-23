@@ -69,6 +69,15 @@ const Home = (props) => {
   };
 
   /* ------------------ 결과 데이터 Home에 띄우는 요청 ------------------ */
+  const [E, setE] = useState('');
+  const [I, setI] = useState('');
+  const [N, setN] = useState('');
+  const [S, setS] = useState('');
+  const [F, setF] = useState('');
+  const [T, setT] = useState('');
+  const [P, setP] = useState('');
+  const [J, setJ] = useState('');
+
   const home = () => {
     axios
     .get(`${ server }/home`, {
@@ -76,11 +85,37 @@ const Home = (props) => {
     })
     .then(response => {
       console.log(response.data)
+      setE(response.data.E);
+      setI(response.data.I);
+      setN(response.data.N);
+      setS(response.data.S);
+      setF(response.data.F);
+      setT(response.data.T);
+      setP(response.data.P);
+      setJ(response.data.J);
     })
     .catch(error => {
       console.log('실패했어요:', error.response);
     })
   };
+  
+  let EnI;
+  let NnS;
+  let FnT;
+  let PnJ;
+  if(E > I){ EnI = E; }else{ EnI = I; };
+  if(N > S){ NnS = N; }else{ NnS = S; };
+  if(F > T){ FnT = F; }else{ FnT = T; };
+  if(P > J){ PnJ = P; }else{ PnJ = J; };
+
+  let krEnI;
+  let krNnS;
+  let krFnT;
+  let krPnJ;
+  if(E > I){ krEnI = '외향형'; }else{ krEnI = '내향형'; };
+  if(N > S){ krNnS = '직관형'; }else{ krNnS = '감각형'; };
+  if(F > T){ krFnT = '감정형'; }else{ krFnT = '사고형'; };
+  if(P > J){ krPnJ = '인식형'; }else{ krPnJ = '판단형'; };
 
   
    /* ------------------ url 복사 ------------------ */
@@ -178,18 +213,18 @@ const Home = (props) => {
             <table>
               <thead>
                 <tr>
-                  <th>외향적</th>
-                  <th>직관적</th>
-                  <th>직관적</th>
-                  <th>판단형</th>
+                  <th>{ krEnI }</th>
+                  <th>{ krNnS }</th>
+                  <th>{ krFnT }</th>
+                  <th>{ krPnJ }</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td>1</td>
-                  <td>2</td>
-                  <td>3</td>
-                  <td>4</td>
+                  <td>{ EnI }</td>
+                  <td>{ NnS }</td>
+                  <td>{ FnT }</td>
+                  <td>{ PnJ }</td>
                 </tr>
               </tbody>
             </table>
