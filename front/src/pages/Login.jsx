@@ -92,7 +92,7 @@ const Login = () => {
              />
 
             <p id='subtitle'>비밀번호</p>
-            <input id='input' type="password" placeholder='5~12자 사이' maxLength="12"
+            <input id='input' type="password" placeholder='비밀번호는 5~12자 사이로 해주세요' maxLength="12"
               onChange={(event) => {
                 setPassword(event.target.value);
               }}
