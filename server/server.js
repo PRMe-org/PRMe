@@ -562,7 +562,6 @@ app.get("/home", (req, res) => {
           P += 0.5;
         }
 
-
         const sendMbti = { E:"", I:"", N:"", S:"", F:"", T:"" , P:"", J:"" };
         sendMbti.E = E;
         sendMbti.I = I;
@@ -572,7 +571,6 @@ app.get("/home", (req, res) => {
         sendMbti.T = T;
         sendMbti.P = P;
         sendMbti.J = J;
-
     
         return res.send(sendMbti); 
       }
