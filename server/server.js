@@ -424,7 +424,8 @@ app.get("/home", (req, res) => {
       if (result.length > 0){ 
         const user = result[0];
 
-        const sendData = { email: "", ISTJ:"", ISFJ:"",INFJ:"",INTJ:"",ISTP:"",ISFP:"",INFP:"",INTP:"",ESTP:"",ESFP:"",ENFP:"",ENTP:"",ESTJ:"",ESFJ:"",ENFJ:"",ENTJ:"",E:"",N:"",F:"",J:"" };
+        const sendData = { email: "", ISTJ:"", ISFJ:"",INFJ:"",INTJ:"",ISTP:"",ISFP:"",INFP:"",INTP:"",ESTP:"",ESFP:"",ENFP:"",ENTP:"",ESTJ:"",ESFJ:"",ENFJ:"",ENTJ:""};
+        const sendData2 = {E:"", N:"", F:"", J:""};
         sendData.email = user.email;
         sendData.ISTJ = user.ISTJ;
         sendData.ISFJ = user.ISFJ;
@@ -442,28 +443,138 @@ app.get("/home", (req, res) => {
         sendData.ESFJ = user.ESFJ;
         sendData.ENFJ = user.ENFJ;
         sendData.ENTJ = user.ENTJ;
-        sendData.E = user.E;
-        sendData.N = user.N;
-        sendData.F = user.F;
-        sendData.J = user.J;
+        sendData2.E = user.E;
+        sendData2.N = user.N;
+        sendData2.F = user.F;
+        sendData2.J = user.J;
 
         // 그렇다(2점)
-        const score2 = {};
+        const score2 = [];
         for (const key in sendData) {
           if (sendData[key] === 2) {
-            score2[key] = sendData[key];
+            score2.push(key);
           }
         };
 
         // 보통이다(1점)
-        const score1 = {};
+        const score1 = [];
         for (const key in sendData) {
           if (sendData[key] === 1) {
-            score1[key] = sendData[key];
+            score1.push(key);
           }
         };
+
+        let E = 0;
+        let I = 0;
+        let N = 0;
+        let S = 0;
+        let F = 0;
+        let T = 0;
+        let P = 0;
+        let J = 0;
+
+        // 그렇다 (2점) 계산
+        for (let i = 0; i < score2.length; i++) {
+          const EnI = score2[i][0];
+          const NnS = score2[i][1];
+          const FnT = score2[i][2];
+          const PnJ = score2[i][3];
+        
+          if (EnI === 'I') {
+            I += 2;
+          } else {
+            E += 2;
+          }
+        
+          if (NnS === 'N') {
+            N += 2;
+          } else {
+            S += 2;
+          }
+
+          if (FnT === 'F') {
+            F += 2;
+          } else {
+            T += 2;
+          }
+
+          if (PnJ === 'P') {
+            P += 2
+          } else {
+            J += 2;
+          }
+        };
+
+        // 그렇다 (1점) 계산
+        for (let i = 0; i < score1.length; i++) {
+          const EnI = score1[i][0];
+          const NnS = score1[i][1];
+          const FnT = score1[i][2];
+          const PnJ = score1[i][3];
+        
+          if (EnI === 'I') {
+            I += 1;
+          } else {
+            E += 1;
+          }
+        
+          if (NnS === 'N') {
+            N += 1;
+          } else {
+            S += 1;
+          }
+
+          if (FnT === 'F') {
+            F += 1;
+          } else {
+            T += 1;
+          }
+
+          if (PnJ === 'P') {
+            P += 1;
+          } else {
+            J += 1;
+          }
+        };
+
+        // 마지막 4문항
+        if (sendData2.E === 0.5){
+          E += 0.5;
+        } else {
+          I += 0.5;
+        }
+
+        if (sendData2.N === 0.5){
+          N += 0.5;
+        } else {
+          S += 0.5;
+        }
+
+        if (sendData2.F === 0.5){
+          F += 0.5;
+        } else {
+          T += 0.5;
+        }
+
+        if (sendData2.J === 0.5){
+          J += 0.5;
+        } else {
+          P += 0.5;
+        }
+
+
+        const sendMbti = { E:"", I:"", N:"", S:"", F:"", T:"" , P:"", J:"" };
+        sendMbti.E = E;
+        sendMbti.I = I;
+        sendMbti.N = N;
+        sendMbti.S = S;
+        sendMbti.F = F;
+        sendMbti.T = T;
+        sendMbti.P = P;
+        sendMbti.J = J;
+
     
-        return res.send(score1); 
+        return res.send(sendMbti); 
       }
     });
   } catch(error){
