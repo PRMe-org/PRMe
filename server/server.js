@@ -231,7 +231,7 @@ app.get("/refreshT", (req, res) => {
           email: user.email,
           name: user.name
         }, process.env.ACCESS_SECRET, {
-          expiresIn : '1m',
+          expiresIn : '10m',
           issuer : 'PRMe', 
         });
   

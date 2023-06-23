@@ -1,6 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
+import axios from 'axios';
 
 const Result = ({ selectedOptions, questions }) => {
+  const server = 'http://localhost:3002';
+
+  let username = 'test';
+
+
   const friendResults = questions.map((question, index) => {
     const selectedOption = selectedOptions[index];
     const optionSymbol = selectedOption === "2" || selectedOption === "0.5" ? "○" : selectedOption === "1" ? "△" : "X";
@@ -17,7 +23,7 @@ const Result = ({ selectedOptions, questions }) => {
       <div className='result-content-top'>
         <div className='friend-think'>
           <div className='result-title'>
-            <p><div id='friend-name'>김지둘</div>님이 생각하는&nbsp; <div id='my-name'>피알미</div>님의 성격은?!</p>
+            <p><div id='friend-name'>{ username }</div>님이 생각하는&nbsp; <div id='my-name'>{ username }</div>님의 성격은?!</p>
           </div>
             <table>
             <thead>

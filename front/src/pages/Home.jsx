@@ -84,7 +84,6 @@ const Home = (props) => {
        withCredentials: true,
     })
     .then(response => {
-      console.log(response.data)
       setE(response.data.E);
       setI(response.data.I);
       setN(response.data.N);

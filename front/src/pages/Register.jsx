@@ -61,7 +61,7 @@ export const Register = () => {
 
           <div className='form-element'>
             <p id='subtitle'>닉네임</p>
-            <input id='input' type="text" placeholder='10자 이하'
+            <input id='input' type="text" placeholder='닉네임은 10자 이하로 해주세요.'
               onChange={(event) => {
                 setName(event.target.value);
               }}
@@ -76,7 +76,7 @@ export const Register = () => {
               />
 
             <p id='subtitle'>비밀번호</p>
-            <input id='input' type="password" placeholder='5~12자 사이'
+            <input id='input' type="password" placeholder='비밀번호는 5~12자 사이로 해주세요'
               onChange={(event) => {
                 setPassword(event.target.value);
                 }}
