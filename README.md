@@ -17,7 +17,7 @@ React + Node.js + MySQL을 이용한 Web Project 입니다.
 <br>
 
 ### 👩🏻‍💻 조원 소개
-- 홍세빈 : React를 이용한 프론드엔드 개발
+- 홍세빈 : React.js를 이용한 프론드엔드 개발
 
 - 윤다빈 : Node.js를 이용한 백엔드 개발
 
