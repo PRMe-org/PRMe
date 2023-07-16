@@ -1,5 +1,5 @@
 # PR Me! - 성격 찾기 프로젝트
-React + Node.js + MySQL을 이용한 Web Project 입니다.
+React.js + Node.js + MySQL을 이용한 Web Project 입니다.
 <br><br>
 
 ## 🖥️ 프로젝트 소개
